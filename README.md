@@ -50,8 +50,22 @@ npm run psi            # o: npm run psi -- https://seem1019.github.io/steven-esp
 ```
 Resultados en `reports/psi.md`. Un sitio nuevo no tiene datos de campo (CrUX) durante semanas: PageSpeed lo evalúa con los datos de laboratorio, y eso es lo normal.
 
-### Resultados
-_Pendiente de la primera publicación._
+### Resultados de laboratorio en local (Lighthouse 13.6 móvil, 2026-11-08)
+| Page | Perf | A11y | BP | SEO | LCP | CLS | TBT | FCP | Meets target |
+|---|---|---|---|---|---|---|---|---|---|
+| es/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 10 ms | 1.1 s | yes |
+| en/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| es/showcase/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| en/showcase/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| es/demos/brinco/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| en/demos/brinco/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| es/demos/lumbre/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| es/demos/isola/ | 100 | 100 | 100 | 100 | 0.9 s | 0 | 20 ms | 0.9 s | yes |
+| es/demos/turnio/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
+| en/demos/turnio/ | 100 | 100 | 100 | 100 | 0.9 s | 0 | 0 ms | 0.9 s | yes |
+
+### Resultados en PageSpeed Insights (URL pública)
+_Pendiente de la primera publicación: `npm run psi` los guarda en `reports/psi.md`._
 
 ## Para agentes y desarrolladores
 - [`CLAUDE.md`](CLAUDE.md): stack, comandos, convenciones y reglas.

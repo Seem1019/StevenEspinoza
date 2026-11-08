@@ -8,7 +8,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import lighthouse from 'lighthouse';
 import * as chromeLauncher from 'chrome-launcher';
 
-const PORT = 4321;
+const PORT = 4330;
 const BASE = `http://localhost:${PORT}/steven-espinoza/`;
 const DEFAULT_PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/'];
 const paths = process.argv.slice(2).length ? process.argv.slice(2) : DEFAULT_PATHS;

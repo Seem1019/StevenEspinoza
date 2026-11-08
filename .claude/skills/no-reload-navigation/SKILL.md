@@ -55,12 +55,13 @@ onPage(() => {
 ```
 - Filter **values**, sort, search, tabs, billing period → `setParams()` (replaceState, no history spam). Opening a filter **panel** → `openUi()`.
 - Triggers are `<button type="button">`. Never `<a href="?x">` (the router navigates).
-- Why the helper exists: Astro's router handles any same-path `popstate` with state as a navigation (fetch + swap). `url-state.ts` marks UI entries (`ui: true`, Astro's `index` preserved) and intercepts their `popstate` in the capture phase.
+- Why the helper exists: Astro's router handles any same-path `popstate` with state as a navigation (fetch + swap). `url-state.ts` marks UI entries (`ui: true`, Astro's `index` preserved). Window listeners run in registration order, so the interception lives in an inline script in `BaseLayout` `<head>` placed before `<ClientRouter />`, which calls `window.__uiPopHandler` from `url-state.ts` and stops the router's handler.
 
 ## 3. Long lists (catalog) without pagination
 - First batch (≈24 items) rendered in static HTML → good LCP and SEO.
 - Next batches: static JSON endpoints (`src/pages/[lang]/…/catalog/[batch].json.ts`) fetched by an IntersectionObserver sentinel with `rootMargin: '1200px 0px'`.
-- Render from `<template>` clones, append in rAF chunks; items have fixed `aspect-ratio`, `content-visibility: auto; contain-intrinsic-size: auto 360px`.
+- Render from `<template>` clones, append in rAF chunks; items have fixed `aspect-ratio` and fixed text heights, `content-visibility: auto; contain-intrinsic-size: auto 360px`.
+- **Reserve the boxes of every batch that will auto-load** with "ghost" items (clones of a real item, same height, `inert`, `aria-hidden`) and make incoming items *replace* ghosts in place. Otherwise a fast scroll reaches the footer before the batch and the batch pushes it (measured CLS 0.69 → 0.01 in Brinco). Reference: `syncGhosts` in `src/demos/brinco/client/app.ts`.
 - After N auto batches (≈5) show a "Load more" button → the footer stays reachable. Or keep the footer outside the infinite flow.
 - Filters/sort/search on the client over a compact index JSON loaded lazily (first interaction or idle).
 

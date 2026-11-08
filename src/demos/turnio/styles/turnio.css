@@ -163,7 +163,7 @@
 }
 .turnio .t-cal .d3, .turnio .t-cal .d4 { display: none; }
 .turnio .t-cal__day { grid-row: 1; align-self: center; font-weight: 700; color: var(--muted); font-size: 0.6875rem; }
-.turnio .t-cal__hour { grid-column: 1; align-self: start; margin-top: -2px; color: #7d948a; font-size: 0.625rem; font-variant-numeric: tabular-nums; }
+.turnio .t-cal__hour { grid-column: 1; align-self: start; margin-top: -2px; color: #52685e; font-size: 0.625rem; font-variant-numeric: tabular-nums; }
 .turnio .t-cal__line { grid-column: 2 / -1; border-top: 1px solid #edf3ef; z-index: 0; }
 .turnio .t-appt {
   position: relative; z-index: 1; margin: 2px 0; padding: 3px 6px; border-radius: var(--r-sm);

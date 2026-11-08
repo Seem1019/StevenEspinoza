@@ -40,3 +40,9 @@ Decisiones tomadas con valores por defecto razonables para no frenar. Cámbialas
 
 ## Skills de terceros
 - `landing-page-design` instalada (solo markdown). `scroll-world` e `img2threejs` **no** instaladas porque ejecutan herramientas externas / de pago. Pendiente de Steven.
+
+## Hallazgos durante la construcción
+- **Orden de listeners de `popstate`:** en `window` los listeners se ejecutan en orden de registro aunque sean de captura. El router de Astro se registra antes que cualquier módulo de página, así que la intercepción de "atrás" para dialogs vive en un script inline en `<head>` antes de `<ClientRouter />` (ver `BaseLayout.astro` y `url-state.ts`). Verificado: cerrar un dialog con "atrás" hace 0 swaps.
+- **Catálogo sin CLS:** los lotes automáticos (hasta 144 productos) tienen su hueco reservado desde el inicio con tarjetas "fantasma" del mismo tamaño que se sustituyen en su sitio. CLS medido con scroll muy rápido: 0,69 → 0,011 (escritorio) y 0 (móvil).
+- **Puertos:** `npm run dev` y `npm run preview` usan 4321; los tests y `npm run lighthouse` levantan su propio preview en 4330 para no chocar con el dev server.
+- **Chunk de three.js** (~137 KB gz) supera el aviso por defecto de Vite; se sube `chunkSizeWarningLimit` a 600 KB porque es una importación diferida que nunca se carga en la carga inicial.

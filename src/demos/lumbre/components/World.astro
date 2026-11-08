@@ -50,7 +50,7 @@ const Art = { entrada: Entrada, barra: Barra, cocina: Cocina, mesa: Mesa };
         <ol role="list">
           {keys.map((k, i) => (
             <li>
-              <button type="button" class="lb-rail__stop" data-lb-rail={k} aria-current={i === 0 ? 'step' : undefined}>
+              <button type="button" class="lb-rail__stop" data-lb-rail={k} aria-label={t(`world.scenes.${k}.rail`)} aria-current={i === 0 ? 'step' : undefined}>
                 <span class="lb-rail__dot" aria-hidden="true" />
                 <span class="lb-rail__label">{t(`world.scenes.${k}.rail`)}</span>
               </button>

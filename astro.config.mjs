@@ -22,6 +22,9 @@ export default defineConfig({
   // ClientRouter enables prefetchAll by default; hover is the default strategy,
   // key links opt into `data-astro-prefetch="viewport"`.
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
+  // The only big chunk is three.js for the Isola demo (~137 KB gz). It is a dynamic import that
+  // loads after the first scroll near the 3D stage, never on initial load. Limit set just above it.
+  vite: { build: { chunkSizeWarningLimit: 600 } },
   fonts: [
     // Portfolio brand
     { provider: fontProviders.fontsource(), name: 'Bricolage Grotesque', cssVariable: '--font-brand-display', weights: ['500 800'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },

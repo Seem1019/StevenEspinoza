@@ -157,6 +157,33 @@ export function initBrinco(): (() => void) | void {
 
   let list: Product[] | null = null; // null = default order via batches
   let rendered = grid.children.length;
+
+  /*
+   * CLS guard: every batch that will load automatically (up to 5) has its box reserved from the start
+   * by "ghost" cards (clones of a real card, same height) at the end of the grid. Incoming cards
+   * REPLACE ghosts in place, so nothing below the grid (final band, footer) can be on screen when the
+   * grid changes. Ghosts are cheap: content-visibility: auto skips their rendering offscreen.
+   */
+  const ghostTpl = grid.firstElementChild?.cloneNode(true) as HTMLElement | undefined;
+  if (ghostTpl) {
+    ghostTpl.dataset.ghost = '';
+    ghostTpl.removeAttribute('data-id');
+    ghostTpl.classList.remove('is-new');
+    ghostTpl.setAttribute('aria-hidden', 'true');
+    ghostTpl.setAttribute('inert', '');
+  }
+  const ghostEls = () => [...grid.querySelectorAll<HTMLElement>(':scope > [data-ghost]')];
+  const syncGhosts = () => {
+    if (!ghostTpl) return;
+    const want = autoCount < 5 ? Math.max(0, Math.min((5 - autoCount) * D.batch, totalNow() - rendered)) : 0;
+    const have = ghostEls();
+    if (have.length > want) have.slice(want).forEach((g) => g.remove());
+    else if (have.length < want) {
+      const frag = document.createDocumentFragment();
+      for (let k = have.length; k < want; k++) frag.append(ghostTpl.cloneNode(true));
+      grid.append(frag);
+    }
+  };
   let autoCount = 0;
   let busy = false;
   let gen = 0;
@@ -184,6 +211,7 @@ export function initBrinco(): (() => void) | void {
     endEl.hidden = !done || n === 0 || n <= D.batch;
     moreBtn.hidden = done || autoCount < 5;
     loadingEl.hidden = !busy;
+    syncGhosts();
   };
 
   const renderItems = (items: Product[], g: number) =>
@@ -192,7 +220,12 @@ export function initBrinco(): (() => void) | void {
       const step = () => {
         if (g !== gen) return res();
         const frag = document.createDocumentFragment();
-        for (let k = 0; k < 8 && i < items.length; k++, i++) frag.append(makeCard(items[i], true));
+        for (let k = 0; k < 8 && i < items.length; k++, i++) {
+          const card = makeCard(items[i], true);
+          const ghost = grid.querySelector(':scope > [data-ghost]');
+          if (ghost) ghost.replaceWith(card); // same box -> no layout shift
+          else frag.append(card);
+        }
         grid.append(frag);
         if (i < items.length) raf(step);
         else res();
@@ -225,6 +258,7 @@ export function initBrinco(): (() => void) | void {
   };
   const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) loadMore(true); }, { rootMargin: '1200px 0px' });
   io.observe(sentinel);
+  syncGhosts();
   on(moreBtn, 'click', () => loadMore(false));
 
   const scrollToCatalog = () => {
