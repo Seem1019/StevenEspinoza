@@ -1,0 +1,255 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DemoBar from '../../../../components/site/DemoBar.astro';
+import { useT, langPaths, type Lang } from '../../../../i18n';
+import Product from '../../../../demos/isola/components/Product.astro';
+import Stage from '../../../../demos/isola/components/Stage.astro';
+import BuyDialog from '../../../../demos/isola/components/BuyDialog.astro';
+import { finishes, finishCss, fromPrice, defaultFinish, type FinishId } from '../../../../demos/isola/data';
+import '../../../../demos/isola/styles/isola.css';
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const t = useT(lang, 'isola');
+const nf = new Intl.NumberFormat(lang);
+const money = (n: number) => t('currency', { n: nf.format(n) });
+const names = t.raw<Record<FinishId, string>>('finish.options');
+const features = t.raw<{ id: string; title: string; body: string; stat: string; statLabel: string }[]>('features.items');
+const specs = t.raw<[string, string][]>('specs.rows');
+const def = finishes.find((f) => f.id === defaultFinish)!;
+const i18nData = JSON.stringify({ lang, currency: t('currency'), current: t('finish.current'), names });
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('meta.title')}
+  description={t('meta.description')}
+  fonts={['--font-isola', '--font-brand-body', '--font-brand-display']}
+  preload={['--font-isola']}
+  bodyClass="isola"
+  themeColor="#ffffff"
+>
+  <Fragment slot="head" set:html={`<style>${finishCss}</style>`} />
+  <DemoBar lang={lang} />
+
+  <header class="top">
+    <div class="top__in wrap">
+      <a class="logo" href="#main" aria-label={t('nav.home')}>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.3" /><circle cx="12" cy="12" r="4" fill="currentColor" /></svg>
+        <span>isola</span>
+      </a>
+      <nav class="top__nav" aria-label={t('nav.label')}>
+        <a href="#design">{t('nav.design')}</a>
+        <a href="#tech">{t('nav.tech')}</a>
+        <a href="#finish">{t('nav.finish')}</a>
+        <a href="#specs">{t('nav.specs')}</a>
+      </nav>
+      <button type="button" class="i-btn i-btn--primary i-btn--sm" data-isola-buy>{t('nav.buy')}</button>
+    </div>
+  </header>
+
+  <main id="main" data-isola-root data-finish={defaultFinish} data-lang={lang} data-i18n={i18nData}>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="hero__eyebrow">{t('hero.eyebrow')}</p>
+        <h1 id="hero-title" class="hero__title">{t('hero.title')}</h1>
+        <p class="hero__promise">{t('hero.promise')}</p>
+        <p class="hero__body">{t('hero.body')}</p>
+        <div class="hero__buy">
+          <p class="hero__price"><span>{t('hero.price', { price: money(fromPrice) })}</span><small>{t('hero.priceNote')}</small></p>
+          <div class="hero__ctas">
+            <button type="button" class="i-btn i-btn--primary" data-isola-buy>{t('hero.cta')}</button>
+            <a class="i-btn i-btn--ghost" href="#design">{t('hero.secondary')}</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__art">
+        <Product uid="hero" label={t('hero.alt')} />
+      </div>
+    </section>
+
+    <Stage lang={lang} />
+
+    <section class="feats" id="tech" aria-labelledby="feats-title">
+      <div class="wrap">
+        <h2 id="feats-title" class="i-h2 feats__title reveal">{t('features.title')}</h2>
+        <div class="feats__grid">
+          {features.map((f) => (
+            <article class="feat reveal" data-feat={f.id}>
+              <p class="feat__stat">{f.stat}</p>
+              <p class="feat__statlabel">{f.statLabel}</p>
+              <h3>{f.title}</h3>
+              <p class="feat__body">{f.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="finish" id="finish" aria-labelledby="finish-title">
+      <div class="finish__in wrap">
+        <div class="finish__art reveal">
+          <Product uid="finish" label={t('finish.alt')} />
+        </div>
+        <div class="finish__copy reveal">
+          <h2 id="finish-title" class="i-h2">{t('finish.title')}</h2>
+          <p class="i-lead">{t('finish.body')}</p>
+          <fieldset class="swatches finish__swatches">
+            <legend class="sr-only">{t('finish.legend')}</legend>
+            {finishes.map((f, i) => (
+              <div class="swatch">
+                <input type="radio" name="page-finish" id={`pf-${f.id}`} value={f.id} data-finish-input checked={i === 0} />
+                <label for={`pf-${f.id}`}><span class="swatch__dot" style={`--dot:${f.shell}`} aria-hidden="true"></span>{names[f.id]}</label>
+              </div>
+            ))}
+          </fieldset>
+          <p class="finish__current" data-finish-current aria-live="polite">{t('finish.current', { name: names[def.id], price: money(def.price) })}</p>
+          <button type="button" class="i-btn i-btn--primary" data-isola-buy>{t('finish.cta')}</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="specs" id="specs" aria-labelledby="specs-title">
+      <div class="specs__in wrap">
+        <div>
+          <h2 id="specs-title" class="i-h2 reveal">{t('specs.title')}</h2>
+          <p class="specs__note">{t('specs.note')}</p>
+        </div>
+        <table class="specs__table reveal">
+          <caption class="sr-only">{t('specs.title')}</caption>
+          <tbody>
+            {specs.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="band-title">
+      <div class="band__in wrap">
+        <h2 id="band-title" class="i-h2">{t('cta.title')}</h2>
+        <p>{t('cta.body')}</p>
+        <button type="button" class="i-btn band__btn" data-open-contact>{t('cta.button')}</button>
+      </div>
+    </section>
+
+    <BuyDialog lang={lang} money={money} />
+  </main>
+
+  <footer class="foot">
+    <div class="foot__in wrap">
+      <span class="logo logo--sm" aria-hidden="true">isola</span>
+      <p>{t('footer.brand')}</p>
+      <p>{t('footer.made')}</p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  import { onPage } from '../../../../scripts/lifecycle';
+  import { getFinish, isFinish } from '../../../../demos/isola/data';
+  import { FINISH_EVENT, applyFinish, currentFinish, i18n, money, root } from '../../../../demos/isola/scripts/finish';
+
+  onPage(() => {
+    const main = root();
+    if (!main) return;
+    const ac = new AbortController();
+    const syncInputs = () => {
+      const id = currentFinish();
+      document.querySelectorAll<HTMLInputElement>('[data-finish-input]').forEach((i) => { i.checked = i.value === id; });
+      const label = document.querySelector('[data-finish-current]');
+      const s = i18n();
+      if (label) label.textContent = s.current.replace('{name}', s.names[id]).replace('{price}', money(getFinish(id).price));
+    };
+    main.addEventListener('change', (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.matches('.finish [data-finish-input]') && isFinish(input.value)) applyFinish(input.value);
+    }, { signal: ac.signal });
+    document.addEventListener(FINISH_EVENT, syncInputs, { signal: ac.signal });
+
+    const fromUrl = new URL(location.href).searchParams.get('finish');
+    if (isFinish(fromUrl)) applyFinish(fromUrl, false);
+    else syncInputs();
+    return () => ac.abort();
+  });
+</script>
+
+<style>
+  /* header */
+  .top { position: sticky; top: 0; z-index: 40; height: var(--header-h); background: rgb(255 255 255 / 0.94); border-bottom: 1px solid var(--line); }
+  .top__in { height: 100%; display: flex; align-items: center; gap: 24px; }
+  .logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 300; font-size: 1.375rem; letter-spacing: 0.06em; min-height: 44px; }
+  .logo--sm { font-size: 1.125rem; }
+  .top__nav { display: none; gap: 4px; margin-left: auto; }
+  .top__nav a { padding: 10px 12px; font-size: 0.875rem; font-weight: 500; text-decoration: none; color: var(--muted); border-radius: 4px; }
+  .top__nav a:hover { color: var(--text); background: var(--steel-1); }
+  .top__in > .i-btn { margin-left: auto; }
+  @media (min-width: 900px) { .top__nav { display: flex; } .top__in > .i-btn { margin-left: 12px; } }
+
+  /* hero */
+  .hero {
+    display: grid; gap: clamp(24px, 4vw, 48px); align-items: center;
+    padding-block: clamp(40px, 8vw, 112px) clamp(64px, 9vw, 128px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px) { .hero { grid-template-columns: 5fr 7fr; } }
+  .hero__eyebrow { font-size: 0.875rem; font-weight: 500; color: var(--muted); margin-bottom: 20px; }
+  .hero__title { font-weight: 200; font-size: clamp(4rem, 10vw, 9.25rem); letter-spacing: -0.055em; line-height: 0.9; margin-left: -0.04em; }
+  .hero__promise { font-weight: 300; font-size: clamp(1.375rem, 2.4vw, 2rem); letter-spacing: -0.02em; line-height: 1.2; margin-top: 20px; }
+  .hero__body { color: var(--muted); max-width: 42ch; margin-top: 16px; }
+  .hero__buy { margin-top: 36px; display: grid; gap: 20px; }
+  .hero__price { display: grid; gap: 2px; }
+  .hero__price span { font-weight: 500; font-size: 1.125rem; font-variant-numeric: tabular-nums; }
+  .hero__price small { color: var(--muted); font-size: 0.8125rem; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__art {
+    aspect-ratio: 640 / 560; width: 100%;
+    background: radial-gradient(55% 50% at 55% 52%, var(--steel-2) 0%, rgb(232 236 240 / 0) 72%);
+  }
+
+  /* features */
+  .feats { padding-block: var(--section); border-top: 1px solid var(--line); }
+  .feats__title { max-width: 14ch; }
+  .feats__grid { margin-top: clamp(48px, 7vw, 96px); display: grid; gap: clamp(40px, 5vw, 64px) clamp(24px, 4vw, 56px); grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .feats__grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .feats__grid { grid-template-columns: repeat(4, 1fr); } }
+  .feat { border-top: 1px solid var(--text); padding-top: 24px; display: grid; align-content: start; }
+  .feat__stat { font-weight: 200; font-size: clamp(2.75rem, 4.4vw, 3.75rem); letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
+  .feat__statlabel { color: var(--muted); font-size: 0.8125rem; font-weight: 500; margin-top: 8px; }
+  .feat h3 { font-weight: 500; font-size: 1.125rem; letter-spacing: -0.01em; margin-top: 32px; }
+  .feat__body { color: var(--muted); margin-top: 10px; font-size: 0.9875rem; }
+
+  /* finish */
+  .finish { background: var(--steel-1); padding-block: var(--section); }
+  .finish__in { display: grid; gap: clamp(32px, 5vw, 72px); align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .finish__in { grid-template-columns: 7fr 5fr; } }
+  .finish__art { aspect-ratio: 640 / 560; background: radial-gradient(50% 48% at 52% 52%, #fff 0%, rgb(255 255 255 / 0) 74%); }
+  .finish__copy { display: grid; gap: 24px; justify-items: start; }
+  .finish__swatches { margin-top: 8px; }
+  .finish__current { color: var(--muted); font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+  .finish :global(.isola-product) { transition: none; }
+
+  /* specs */
+  .specs { padding-block: var(--section); }
+  .specs__in { display: grid; gap: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .specs__in { grid-template-columns: 4fr 8fr; } }
+  .specs__note { color: var(--muted); font-size: 0.875rem; margin-top: 16px; }
+  .specs__table { width: 100%; border-collapse: collapse; font-size: 0.9875rem; }
+  .specs__table th, .specs__table td { text-align: left; vertical-align: top; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .specs__table tr:first-child th, .specs__table tr:first-child td { border-top: 1px solid var(--text); }
+  .specs__table th { font-weight: 500; width: 38%; padding-right: 24px; }
+  .specs__table td { color: var(--muted); }
+
+  /* final band */
+  .band { background: var(--text); color: #f4f6f8; padding-block: clamp(80px, 11vw, 160px); }
+  .band__in { display: grid; gap: 20px; justify-items: start; }
+  .band__in p { color: #b9c0c7; max-width: 48ch; }
+  .band__btn { background: #f4f6f8; color: var(--text); margin-top: 12px; }
+  .band__btn:hover { background: #ffffff; }
+  .band .i-h2 { max-width: 16ch; }
+  .band :focus-visible { outline-color: #a9c4b6; }
+
+  /* footer */
+  .foot { border-top: 1px solid var(--line); padding-block: 40px 56px; }
+  .foot__in { display: grid; gap: 10px; color: var(--muted); font-size: 0.8125rem; }
+  .foot .logo { color: var(--text); min-height: 0; }
+</style>

@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DemoBar from '../../../../components/site/DemoBar.astro';
+import { useT, langPaths, type Lang } from '../../../../i18n';
+import Icons from '../../../../demos/lumbre/components/Icons.astro';
+import World from '../../../../demos/lumbre/components/World.astro';
+import Menu from '../../../../demos/lumbre/components/Menu.astro';
+import ReserveDialog from '../../../../demos/lumbre/components/ReserveDialog.astro';
+import '../../../../demos/lumbre/styles/lumbre.css';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const t = useT(lang, 'lumbre');
+const hours = t.raw<{ d: string; h: string }[]>('info.hours');
+---
+<BaseLayout
+  lang={lang}
+  title={t('meta.title')}
+  description={t('meta.description')}
+  fonts={['--font-lumbre-display', '--font-lumbre-body']}
+  preload={['--font-lumbre-display']}
+  bodyClass="lumbre"
+  themeColor="#120c09"
+>
+  <DemoBar lang={lang} />
+  <Icons />
+  <main id="main" class="lb-main">
+    <header class="lb-head">
+      <button type="button" class="lb-brand" data-lb-top aria-label={t('head.home')}>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><use href="#lb-i-flame" /></svg>
+        <span>Lumbre</span>
+      </button>
+      <nav class="lb-head__nav" aria-label={t('head.nav')}>
+        <button type="button" class="lb-head__link" data-lb-goto="lb-carta">{t('head.menu')}</button>
+        <button type="button" class="lb-head__link lb-head__link--hours" data-lb-goto="lb-info">{t('head.hours')}</button>
+        <button type="button" class="lb-btn lb-btn--primary lb-btn--sm" data-lb-reserve>{t('head.reserve')}</button>
+      </nav>
+    </header>
+
+    <World lang={lang} />
+    <Menu lang={lang} />
+
+    <section class="lb-info lb-wrap" id="lb-info" aria-labelledby="lb-info-title">
+      <h2 id="lb-info-title" class="lb-h2">{t('info.title')}</h2>
+      <div class="lb-info__grid">
+        <div class="lb-card">
+          <h3 class="lb-card__title">{t('info.hoursTitle')}</h3>
+          <dl class="lb-hours">
+            {hours.map((h) => <div><dt>{h.d}</dt><dd>{h.h}</dd></div>)}
+          </dl>
+          <button type="button" class="lb-btn lb-btn--primary" data-lb-reserve>{t('info.reserve')}</button>
+        </div>
+        <div class="lb-card lb-card--map">
+          <h3 class="lb-card__title">{t('info.addressTitle')}</h3>
+          <p class="lb-address">{t('info.address')}</p>
+          <p class="lb-note">{t('info.addressNote')}</p>
+          <svg class="lb-map" viewBox="0 0 400 180" role="img" aria-label={t('info.mapLabel')}>
+            <rect width="400" height="180" fill="#1b120d" />
+            <g stroke="#3a2a1f" stroke-width="14" fill="none" stroke-linecap="round">
+              <path d="M-10 120C80 110 150 60 230 70s120 50 190 40" />
+              <path d="M120 -10l30 200M300 -10l-40 200" />
+            </g>
+            <g stroke="#261a13" stroke-width="6" fill="none"><path d="M0 40h400M40 0v180M360 0v180" /></g>
+            <g fill="none" stroke="#c9a15a" stroke-width="1.5" stroke-dasharray="4 4"><path d="M60 150c40-20 80-30 140-48" /></g>
+            <circle cx="200" cy="102" r="22" fill="#e8742c" opacity="0.18" />
+            <path d="M200 112c-9 0-14-6-14-13 0-8 6-11 8-20 5 4 6 8 6 11 2-1 4-4 4-7 5 4 8 10 8 16 0 7-5 13-12 13z" fill="#e8742c" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="lb-band lb-wrap" aria-label={t('band.cta')}>
+      <button type="button" class="lb-band__btn" data-open-contact>
+        <span class="lb-band__lead">{t('band.lead')}</span>
+        <span class="lb-band__cta">{t('band.cta')}<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><use href="#lb-i-arrow" /></svg></span>
+      </button>
+    </section>
+  </main>
+
+  <footer class="lb-foot">
+    <div class="lb-wrap lb-foot__in">
+      <p class="lb-foot__brand"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><use href="#lb-i-flame" /></svg>Lumbre</p>
+      <p class="lb-foot__line">{t('footer.line')}</p>
+      <button type="button" class="lb-head__link" data-lb-top>{t('footer.top')}</button>
+    </div>
+  </footer>
+
+  <ReserveDialog lang={lang} />
+</BaseLayout>
+
+<script>
+  import '../../../../demos/lumbre/scripts/lumbre';
+</script>

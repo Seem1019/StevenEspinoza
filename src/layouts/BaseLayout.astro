@@ -62,6 +62,21 @@ type FontVar = Parameters<typeof Font>[0]['cssVariable'];
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href={baseUrl('favicon.svg')} type="image/svg+xml" />
     {fonts.map((v) => <Font cssVariable={v as FontVar} preload={preload.includes(v)} />)}
+    {/*
+      Must run BEFORE ClientRouter registers its popstate listener: window listeners fire in
+      registration order, so this classic inline script is what lets src/scripts/url-state.ts
+      stop the router from swapping the page when Back only closes a dialog. Guarded: runs once per document.
+    */}
+    <script is:inline>
+      (function () {
+        if (window.__uiPopInstalled) return;
+        window.__uiPopInstalled = true;
+        addEventListener('popstate', function (e) {
+          var h = window.__uiPopHandler;
+          if (h && h(e)) e.stopImmediatePropagation();
+        }, true);
+      })();
+    </script>
     <ClientRouter />
     <slot name="head" />
   </head>

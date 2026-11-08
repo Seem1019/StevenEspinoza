@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "name": "Brinco",
+    "title": "Brinco · Ofertas que brincan hasta -85% (demo)",
+    "tagline": "Marketplace de descuentos masivos: 240 productos, ruleta de cupones y carrito al instante.",
+    "description": "Brinco es una tienda ficticia de ofertas con 240 productos, ventas flash con cuenta regresiva y una ruleta que regala cupones. Filtros, vista rápida, carrito y pago simulado funcionan en la misma página, sin recargas.",
+    "features": [
+      "Catálogo infinito de 240 productos sin paginación",
+      "Ruleta de premios con cupón que vuela al carrito",
+      "Filtros, vista rápida y carrito con URL compartible",
+      "Pago simulado dentro del carrito"
+    ]
+  },
+  "ticker": {
+    "label": "Promociones",
+    "items": [
+      "Envío GRATIS desde {free}",
+      "Nuevo en Brinco: gira la ruleta y gana hasta -15% extra",
+      "Ofertas relámpago cada medianoche",
+      "Devolución gratis en 30 días",
+      "Más de 240 productos con descuento"
+    ]
+  },
+  "header": {
+    "home": "Brinco, inicio de la tienda",
+    "searchLabel": "Buscar productos",
+    "searchPlaceholder": "Busca audífonos, termos, gorras…",
+    "searchSubmit": "Buscar",
+    "cart": "Carrito",
+    "cartCount": "{n} en el carrito"
+  },
+  "hero": {
+    "kicker": "Mega venta de temporada",
+    "title": "Precios que brincan hasta -85%",
+    "sub": "Miles de ofertas en tecnología, hogar, moda y más. Envío gratis desde {free} y un cupón esperándote en la ruleta.",
+    "ctaShop": "Ver ofertas",
+    "ctaSpin": "Gira y gana",
+    "stickerOff": "-85%",
+    "stickerShip": "Envío gratis",
+    "stickerNew": "Cupón extra",
+    "teaser": "Tu giro de hoy",
+    "teaserPrize": "hasta -15%"
+  },
+  "flash": {
+    "title": "Ofertas relámpago",
+    "ends": "Terminan en",
+    "h": "h",
+    "m": "min",
+    "s": "s",
+    "left": "Solo quedan {n}",
+    "claimed": "{n}% vendido"
+  },
+  "catalog": {
+    "title": "Ofertas para ti",
+    "sample": "Precios, valoraciones y ventas son datos de ejemplo.",
+    "all": "Todo",
+    "chipsLabel": "Categorías",
+    "filters": "Filtros",
+    "sort": "Ordenar",
+    "sorts": {
+      "pop": "Más populares",
+      "low": "Precio: menor a mayor",
+      "high": "Precio: mayor a menor",
+      "off": "Mayor descuento",
+      "rating": "Mejor valorados"
+    },
+    "results": "{n} productos",
+    "searching": "Resultados para “{q}”",
+    "empty": "No encontramos ofertas con esos filtros.",
+    "clear": "Limpiar filtros",
+    "more": "Ver más productos",
+    "loading": "Cargando más ofertas…",
+    "end": "¡Viste todo el catálogo!"
+  },
+  "card": {
+    "view": "Vista rápida de {name}",
+    "add": "Agregar",
+    "addLabel": "Agregar {name} al carrito",
+    "added": "¡Listo!",
+    "before": "Antes",
+    "sold": "{n} vendidos",
+    "low": "¡Solo quedan {n}!",
+    "rating": "{r} de 5"
+  },
+  "badges": { "flash": "Relámpago", "hot": "Top ventas", "new": "Nuevo", "top": "Mejor precio" },
+  "filters": {
+    "title": "Filtros",
+    "close": "Cerrar filtros",
+    "category": "Categoría",
+    "price": "Precio máximo",
+    "priceAny": "Sin límite",
+    "priceUpTo": "Hasta {v}",
+    "discount": "Descuento mínimo",
+    "discountAny": "Todos",
+    "discountN": "-{n}% o más",
+    "apply": "Ver {n} productos",
+    "clear": "Limpiar"
+  },
+  "quick": {
+    "close": "Cerrar vista rápida",
+    "viewing": "{n} personas están viendo esto",
+    "simulated": "simulado",
+    "stock": "Quedan {n} unidades",
+    "qty": "Cantidad",
+    "less": "Quitar uno",
+    "more": "Añadir uno",
+    "add": "Agregar al carrito",
+    "added": "¡Agregado al carrito!",
+    "goCart": "Ver carrito",
+    "save": "Ahorras {amount}",
+    "desc": "Producto ficticio de demostración. Envío rápido, devolución gratis en 30 días y garantía Brinco.",
+    "ratingNote": "valoración de ejemplo"
+  },
+  "cart": {
+    "title": "Tu carrito",
+    "close": "Cerrar carrito",
+    "empty": "Tu carrito está vacío. ¡Las ofertas no esperan!",
+    "emptyCta": "Explorar ofertas",
+    "less": "Quitar uno de {name}",
+    "more": "Añadir uno de {name}",
+    "remove": "Eliminar {name}",
+    "subtotal": "Subtotal",
+    "coupon": "Cupón {code}",
+    "couponRemove": "Quitar cupón",
+    "noCoupon": "¿Sin cupón? Gira la ruleta",
+    "shipping": "Envío",
+    "free": "Gratis",
+    "remaining": "Te faltan {amount} para envío gratis",
+    "unlocked": "¡Desbloqueaste el envío gratis!",
+    "total": "Total",
+    "savings": "Ahorras {amount} hoy",
+    "checkout": "Ir a pagar"
+  },
+  "checkout": {
+    "back": "Volver",
+    "steps": ["Carrito", "Envío", "Pago", "Listo"],
+    "shippingTitle": "¿Cómo lo enviamos?",
+    "standard": "Estándar",
+    "standardTime": "5 a 8 días hábiles",
+    "express": "Express",
+    "expressTime": "48 horas",
+    "city": "Ciudad de entrega",
+    "cities": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Bucaramanga", "Pereira"],
+    "next": "Continuar al pago",
+    "payTitle": "Elige cómo pagar",
+    "methods": { "card": "Tarjeta", "transfer": "Transferencia", "wallet": "Billetera digital", "cash": "Contra entrega" },
+    "note": "Demo: no se cobra nada y no pedimos datos de pago.",
+    "pay": "Pagar {amount}",
+    "doneTitle": "¡Pedido confirmado!",
+    "doneOrder": "Pedido {id}",
+    "doneText": "Simulamos tu compra de principio a fin. En una tienda real aquí llegaría el correo de confirmación.",
+    "doneCta": "Seguir comprando"
+  },
+  "wheel": {
+    "title": "Gira y gana",
+    "sub": "Un giro por visita. ¡Todos los premios son cupones!",
+    "close": "Cerrar ruleta",
+    "spin": "¡Girar ahora!",
+    "spinning": "Girando…",
+    "won": "¡Ganaste {prize}!",
+    "wonText": "Cupón {code} listo. Lo aplicamos a tu carrito automáticamente.",
+    "use": "Aplicar a mi carrito",
+    "segments": ["-5%", "Envío", "-10%", "-3%", "-15%", "-8%", "-12%", "-20%*"],
+    "prize": "15% de descuento",
+    "terms": "*Premios de demostración. El resultado está predefinido.",
+    "applied": "Cupón {code} aplicado: -{pct}%",
+    "spent": "Ya giraste en esta visita"
+  },
+  "social": {
+    "region": "Avisos de compras recientes",
+    "bought": "Alguien en {city} compró {product}",
+    "ago": "hace {n} min",
+    "sample": "dato de ejemplo",
+    "pause": "Pausar avisos",
+    "cities": ["Bogotá", "Medellín", "Cali", "Quito", "Lima", "Guadalajara", "Santiago", "Panamá"]
+  },
+  "sticky": {
+    "remaining": "Te faltan {amount} para envío gratis",
+    "unlocked": "¡Envío gratis desbloqueado!",
+    "open": "Ver carrito"
+  },
+  "final": {
+    "title": "¿Quieres una tienda así de rápida?",
+    "text": "Catálogos enormes que cargan al instante, carrito sin recargas y gamificación que vende. Esta demo la construyó Steven Espinoza.",
+    "cta": "¿Quieres una tienda así? Habla con Steven"
+  },
+  "footer": {
+    "label": "Pie de página",
+    "help": "Ayuda",
+    "helpItems": ["Seguimiento de pedidos", "Devoluciones", "Métodos de pago", "Preguntas frecuentes"],
+    "about": "Brinco",
+    "aboutItems": ["Quiénes somos", "Vende en Brinco", "Programa de puntos", "Trabaja con nosotros"],
+    "pay": "Pagos aceptados (ilustrativo)",
+    "note": "Brinco es una tienda ficticia creada como demostración por Steven Espinoza. Productos, precios, valoraciones, ventas y avisos son datos de ejemplo; no se vende ni se cobra nada.",
+    "made": "Demo de portafolio · Steven Espinoza"
+  },
+  "catalogVocab": {
+    "cats": ["Tecnología", "Hogar", "Belleza", "Moda", "Deporte", "Juguetes", "Cocina", "Mascotas"],
+    "nouns": [
+      ["Audífonos", "Cargador", "Parlante", "Smartwatch", "Teclado", "Mouse", "Power bank", "Soporte de celular"],
+      ["Lámpara", "Organizador", "Cojín", "Cortina", "Espejo", "Reloj de pared", "Tapete", "Difusor"],
+      ["Set de brochas", "Sérum", "Rizador", "Secador", "Esmalte", "Crema", "Espejo de maquillaje", "Masajeador facial"],
+      ["Camiseta", "Gorra", "Bolso", "Gafas de sol", "Chaqueta", "Medias", "Cinturón", "Sudadera"],
+      ["Mancuernas", "Banda elástica", "Botella", "Tapete de yoga", "Cuerda para saltar", "Guantes", "Rodillera", "Maleta deportiva"],
+      ["Cubo mágico", "Dron mini", "Peluche", "Bloques", "Carro a control", "Rompecabezas", "Slime", "Kit de magia"],
+      ["Sartén", "Licuadora", "Set de cuchillos", "Molde", "Termo", "Rallador", "Tabla de picar", "Espátula"],
+      ["Cama para mascota", "Mordedor", "Collar", "Comedero", "Rascador", "Correa", "Cepillo", "Fuente de agua"]
+    ],
+    "adjs": ["Pro", "Max", "Turbo", "Neón", "XL", "Mini", "Ultra", "Express", "360", "Plus", "2.0", "Air", "Duo", "Flash", "Lite", "Zen"]
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens: coral #FF2E4D · amarillo #FFE600 · tinta #111 · ahorro #007A3D",
+      "type": "tipografía: Rubik 400–900 · display 900 · -0.03em",
+      "layout": "layout: ticker 34 · header sticky 64 · hero 2 col",
+      "skTicker": "ticker: alto fijo 34 px · marquee transform",
+      "skHeader": "header: logo + búsqueda + carrito con badge",
+      "skHero": "hero: h1 en HTML inicial (LCP texto)",
+      "skWheel": "ruleta: SVG 8 segmentos · conic-gradient fallback",
+      "skFlash": "flash: banda amarilla · scroll-snap x",
+      "skGrid": "grid 5 col · gap 12 · aspect 1/1 · content-visibility",
+      "skCards": "cards: alto reservado · contain-intrinsic-size 380px",
+      "skFooter": "footer: 3 columnas · nota de datos de ejemplo",
+      "cTicker": "copy: envío gratis desde US$29 · bono nuevo usuario",
+      "cHeader": "copy: placeholder de búsqueda con ejemplos reales",
+      "cHero": "copy: “Precios que brincan hasta -85%”",
+      "cWheel": "copy: 8 premios · resultado predefinido -15%",
+      "cFlash": "cuenta regresiva a medianoche local · tabular-nums",
+      "cGrid": "240 productos · PRNG con semilla · vocabulario i18n",
+      "cCards": "precio Intl es-CO/en-US · -% calculado del precio real",
+      "cFooter": "copy: aviso de tienda ficticia",
+      "mTicker": "motion: marquee translateX 30 s · pausa con reduced-motion",
+      "mWheel": "motion: giro con transition transform 4.2 s",
+      "mFlash": "motion: barras de stock scaleX",
+      "mCards": "motion: pulso al agregar · badge bump · burst",
+      "batches": "infinite scroll: IO rootMargin 1200px · lotes JSON de 24",
+      "qaContrast": "QA contraste: negro sobre coral 6.1:1 · OK",
+      "qaCls": "QA CLS: 0.00 · overlays en position: fixed",
+      "qaLcp": "QA LCP: h1.hero (texto) · sin opacity inicial",
+      "qaKeys": "QA teclado: diálogos con foco atrapado · Esc cierra · Back cierra"
+    }
+  }
+}

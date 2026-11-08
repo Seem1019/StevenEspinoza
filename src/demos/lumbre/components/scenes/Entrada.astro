@@ -1,0 +1,227 @@
+---
+/** Scene 1 — night façade. Back: sky + neighbours. Mid: Lumbre façade with lit door. Glow: flicker. Front: street. */
+import '../../styles/art.css';
+interface Props { p?: string }
+const { p = 'lbE' } = Astro.props;
+const id = (s: string) => `${p}-${s}`;
+const url = (s: string) => `url(#${id(s)})`;
+let seed = 11;
+const r = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const stars = Array.from({ length: 38 }, () => ({ x: r() * 1600, y: r() * 230, r: 0.7 + r() * 1.5, o: 0.25 + r() * 0.6 }));
+const cobbles = Array.from({ length: 70 }, (_, i) => {
+  const row = Math.floor(i / 14);
+  return { x: (i % 14) * 120 + (row % 2) * 60 + r() * 20, y: 905 + row * 22, w: 70 + r() * 30 };
+});
+// diner silhouettes inside ground-floor windows
+const diners = [
+  { x: 395, y: 735, s: 1 }, { x: 470, y: 742, s: 0.9 },
+  { x: 1110, y: 738, s: 0.95 }, { x: 1200, y: 732, s: 1.05 },
+];
+---
+<div class="lb-cam">
+  <div class="lb-push">
+    <div class="lb-layer lb-layer--back">
+      <svg class="lb-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={id('sky')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#05060b" />
+            <stop offset="0.45" stop-color="#110d16" />
+            <stop offset="1" stop-color="#3b2015" />
+          </linearGradient>
+          <radialGradient id={id('moon')}>
+            <stop offset="0" stop-color="#f6e7c8" stop-opacity="0.32" />
+            <stop offset="1" stop-color="#f6e7c8" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1600" height="1000" fill={url('sky')} />
+        {stars.map((s) => <circle cx={s.x.toFixed(1)} cy={s.y.toFixed(1)} r={s.r.toFixed(2)} fill="#f6e7d2" opacity={s.o.toFixed(2)} />)}
+        <circle cx="1000" cy="96" r="110" fill={url('moon')} />
+        <circle cx="1000" cy="96" r="24" fill="#eedab4" />
+        <circle cx="992" cy="90" r="22" fill="#e4cfa8" opacity="0.5" />
+        <!-- neighbouring buildings -->
+        <path d="M0 300h90v-40h40v40h180v700H0z" fill="#0d0a0d" />
+        <path d="M1290 250h120v-30h30v30h160v780h-310z" fill="#0d0a0d" />
+        <g fill="#f0a24f">
+          <rect x="60" y="360" width="46" height="70" opacity="0.55" />
+          <rect x="190" y="480" width="46" height="70" opacity="0.25" />
+          <rect x="1350" y="320" width="46" height="70" opacity="0.4" />
+          <rect x="1480" y="460" width="46" height="70" opacity="0.6" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="lb-layer lb-layer--mid">
+      <svg class="lb-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={id('wall')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1c130e" />
+            <stop offset="0.6" stop-color="#2c1b12" />
+            <stop offset="1" stop-color="#3a2216" />
+          </linearGradient>
+          <pattern id={id('brick')} width="64" height="32" patternUnits="userSpaceOnUse">
+            <path d="M0 .5h64M0 16.5h64M.5 0v16M32.5 16v16" stroke="#0e0906" stroke-opacity="0.55" fill="none" />
+          </pattern>
+          <linearGradient id={id('inside')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe7b0" />
+            <stop offset="0.55" stop-color="#ffb862" />
+            <stop offset="1" stop-color="#d2602a" />
+          </linearGradient>
+          <linearGradient id={id('win')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffc979" />
+            <stop offset="1" stop-color="#b9501f" />
+          </linearGradient>
+          <linearGradient id={id('wood')} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#2a170d" />
+            <stop offset="1" stop-color="#4a2a16" />
+          </linearGradient>
+          <linearGradient id={id('brass')} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f1d08a" />
+            <stop offset="0.5" stop-color="#c9a15a" />
+            <stop offset="1" stop-color="#8d6a32" />
+          </linearGradient>
+        </defs>
+        <!-- façade -->
+        <rect x="300" y="150" width="1000" height="790" fill={url('wall')} />
+        <rect x="300" y="150" width="1000" height="790" fill={url('brick')} />
+        <rect x="288" y="138" width="1024" height="20" fill="#3d2a1e" />
+        <rect x="300" y="158" width="1000" height="8" fill="#120b08" />
+        <rect x="300" y="520" width="1000" height="10" fill="#3d2a1e" />
+        <!-- upper windows -->
+        {[380, 610, 890, 1120].map((x, i) => (
+          <g>
+            <rect x={x - 8} y="186" width="116" height="132" fill="#120b08" />
+            <rect x={x} y="194" width="100" height="116" fill={i === 2 ? url('win') : '#0f0c12'} opacity={i === 2 ? 0.85 : 1} />
+            <path d={`M${x + 50} 194v116M${x} 252h100`} stroke="#120b08" stroke-width="6" />
+            <rect x={x - 12} y="316" width="124" height="10" fill="#3d2a1e" />
+          </g>
+        ))}
+        <path d="M905 310c8-30 20-46 32-50 6 18 2 36-12 50z M935 310c4-22 14-34 30-40 2 16-6 32-18 40z" fill="#3b1d0e" opacity="0.8" />
+        <!-- sign -->
+        <rect x="596" y="340" width="408" height="84" rx="4" fill="#140c08" />
+        <rect x="604" y="348" width="392" height="68" rx="3" fill="none" stroke={url('brass')} stroke-width="3" />
+        <text x="800" y="399" text-anchor="middle" fill={url('brass')} style="font-family: var(--font-lumbre-display), Georgia, serif; font-weight: 600; font-size: 46px; letter-spacing: 14px;">LUMBRE</text>
+        <path d="M622 395c6-10 6-18 0-26 12 6 16 16 10 26z M978 395c-6-10-6-18 0-26-12 6-16 16-10 26z" fill="#f4a547" />
+        <!-- ground floor windows -->
+        {[340, 1040].map((x) => (
+          <g>
+            <rect x={x - 12} y="560" width="244" height="280" fill="#120b08" />
+            <rect x={x} y="572" width="220" height="256" fill={url('win')} />
+            <path d={`M${x + 30} 572v20h160v-20`} fill="#7a3418" opacity="0.5" />
+            <circle cx={x + 110} cy="640" r="16" fill="#fff1c9" opacity="0.9" />
+            <path d={`M${x + 110} 572v52`} stroke="#2a140a" stroke-width="2" />
+            <path d={`M${x + 96} 630h28l8 14h-44z`} fill="#2a140a" />
+            <rect x={x} y="770" width="220" height="58" fill="#5a2610" opacity="0.6" />
+            <path d={`M${x + 73} 572v256M${x + 146} 572v256`} stroke="#120b08" stroke-width="5" />
+            <rect x={x - 16} y="836" width="252" height="14" fill="#3d2a1e" />
+          </g>
+        ))}
+        {diners.map((d) => (
+          <g fill="#3a1608" opacity="0.85" transform={`translate(${d.x} ${d.y}) scale(${d.s})`}>
+            <circle cx="0" cy="-44" r="17" />
+            <path d="M-34 32c0-36 14-58 34-58s34 22 34 58z" />
+          </g>
+        ))}
+        <!-- door: stone arch, fan light, leaves -->
+        <path d="M652 880V590a148 148 0 0 1 296 0v290z" fill="#3b2a20" />
+        <path d="M652 880V590a148 148 0 0 1 296 0v290" fill="none" stroke="#4d382a" stroke-width="6" />
+        <path d="M680 880V590a120 120 0 0 1 240 0v290z" fill={url('inside')} />
+        <g stroke="#2a170d" stroke-width="5" fill="none">
+          <path d="M680 596h240" stroke-width="9" />
+          <path d="M800 590V470M800 590l-85-85M800 590l85-85M800 590l-113-36M800 590l113-36" />
+          <path d="M740 590a60 60 0 0 1 120 0" />
+        </g>
+        <!-- interior glimpse through the open leaf -->
+        <rect x="800" y="600" width="84" height="280" fill="#ffd390" />
+        <path d="M842 600v40" stroke="#5a2a10" stroke-width="2" />
+        <path d="M828 640h28l6 14h-40z" fill="#5a2a10" />
+        <circle cx="842" cy="668" r="12" fill="#fffaf0" opacity="0.9" />
+        <path d="M800 800h84v80h-84z" fill="#b8642c" opacity="0.6" />
+        <!-- left leaf (closed) -->
+        <rect x="680" y="600" width="120" height="280" fill={url('wood')} />
+        <path d="M710 600v280M740 600v280M770 600v280" stroke="#1d0f07" stroke-width="3" />
+        <rect x="694" y="640" width="92" height="64" fill="none" stroke="#1d0f07" stroke-width="4" />
+        <rect x="782" y="730" width="8" height="46" rx="3" fill={url('brass')} />
+        <!-- right leaf swung inward -->
+        <path d="M920 600l-36 14v252l36 14z" fill="#24130a" />
+        <path d="M884 614v252" stroke="#5c3418" stroke-width="2" />
+        <!-- step -->
+        <rect x="640" y="880" width="320" height="22" fill="#4d382a" />
+        <rect x="640" y="880" width="320" height="4" fill="#7a5a40" />
+        <!-- lanterns -->
+        {[612, 988].map((x) => (
+          <g>
+            <path d={`M${x} 600h${x < 800 ? 26 : -26}`} stroke="#1a100a" stroke-width="5" />
+            <path d={`M${x - 16} 604h32l-4 8h-24z`} fill="#1a100a" />
+            <rect x={x - 13} y="612" width="26" height="44" fill="#ffcf7a" />
+            <path d={`M${x - 13} 626h26M${x - 13} 642h26M${x} 612v44`} stroke="#1a100a" stroke-width="2" />
+            <path d={`M${x - 16} 656h32l-6 10h-20z`} fill="#1a100a" />
+          </g>
+        ))}
+      </svg>
+    </div>
+
+    <div class="lb-layer lb-layer--glow lb-fx lb-fx-flicker">
+      <svg class="lb-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id={id('halo')}>
+            <stop offset="0" stop-color="#ffb35a" stop-opacity="0.55" />
+            <stop offset="0.5" stop-color="#e8742c" stop-opacity="0.18" />
+            <stop offset="1" stop-color="#e8742c" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id={id('halo2')}>
+            <stop offset="0" stop-color="#ffd28a" stop-opacity="0.7" />
+            <stop offset="1" stop-color="#ffd28a" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <ellipse cx="800" cy="720" rx="330" ry="300" fill={url('halo')} />
+        <ellipse cx="800" cy="382" rx="300" ry="90" fill={url('halo')} opacity="0.8" />
+        <circle cx="612" cy="634" r="70" fill={url('halo2')} />
+        <circle cx="988" cy="634" r="70" fill={url('halo2')} />
+        <ellipse cx="450" cy="700" rx="200" ry="170" fill={url('halo')} opacity="0.55" />
+        <ellipse cx="1150" cy="700" rx="200" ry="170" fill={url('halo')} opacity="0.55" />
+      </svg>
+    </div>
+
+    <div class="lb-layer lb-layer--front">
+      <svg class="lb-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id={id('pool')}>
+            <stop offset="0" stop-color="#f29a4a" stop-opacity="0.55" />
+            <stop offset="1" stop-color="#f29a4a" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id={id('lamp')}>
+            <stop offset="0" stop-color="#ffe2a8" stop-opacity="0.8" />
+            <stop offset="1" stop-color="#ffe2a8" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect x="0" y="900" width="1600" height="100" fill="#140d09" />
+        <rect x="0" y="898" width="1600" height="5" fill="#2e2017" />
+        {cobbles.map((c) => <rect x={c.x.toFixed(0)} y={c.y.toFixed(0)} width={c.w.toFixed(0)} height="14" rx="7" fill="#21160f" />)}
+        <ellipse cx="800" cy="935" rx="460" ry="70" fill={url('pool')} />
+        <!-- potted shrubs framing the door -->
+        {[596, 1004].map((x) => (
+          <g>
+            <circle cx={x - 22} cy="790" r="30" fill="#120c07" />
+            <circle cx={x + 20} cy="784" r="34" fill="#120c07" />
+            <circle cx={x} cy="758" r="34" fill="#150e08" />
+            <path d={`M${x - 30} 770c8-16 22-26 38-28M${x + 6} 750c14 2 26 10 32 24`} stroke="#6a4420" stroke-width="3" fill="none" opacity="0.7" />
+            <path d={`M${x - 38} 812h76l-8 88h-60z`} fill="#2b1a10" />
+            <rect x={x - 42} y="806" width="84" height="12" fill="#3d2a1e" />
+          </g>
+        ))}
+        <!-- street lamp (desktop edge) -->
+        <path d="M150 1000V420" stroke="#0a0705" stroke-width="12" />
+        <path d="M150 420h40" stroke="#0a0705" stroke-width="8" />
+        <path d="M170 420h44l-8 30h-28z" fill="#0a0705" />
+        <circle cx="192" cy="460" r="90" fill={url('lamp')} />
+        <rect x="180" y="448" width="24" height="10" fill="#ffe8b8" />
+        <!-- chalkboard -->
+        <g transform="translate(1180 790)">
+          <path d="M0 110L22 0h76l22 110" stroke="#2a1a10" stroke-width="7" fill="none" />
+          <rect x="18" y="8" width="84" height="74" fill="#141312" stroke="#3a2618" stroke-width="5" />
+          <path d="M32 28h56M32 42h40M32 56h50" stroke="#d9cfc0" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,400 @@
+---
+/**
+ * Brinco — fictional mass-discount marketplace demo. See src/demos/brinco/DESIGN.md.
+ * First 24 products are SSR (LCP/SEO); the rest arrive as static JSON batches + a compact index for filters.
+ */
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DemoBar from '../../../../components/site/DemoBar.astro';
+import Card from '../../../../demos/brinco/Card.astro';
+import Wheel from '../../../../demos/brinco/Wheel.astro';
+import { useT, langPaths, localePath, baseUrl, type Lang } from '../../../../i18n';
+import { buildCatalog, decode, flashPicks, claimed, locale, BATCH, BG, FREE_SHIP, TOTAL, BATCHES, COUPON, SHIP_STD, SHIP_EXPRESS, type Vocab } from '../../../../demos/brinco/catalog';
+import { money, moneyShort, CAT_SLUGS } from '../../../../demos/brinco/format';
+import '../../../../demos/brinco/brinco.css';
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const t = useT(lang, 'brinco');
+const loc = locale(lang);
+const vocab = t.raw<Vocab>('catalogVocab');
+const all = buildCatalog(vocab);
+const first = all.slice(0, BATCH).map(decode);
+const flash = flashPicks(all).map(decode);
+const sprite = baseUrl('demos/brinco/sprite.svg');
+const free = moneyShort(FREE_SHIP, loc);
+const tickerItems = t.raw<string[]>('ticker.items').map((s) => s.replace('{free}', free));
+const segments = t.raw<string[]>('wheel.segments');
+const sorts = t.raw<Record<string, string>>('catalog.sorts');
+const methods = t.raw<Record<string, string>>('checkout.methods');
+const cities = t.raw<string[]>('checkout.cities');
+const steps = t.raw<string[]>('checkout.steps');
+
+const payload = {
+  lang, loc, sprite,
+  api: baseUrl(`${lang}/demos/brinco/catalog/`),
+  total: TOTAL, batch: BATCH, batches: BATCHES, free: FREE_SHIP, coupon: COUPON, ship: [SHIP_STD, SHIP_EXPRESS],
+  bg: BG, cats: vocab.cats,
+  seed: [...all.slice(0, BATCH), ...flashPicks(all)],
+  s: {
+    card: t.raw('card'), badges: t.raw('badges'), catalog: t.raw('catalog'), filters: t.raw('filters'), quick: t.raw('quick'),
+    cart: t.raw('cart'), checkout: t.raw('checkout'), wheel: t.raw('wheel'), social: t.raw('social'), sticky: t.raw('sticky'), header: t.raw('header'),
+  },
+};
+
+const icon = {
+  search: '<path d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5L21 21" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
+  cart: '<path d="M2 4h3l2.5 11h11L21 7H6.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><circle cx="9" cy="19.5" r="1.8" fill="currentColor"/><circle cx="17" cy="19.5" r="1.8" fill="currentColor"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
+  bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor"/>',
+  filter: '<path d="M3 5h18M6 12h12M10 19h4" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
+  back: '<path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
+};
+---
+
+<BaseLayout lang={lang} title={t('meta.title')} description={t('meta.description')} fonts={['--font-brinco']} preload={['--font-brinco']} bodyClass="brinco" themeColor="#FF2E4D">
+  <DemoBar lang={lang} />
+
+  <div class="b-ticker" role="region" aria-label={t('ticker.label')}>
+    <div class="b-ticker__track">
+      <ul class="b-ticker__list" role="list">{tickerItems.map((s) => <li>{s}</li>)}</ul>
+      <ul class="b-ticker__list" role="list" aria-hidden="true">{tickerItems.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </div>
+
+  <header class="b-header">
+    <div class="b-wrap b-header__in">
+      <a class="b-logo" href={localePath(lang, 'demos/brinco/')} aria-label={t('header.home')}>
+        <span class="b-logo__mark" aria-hidden="true">b</span><span class="b-logo__word" aria-hidden="true">brinco</span>
+      </a>
+      <form class="b-search" role="search" data-search>
+        <label class="sr-only" for="b-q">{t('header.searchLabel')}</label>
+        <input id="b-q" name="q" type="search" autocomplete="off" enterkeyhint="search" placeholder={t('header.searchPlaceholder')} />
+        <button type="submit" aria-label={t('header.searchSubmit')}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" set:html={icon.search} /></button>
+      </form>
+      <button type="button" class="b-cartbtn" data-open-cart aria-label={t('header.cart')} aria-describedby="b-cart-live">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" set:html={icon.cart} />
+        <span class="b-cartbtn__label" aria-hidden="true">{t('header.cart')}</span>
+        <span class="b-cartbtn__count" data-cart-count data-n="0" aria-hidden="true">0</span>
+      </button>
+      <span id="b-cart-live" class="sr-only" aria-live="polite" data-cart-live>{t('header.cartCount', { n: 0 })}</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="b-hero" aria-labelledby="b-hero-title">
+      <div class="b-wrap b-hero__in">
+        <div class="b-hero__copy">
+          <p class="b-hero__kicker"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" set:html={icon.bolt} />{t('hero.kicker')}</p>
+          <h1 id="b-hero-title" class="b-hero__title">{t('hero.title')}</h1>
+          <p class="b-hero__sub">{t('hero.sub', { free })}</p>
+          <div class="b-hero__ctas">
+            <button type="button" class="b-btn b-btn--yellow b-btn--xl" data-scroll-catalog>{t('hero.ctaShop')}</button>
+            <button type="button" class="b-btn b-btn--red b-btn--xl" data-open-wheel>{t('hero.ctaSpin')}</button>
+          </div>
+        </div>
+        <div class="b-hero__art" aria-hidden="true">
+          <span class="b-sticker b-sticker--a">{t('hero.stickerOff')}</span>
+          <span class="b-sticker b-sticker--b">{t('hero.stickerShip')}</span>
+          <span class="b-sticker b-sticker--c">{t('hero.stickerNew')}</span>
+          <div class="b-teaser">
+            <span class="b-teaser__pin"></span>
+            <Wheel labels={segments} class="b-teaser__wheel" />
+          </div>
+          <p class="b-teaser__txt"><span>{t('hero.teaser')}</span><strong>{t('hero.teaserPrize')}</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-flash" aria-labelledby="b-flash-title">
+      <div class="b-wrap">
+        <div class="b-flash__head">
+          <h2 id="b-flash-title" class="b-flash__title"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" set:html={icon.bolt} />{t('flash.title')}</h2>
+          <p class="b-cd" data-countdown>
+            <span class="b-cd__label">{t('flash.ends')}</span>
+            <span class="b-cd__box"><strong data-cd="h">--</strong><span>{t('flash.h')}</span></span>
+            <span class="b-cd__box"><strong data-cd="m">--</strong><span>{t('flash.m')}</span></span>
+            <span class="b-cd__box"><strong data-cd="s">--</strong><span>{t('flash.s')}</span></span>
+          </p>
+        </div>
+        <ul class="b-flash__list" role="list" data-flash>
+          {flash.map((p) => (
+            <li class="bf" style={`--bg:${BG[p.bg]}`}>
+              <button type="button" class="bf__btn" data-quick={p.id} aria-label={t('card.view', { name: p.name })}>
+                <span class="bf__art"><svg viewBox="0 0 64 64" aria-hidden="true"><use href={`${sprite}#i${p.icon}`} /></svg><span class="bf__off">-{p.off}%</span></span>
+                <span class="bf__name">{p.name}</span>
+                <span class="bf__price"><strong>{money(p.price, loc)}</strong> <s>{money(p.orig, loc)}</s></span>
+                <span class="bf__bar" aria-hidden="true"><span style={`transform:scaleX(${claimed(p) / 100})`}></span></span>
+                <span class="bf__left"><span>{t('flash.left', { n: p.stock })}</span><span>{t('flash.claimed', { n: claimed(p) })}</span></span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="b-catalog" id="ofertas" aria-labelledby="b-cat-title" data-catalog>
+      <div class="b-wrap">
+        <div class="b-cat__head">
+          <h2 id="b-cat-title" class="b-cat__title">{t('catalog.title')}</h2>
+          <p class="b-cat__count" aria-live="polite" data-count>{t('catalog.results', { n: TOTAL })}</p>
+          <p class="b-cat__sample">{t('catalog.sample')}</p>
+        </div>
+        <div class="b-toolbar">
+          <div class="b-chips" role="group" aria-label={t('catalog.chipsLabel')} data-chips>
+            <button type="button" class="b-chip" data-cat="" aria-pressed="true">{t('catalog.all')}</button>
+            {vocab.cats.map((c, i) => <button type="button" class="b-chip" data-cat={CAT_SLUGS[i]} aria-pressed="false">{c}</button>)}
+          </div>
+          <div class="b-toolbar__right">
+            <label class="b-select">
+              <span class="sr-only">{t('catalog.sort')}</span>
+              <select data-sort>{Object.entries(sorts).map(([k, v]) => <option value={k}>{v}</option>)}</select>
+            </label>
+            <button type="button" class="b-btn b-btn--ink b-filterbtn" data-open-filters>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" set:html={icon.filter} />
+              {t('catalog.filters')}<span class="b-filterbtn__n" data-filter-n hidden>0</span>
+            </button>
+          </div>
+        </div>
+        <p class="b-searching" data-searching hidden></p>
+        <ul class="b-grid" role="list" data-grid>
+          {first.map((p) => <Card p={p} lang={lang} sprite={sprite} />)}
+        </ul>
+        <div class="b-empty" data-empty hidden>
+          <p>{t('catalog.empty')}</p>
+          <button type="button" class="b-btn b-btn--yellow" data-clear>{t('catalog.clear')}</button>
+        </div>
+        <div class="b-sentinel" data-sentinel aria-hidden="true"></div>
+        <div class="b-more">
+          <p class="b-more__loading" data-loading hidden>{t('catalog.loading')}</p>
+          <button type="button" class="b-btn b-btn--ink b-btn--xl" data-more hidden>{t('catalog.more')}</button>
+          <p class="b-more__end" data-end hidden>{t('catalog.end')}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-final" aria-labelledby="b-final-title">
+      <div class="b-wrap b-final__in">
+        <h2 id="b-final-title">{t('final.title')}</h2>
+        <p>{t('final.text')}</p>
+        <button type="button" class="b-btn b-btn--yellow b-btn--xl" data-open-contact>{t('final.cta')}</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="b-footer" aria-label={t('footer.label')}>
+    <div class="b-wrap b-footer__in">
+      <div class="b-footer__brand">
+        <span class="b-logo b-logo--foot" aria-hidden="true"><span class="b-logo__mark">b</span><span class="b-logo__word">brinco</span></span>
+        <p>{t('footer.note')}</p>
+      </div>
+      <div>
+        <h2 class="b-footer__h">{t('footer.help')}</h2>
+        <ul role="list">{t.raw<string[]>('footer.helpItems').map((s) => <li>{s}</li>)}</ul>
+      </div>
+      <div>
+        <h2 class="b-footer__h">{t('footer.about')}</h2>
+        <ul role="list">{t.raw<string[]>('footer.aboutItems').map((s) => <li>{s}</li>)}</ul>
+      </div>
+      <div>
+        <h2 class="b-footer__h">{t('footer.pay')}</h2>
+        <ul class="b-footer__pay" role="list">{Object.values(methods).map((m) => <li>{m}</li>)}</ul>
+      </div>
+    </div>
+    <p class="b-wrap b-footer__made">{t('footer.made')}</p>
+  </footer>
+
+  <!-- Quick view (?product=<id>) -->
+  <dialog class="b-dlg b-qv" id="b-qv" aria-labelledby="b-qv-name">
+    <div class="b-qv__in">
+      <button type="button" class="b-x" data-close aria-label={t('quick.close')}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" set:html={icon.close} /></button>
+      <div class="b-qv__art" data-qv-art>
+        <svg viewBox="0 0 64 64" aria-hidden="true"><use data-qv-icon href={`${sprite}#i0`} /></svg>
+        <span class="b-qv__off" data-qv-off>-0%</span>
+        <span class="b-qv__badge" data-qv-badge hidden></span>
+      </div>
+      <div class="b-qv__info">
+        <p class="b-qv__cat" data-qv-cat></p>
+        <h2 id="b-qv-name" class="b-qv__name" data-qv-name>&nbsp;</h2>
+        <p class="b-qv__rate"><span aria-hidden="true">★</span> <span data-qv-rate></span> <span class="b-qv__note">· <span data-qv-sold></span> · {t('quick.ratingNote')}</span></p>
+        <p class="b-qv__price"><strong data-qv-price></strong> <span class="sr-only">{t('card.before')}</span> <s data-qv-orig></s></p>
+        <p class="b-qv__save" data-qv-save></p>
+        <p class="b-qv__live"><span class="b-dotlive" aria-hidden="true"></span><span data-qv-viewing></span> <small>({t('quick.simulated')})</small></p>
+        <div class="b-qv__stock"><span class="b-qv__bar" aria-hidden="true"><span data-qv-bar></span></span><span data-qv-stock></span></div>
+        <div class="b-qv__buy">
+          <div class="b-step" role="group" aria-label={t('quick.qty')}>
+            <button type="button" data-qv-dec aria-label={t('quick.less')}>−</button>
+            <output data-qv-qty aria-live="polite">1</output>
+            <button type="button" data-qv-inc aria-label={t('quick.more')}>+</button>
+          </div>
+          <button type="button" class="b-btn b-btn--red b-btn--xl b-qv__add" data-qv-add><span>{t('quick.add')}</span></button>
+        </div>
+        <p class="b-qv__done" data-qv-done hidden>
+          <span>{t('quick.added')}</span>
+          <button type="button" class="b-btn b-btn--ink" data-qv-gocart>{t('quick.goCart')}</button>
+        </p>
+        <p class="b-qv__desc">{t('quick.desc')}</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Cart drawer (?cart=1&checkout=shipping|pay|done) -->
+  <dialog class="b-dlg b-drawer" id="b-cart" aria-labelledby="b-cart-title">
+    <div class="b-drawer__in">
+      <header class="b-drawer__head">
+        <button type="button" class="b-x b-x--back" data-co-back aria-label={t('checkout.back')} hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" set:html={icon.back} /></button>
+        <h2 id="b-cart-title" data-cart-title>{t('cart.title')}</h2>
+        <button type="button" class="b-x" data-close aria-label={t('cart.close')}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" set:html={icon.close} /></button>
+      </header>
+      <ol class="b-steps" role="list" data-steps>{steps.map((s, i) => <li data-i={i}>{s}</li>)}</ol>
+      <div class="b-ship" data-ship-progress>
+        <p data-ship-text></p>
+        <span class="b-ship__bar" aria-hidden="true"><span data-ship-bar></span></span>
+      </div>
+
+      <div class="b-view" data-view="cart">
+        <ul class="b-lines" role="list" data-lines></ul>
+        <div class="b-cart-empty" data-cart-empty hidden>
+          <p>{t('cart.empty')}</p>
+          <button type="button" class="b-btn b-btn--yellow" data-cart-explore>{t('cart.emptyCta')}</button>
+        </div>
+      </div>
+
+      <div class="b-view" data-view="shipping" hidden>
+        <h3 class="b-view__h">{t('checkout.shippingTitle')}</h3>
+        <div class="b-choices" role="radiogroup" aria-label={t('checkout.shippingTitle')} data-ship-choices>
+          <button type="button" role="radio" class="b-choice" data-ship="std" aria-checked="true"><strong>{t('checkout.standard')}</strong><span>{t('checkout.standardTime')}</span><em data-ship-std></em></button>
+          <button type="button" role="radio" class="b-choice" data-ship="exp" aria-checked="false"><strong>{t('checkout.express')}</strong><span>{t('checkout.expressTime')}</span><em>{money(SHIP_EXPRESS * 100, loc)}</em></button>
+        </div>
+        <label class="b-field"><span>{t('checkout.city')}</span>
+          <select data-city>{cities.map((c, i) => <option value={i}>{c}</option>)}</select>
+        </label>
+      </div>
+
+      <div class="b-view" data-view="pay" hidden>
+        <h3 class="b-view__h">{t('checkout.payTitle')}</h3>
+        <div class="b-choices b-choices--grid" role="radiogroup" aria-label={t('checkout.payTitle')} data-pay-choices>
+          {Object.entries(methods).map(([k, v], i) => <button type="button" role="radio" class="b-choice" data-pay={k} aria-checked={i === 0 ? 'true' : 'false'}><strong>{v}</strong></button>)}
+        </div>
+        <p class="b-note">{t('checkout.note')}</p>
+      </div>
+
+      <div class="b-view b-done" data-view="done" hidden>
+        <div class="b-done__burst" aria-hidden="true"></div>
+        <h3 class="b-done__h">{t('checkout.doneTitle')}</h3>
+        <p class="b-done__id" data-order-id></p>
+        <p>{t('checkout.doneText')}</p>
+        <button type="button" class="b-btn b-btn--yellow b-btn--xl" data-done-close>{t('checkout.doneCta')}</button>
+      </div>
+
+      <footer class="b-drawer__foot" data-totals>
+        <dl class="b-totals">
+          <div><dt>{t('cart.subtotal')}</dt><dd data-sub></dd></div>
+          <div class="b-totals__coupon" data-coupon-row hidden><dt><span data-coupon-label></span> <button type="button" class="b-link" data-coupon-remove>{t('cart.couponRemove')}</button></dt><dd data-coupon-amt></dd></div>
+          <div data-nocoupon-row><dt><button type="button" class="b-link" data-open-wheel>{t('cart.noCoupon')}</button></dt><dd></dd></div>
+          <div><dt>{t('cart.shipping')}</dt><dd data-shipcost></dd></div>
+          <div class="b-totals__total"><dt>{t('cart.total')}</dt><dd data-total></dd></div>
+        </dl>
+        <p class="b-totals__save" data-savings></p>
+        <button type="button" class="b-btn b-btn--red b-btn--xl b-btn--block" data-co-next>{t('cart.checkout')}</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Filters (?filters=1); values live in ?cat=&sort=&q=&min=&max= -->
+  <dialog class="b-dlg b-drawer b-drawer--filters" id="b-filters" aria-labelledby="b-filters-title">
+    <div class="b-drawer__in">
+      <header class="b-drawer__head">
+        <h2 id="b-filters-title">{t('filters.title')}</h2>
+        <button type="button" class="b-x" data-close aria-label={t('filters.close')}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" set:html={icon.close} /></button>
+      </header>
+      <div class="b-fbody">
+        <fieldset class="b-fset">
+          <legend>{t('filters.category')}</legend>
+          <div class="b-opts" data-f-cat>
+            <button type="button" class="b-chip" data-cat="" aria-pressed="true">{t('catalog.all')}</button>
+            {vocab.cats.map((c, i) => <button type="button" class="b-chip" data-cat={CAT_SLUGS[i]} aria-pressed="false">{c}</button>)}
+          </div>
+        </fieldset>
+        <fieldset class="b-fset">
+          <legend>{t('filters.price')}</legend>
+          <label class="b-range">
+            <span class="sr-only">{t('filters.price')}</span>
+            <input type="range" min="5" max="90" step="5" value="90" data-f-max />
+          </label>
+          <output class="b-range__out" data-f-max-out>{t('filters.priceAny')}</output>
+        </fieldset>
+        <fieldset class="b-fset">
+          <legend>{t('filters.discount')}</legend>
+          <div class="b-opts" data-f-min>
+            {[0, 30, 50, 70].map((n) => <button type="button" class="b-chip" data-min={n} aria-pressed={n === 0 ? 'true' : 'false'}>{n ? t('filters.discountN', { n }) : t('filters.discountAny')}</button>)}
+          </div>
+        </fieldset>
+        <fieldset class="b-fset">
+          <legend>{t('catalog.sort')}</legend>
+          <div class="b-opts" data-f-sort>
+            {Object.entries(sorts).map(([k, v]) => <button type="button" class="b-chip" data-sortv={k} aria-pressed={k === 'pop' ? 'true' : 'false'}>{v}</button>)}
+          </div>
+        </fieldset>
+      </div>
+      <footer class="b-drawer__foot b-drawer__foot--row">
+        <button type="button" class="b-btn b-btn--ghost" data-clear>{t('filters.clear')}</button>
+        <button type="button" class="b-btn b-btn--red b-btn--xl" data-f-apply>{t('filters.apply', { n: TOTAL })}</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Prize wheel (auto after ~8 s once per session, or ?spin=1 from a button) -->
+  <dialog class="b-dlg b-wheel" id="b-wheel" aria-labelledby="b-wheel-title">
+    <div class="b-wheel__in">
+      <button type="button" class="b-x" data-close aria-label={t('wheel.close')}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" set:html={icon.close} /></button>
+      <h2 id="b-wheel-title" class="b-wheel__title">{t('wheel.title')}</h2>
+      <p class="b-wheel__sub">{t('wheel.sub')}</p>
+      <div class="b-wheel__stage">
+        <span class="b-wheel__pin" aria-hidden="true"></span>
+        <Wheel labels={segments} class="b-wheel__svg" id="b-wheel-svg" />
+      </div>
+      <div class="b-wheel__result" aria-live="polite" data-wheel-result></div>
+      <div class="b-wheel__actions">
+        <button type="button" class="b-btn b-btn--red b-btn--xl b-btn--block" data-spin>{t('wheel.spin')}</button>
+        <div class="b-ticket" data-ticket hidden>
+          <span class="b-ticket__code">{COUPON.code}</span><span class="b-ticket__pct">-{COUPON.pct}%</span>
+        </div>
+        <button type="button" class="b-btn b-btn--yellow b-btn--xl b-btn--block" data-use-coupon hidden>{t('wheel.use')}</button>
+      </div>
+      <p class="b-wheel__terms">{t('wheel.terms')}</p>
+    </div>
+  </dialog>
+
+  <!-- Overlays (position: fixed, never push content) -->
+  <div class="b-sticky" data-sticky aria-hidden="true">
+    <div class="b-sticky__txt"><span data-sticky-text></span><span class="b-ship__bar" aria-hidden="true"><span data-sticky-bar></span></span></div>
+    <button type="button" class="b-btn b-btn--yellow" data-open-cart tabindex="-1">{t('sticky.open')}</button>
+  </div>
+  <div class="b-toasts" role="region" aria-label={t('social.region')}>
+    <div aria-live="polite" data-toasts></div>
+  </div>
+
+  <template id="b-card-tpl"><Card p={first[0]} lang={lang} sprite={sprite} /></template>
+  <template id="b-line-tpl">
+    <li class="bl">
+      <span class="bl__art"><svg viewBox="0 0 64 64" aria-hidden="true"><use href={`${sprite}#i0`} /></svg></span>
+      <div class="bl__info">
+        <p class="bl__name"></p>
+        <p class="bl__price"><strong></strong> <s></s></p>
+        <div class="b-step b-step--sm" role="group">
+          <button type="button" data-line-dec>−</button>
+          <output></output>
+          <button type="button" data-line-inc>+</button>
+        </div>
+      </div>
+      <button type="button" class="b-x b-x--sm" data-line-rm><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" set:html={icon.close} /></button>
+    </li>
+  </template>
+  <script type="application/json" id="b-data" set:html={JSON.stringify(payload)} />
+</BaseLayout>
+
+<script>
+  import { onPage } from '../../../../scripts/lifecycle';
+  import { initBrinco } from '../../../../demos/brinco/client/app';
+  onPage(() => initBrinco());
+</script>

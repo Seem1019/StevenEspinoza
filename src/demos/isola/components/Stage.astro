@@ -1,0 +1,143 @@
+---
+/**
+ * Sticky 3D stage (380svh track). Canvas box is fixed; poster SVG fills it until three.js is ready (zero CLS).
+ * Reduced motion / no WebGL (.is-static): normal-height section with the exploded SVG and all callouts.
+ */
+import { useT, type Lang } from '../../../i18n';
+import Product from './Product.astro';
+import Exploded from './Exploded.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'isola');
+const callouts = t.raw<{ id: string; title: string; body: string }[]>('stage.callouts');
+const left = callouts.slice(0, 3);
+const right = callouts.slice(3);
+---
+
+<section class="stage" id="design" data-isola-stage aria-labelledby="stage-title">
+  <div class="stage__sticky">
+    <div class="stage__head wrap">
+      <h2 id="stage-title" class="sr-only">{t('stage.label')}</h2>
+      <p class="stage__title stage__title--a" data-phase="a">{t('stage.titleA')}</p>
+      <p class="stage__title stage__title--b" data-phase="b">{t('stage.titleB')}</p>
+    </div>
+
+    <div class="stage__body">
+      <ul class="stage__notes stage__notes--l" role="list">
+        {left.map((c) => <li class="note" data-note={c.id}><strong>{c.title}</strong><span>{c.body}</span></li>)}
+      </ul>
+      <div class="stage__box">
+        <div class="stage__poster"><Product uid="stage" label={t('stage.posterAlt')} /></div>
+        <div class="stage__exploded"><Exploded uid="stagex" label={t('stage.explodedAlt')} /></div>
+        <canvas class="stage__canvas" data-stage-canvas role="img" aria-label={t('stage.canvas')}></canvas>
+      </div>
+      <ul class="stage__notes stage__notes--r" role="list">
+        {right.map((c) => <li class="note" data-note={c.id}><strong>{c.title}</strong><span>{c.body}</span></li>)}
+      </ul>
+    </div>
+
+    <p class="stage__hint" data-stage-hint>
+      <svg viewBox="0 0 16 24" width="12" height="18" aria-hidden="true"><rect x="1" y="1" width="14" height="22" rx="7" fill="none" stroke="currentColor" stroke-width="1.4" /><rect x="7" y="5" width="2" height="5" rx="1" fill="currentColor" /></svg>
+      {t('stage.hint')}
+    </p>
+  </div>
+</section>
+
+<script>
+  import '../scripts/stage';
+</script>
+
+<style>
+  .stage {
+    position: relative;
+    height: 380svh;
+    background:
+      radial-gradient(60% 50% at 50% 55%, var(--steel-1) 0%, rgb(244 246 248 / 0) 70%),
+      var(--bg);
+  }
+  .stage__sticky {
+    position: sticky; top: 0; height: 100svh; overflow: clip;
+    display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: calc(var(--header-h) + clamp(12px, 3vh, 40px)) 0 clamp(16px, 3vh, 32px);
+  }
+  .stage__head { position: relative; display: grid; text-align: center; min-height: 2.3em; font-size: clamp(1.5rem, 3.2vw, 2.75rem); }
+  .stage__title {
+    grid-area: 1 / 1; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance;
+    max-width: 22ch; margin-inline: auto;
+  }
+  .stage__title--b { opacity: 0; }
+
+  .stage__body {
+    display: grid; min-height: 0;
+    grid-template-columns: minmax(170px, 1fr) minmax(0, 3.2fr) minmax(170px, 1fr);
+    gap: clamp(12px, 2vw, 32px);
+    width: min(100% - 2 * var(--gutter), 1400px); margin-inline: auto;
+  }
+  .stage__box { position: relative; min-height: 0; height: 100%; }
+  .stage__poster, .stage__exploded, .stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .stage__poster { padding: 6% 10%; transition: opacity 700ms var(--ease); }
+  .stage__exploded { display: none; }
+  .stage__canvas { opacity: 0; transition: opacity 700ms var(--ease); }
+  .stage:global(.is-3d) .stage__canvas { opacity: 1; }
+  .stage:global(.is-3d) .stage__poster { opacity: 0; }
+
+  .stage__notes { display: grid; align-content: center; gap: clamp(20px, 4vh, 44px); }
+  .note {
+    display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--steel-3);
+    font-size: 0.875rem; line-height: 1.45;
+  }
+  .stage:global(.is-live) .note { opacity: 0; }
+  .note strong { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.005em; }
+  .note span { color: var(--muted); }
+  .stage__notes--r .note { text-align: left; }
+  .stage__notes--l .note { text-align: right; }
+
+  .stage__hint {
+    display: flex; gap: 8px; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.8125rem; font-weight: 500;
+  }
+
+  @media (max-width: 719px) {
+    .stage__sticky { grid-template-rows: auto auto 112px auto; align-content: center; row-gap: 8px; }
+    .stage__head { font-size: 1.5rem; min-height: 2.4em; }
+    .stage__body { display: contents; }
+    .stage__box { grid-row: 2; margin-inline: 8px; height: min(118vw, 100svh - 320px); }
+    .stage__poster { padding: 4%; }
+    .stage__notes { grid-row: 3; grid-column: 1; position: relative; width: min(100% - 2 * var(--gutter), 420px); margin-inline: auto; display: block; }
+    .stage__notes .note { position: absolute; inset: 8px 0 auto; text-align: center; border-top: 0; padding-top: 0; }
+    .stage__notes .note::before { content: ''; display: block; width: 32px; height: 1px; margin: 0 auto 12px; background: var(--accent); }
+    .stage__hint { grid-row: 4; }
+  }
+
+  /* Static fallback: reduced motion (CSS) or WebGL unavailable (.is-static from JS) */
+  @media (prefers-reduced-motion: reduce) {
+    .stage { height: auto; }
+    .stage__sticky { position: relative; height: auto; display: block; padding: var(--section) 0; }
+    .stage__title--a, .stage__hint { display: none; }
+    .stage__title--b { opacity: 1; }
+    .stage__head { margin-bottom: 40px; }
+    .stage__body { display: flex; flex-wrap: wrap; gap: 32px 24px; }
+    .stage__box { order: -1; flex: 1 1 100%; max-width: 1100px; margin-inline: auto; aspect-ratio: 1040 / 440; height: auto; }
+    .stage__notes--l { flex: 3 1 480px; }
+    .stage__notes--r { flex: 2 1 320px; }
+    .stage__poster, .stage__canvas { display: none; }
+    .stage__exploded { display: block; }
+    .stage__notes { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; width: auto; grid-row: auto; }
+    .stage__notes .note { position: static; opacity: 1; text-align: left; border-top: 1px solid var(--steel-3); padding-top: 12px; }
+    .stage__notes .note::before { display: none; }
+  }
+  .stage:global(.is-static) { height: auto; }
+  .stage:global(.is-static) .stage__sticky { position: relative; height: auto; display: block; padding: var(--section) 0; }
+  .stage:global(.is-static) .stage__title--a, .stage:global(.is-static) .stage__hint, .stage:global(.is-static) .stage__poster, .stage:global(.is-static) .stage__canvas { display: none; }
+  .stage:global(.is-static) .stage__title--b { opacity: 1 !important; transform: none !important; }
+  .stage:global(.is-static) .stage__head { margin-bottom: 40px; }
+  .stage:global(.is-static) .stage__body { display: flex; flex-wrap: wrap; gap: 32px 24px; }
+  .stage:global(.is-static) .stage__notes--l { flex: 3 1 480px; }
+  .stage:global(.is-static) .stage__notes--r { flex: 2 1 320px; }
+  .stage:global(.is-static) .stage__box { order: -1; flex: 1 1 100%; max-width: 1100px; margin-inline: auto; aspect-ratio: 1040 / 440; height: auto; }
+  .stage:global(.is-static) .stage__exploded { display: block; }
+  .stage:global(.is-static) .stage__notes { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; width: auto; grid-row: auto; }
+  .stage:global(.is-static) .note { position: static; opacity: 1 !important; transform: none !important; text-align: left; border-top: 1px solid var(--steel-3); padding-top: 12px; }
+  .stage:global(.is-static) .note::before { display: none; }
+</style>

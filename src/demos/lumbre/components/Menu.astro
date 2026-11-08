@@ -1,0 +1,42 @@
+---
+/** Menu with in-page tabs. State in the URL (?menu=fuego) via setParams (no history). Script: scripts/menu.ts */
+import { useT, type Lang } from '../../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'lumbre');
+const tabs = ['empezar', 'fuego', 'postres', 'bebidas'] as const;
+type Dish = { name: string; desc: string; price: string; icon: string };
+---
+<section class="lb-menu lb-wrap" id="lb-carta" aria-labelledby="lb-carta-title" data-lb-menu>
+  <header class="lb-sec-head">
+    <h2 id="lb-carta-title" class="lb-h2">{t('menu.title')}</h2>
+    <p class="lb-lead">{t('menu.intro')}</p>
+  </header>
+  <div class="lb-tabs" role="tablist" aria-label={t('menu.tabsLabel')}>
+    {tabs.map((k, i) => (
+      <button type="button" role="tab" class="lb-tab" id={`lb-tab-${k}`} aria-controls={`lb-panel-${k}`}
+        aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab={k}>
+        {t(`menu.tabs.${k}`)}
+      </button>
+    ))}
+  </div>
+  <div class="lb-panels">
+    {tabs.map((k, i) => (
+      <div class="lb-panel" role="tabpanel" id={`lb-panel-${k}`} aria-labelledby={`lb-tab-${k}`} hidden={i !== 0} data-panel={k}>
+        <ul class="lb-dishes" role="list">
+          {t.raw<Dish[]>(`menu.items.${k}`).map((d) => (
+            <li class="lb-dish">
+              <span class="lb-dish__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><use href={`#lb-i-${d.icon}`} /></svg></span>
+              <div class="lb-dish__text">
+                <h3 class="lb-dish__name">{d.name}</h3>
+                <p class="lb-dish__desc">{d.desc}</p>
+              </div>
+              <span class="lb-dish__price">{d.price}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+  <p class="lb-note">{t('menu.note')}</p>
+</section>

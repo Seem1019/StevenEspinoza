@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DemoBar from '../../../../components/site/DemoBar.astro';
+import { useT, langPaths, type Lang } from '../../../../i18n';
+import Icon from '../../../../demos/turnio/components/Icon.astro';
+import HeroMock from '../../../../demos/turnio/components/HeroMock.astro';
+import Tour from '../../../../demos/turnio/components/Tour.astro';
+import SignupDialog from '../../../../demos/turnio/components/SignupDialog.astro';
+import '../../../../demos/turnio/styles/turnio.css';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const t = useT(lang, 'turnio');
+
+type Plan = { id: string; name: string; for: string; monthly: number; annual: number; features: string[]; cta: string };
+type Row = { label: string; v: (string | boolean)[] };
+const plans = t.raw<Plan[]>('pricing.plans');
+const rows = t.raw<Row[]>('pricing.compare.rows');
+const faqs = t.raw<{ q: string; a: string }[]>('faq.items');
+const benefits = t.raw<{ metric: string; metricLabel: string; title: string; text: string }[]>('benefits.items');
+const steps = t.raw<{ title: string; text: string; meta: string }[]>('how.steps');
+const quotes = t.raw<{ quote: string; name: string; role: string }[]>('testimonials.items');
+const names = t.raw<string[]>('proof.names');
+const price = (n: number) => t('pricing.price', { n });
+const initials = (n: string) => n.split(' ').map((w) => w[0]).slice(0, 2).join('');
+const stepIcons = ['sliders', 'link', 'bell'] as const;
+const benefitIcons = ['calendar', 'clock', 'moon'] as const;
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout
+  lang={lang}
+  title={t('meta.title')}
+  description={t('meta.description')}
+  fonts={['--font-turnio']}
+  preload={['--font-turnio']}
+  bodyClass="turnio"
+  themeColor="#0B3D2E"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqLd)} />
+  <DemoBar lang={lang} />
+  <main id="main" class="t-main" data-billing="monthly">
+    <header class="t-header">
+      <div class="t-wrap t-header__in">
+        <a class="t-brand" href="#main" aria-label={t('a11y.home')}>
+          <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#7CF3B6" /><path d="M9 12.5h14M16 12.5V23" stroke="#062B20" stroke-width="3.2" stroke-linecap="round" /><circle cx="22.5" cy="21.5" r="2.4" fill="#FFB547" /></svg>
+          <span>turnio</span>
+        </a>
+        <nav class="t-nav" aria-label={t('a11y.nav')}>
+          <a href="#tour">{t('nav.product')}</a>
+          <a href="#how">{t('nav.how')}</a>
+          <a href="#pricing">{t('nav.pricing')}</a>
+          <a href="#faq">{t('nav.faq')}</a>
+        </nav>
+        <button type="button" class="t-btn t-btn--mint t-btn--sm" data-signup="pro">{t('nav.cta')}</button>
+      </div>
+    </header>
+
+    <section class="t-hero" aria-labelledby="t-h1">
+      <div class="t-wrap t-hero__in">
+        <div class="t-hero__copy">
+          <p class="t-eyebrow"><span class="t-live"></span>{t('hero.eyebrow')}</p>
+          <h1 id="t-h1"><span>{t('hero.titleA')}</span> <span>{t('hero.titleB')}</span></h1>
+          <p class="t-hero__sub">{t('hero.subtitle')}</p>
+          <div class="t-hero__ctas">
+            <button type="button" class="t-btn t-btn--mint t-btn--lg" data-signup="pro">{t('hero.cta')}<Icon name="arrow" size={20} /></button>
+            <a class="t-btn t-btn--ghost t-btn--lg" href="#tour"><Icon name="play" size={20} />{t('hero.ctaSecondary')}</a>
+          </div>
+          <ul class="t-reassure" role="list">
+            {t.raw<string[]>('hero.reassure').map((r) => <li><Icon name="check" size={16} />{r}</li>)}
+          </ul>
+        </div>
+        <div class="t-hero__mock">
+          <HeroMock lang={lang} />
+        </div>
+      </div>
+    </section>
+
+    <section class="t-proof" aria-labelledby="t-proof-label">
+      <div class="t-wrap t-proof__in">
+        <p class="t-proof__lead"><span class="t-sample" id="t-proof-label">{t('proof.label')}</span>{t('proof.lead')}</p>
+        <ul class="t-marks" role="list">
+          {names.map((n, i) => <li class={`t-mark t-mark--${i}`}><span class="t-mark__glyph" aria-hidden="true"></span>{n}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="t-section t-problem" id="product" aria-labelledby="t-problem-title">
+      <div class="t-wrap">
+        <div class="t-head t-reveal">
+          <h2 id="t-problem-title">{t('problem.title')}</h2>
+          <p>{t('problem.lead')}</p>
+        </div>
+        <div class="t-ba t-reveal">
+          <div class="t-ba__col t-ba__col--before">
+            <h3>{t('problem.beforeTitle')}</h3>
+            <ul role="list">
+              {t.raw<string[]>('problem.before').map((x) => <li><span class="t-ba__ic"><Icon name="x" size={16} /></span>{x}</li>)}
+            </ul>
+          </div>
+          <span class="t-ba__arrow" aria-hidden="true"><Icon name="arrow" size={24} /></span>
+          <div class="t-ba__col t-ba__col--after">
+            <h3>{t('problem.afterTitle')}</h3>
+            <ul role="list">
+              {t.raw<string[]>('problem.after').map((x) => <li><span class="t-ba__ic"><Icon name="check" size={16} /></span>{x}</li>)}
+            </ul>
+          </div>
+        </div>
+
+        <div class="t-benefits">
+          <div class="t-benefits__head t-reveal">
+            <h2 class="t-h3">{t('benefits.title')}</h2>
+            <span class="t-sample">{t('benefits.label')}</span>
+          </div>
+          <ul class="t-grid3" role="list">
+            {benefits.map((b, i) => (
+              <li class="t-card t-benefit t-reveal">
+                <span class="t-benefit__ic"><Icon name={benefitIcons[i]} size={22} /></span>
+                <p class="t-metric"><b>{b.metric}</b><span>{b.metricLabel}</span></p>
+                <h3>{b.title}</h3>
+                <p>{b.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="t-section t-how" id="how" aria-labelledby="t-how-title">
+      <div class="t-wrap">
+        <div class="t-head t-reveal">
+          <h2 id="t-how-title">{t('how.title')}</h2>
+          <p>{t('how.lead')}</p>
+        </div>
+        <ol class="t-steps" role="list">
+          {steps.map((s, i) => (
+            <li class="t-step t-reveal">
+              <span class="t-step__node"><Icon name={stepIcons[i]} size={26} /></span>
+              <span class="t-step__meta">{s.meta}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <Tour lang={lang} />
+
+    <section class="t-section t-quotes" aria-labelledby="t-quotes-title">
+      <div class="t-wrap">
+        <div class="t-head t-head--row t-reveal">
+          <h2 id="t-quotes-title">{t('testimonials.title')}</h2>
+          <span class="t-sample">{t('testimonials.label')}</span>
+        </div>
+        <ul class="t-grid3" role="list">
+          {quotes.map((q, i) => (
+            <li class="t-card t-quote t-reveal">
+              <svg class="t-quote__mark" viewBox="0 0 32 24" width="32" height="24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C8.5 5 6.5 8 6.5 11H12v13zm18 0V14c0-8 4-12.5 12-14l1.5 3.5c-5 1.5-7 4.5-7 7.5H30v13z" fill="currentColor" /></svg>
+              <blockquote><p>{q.quote}</p></blockquote>
+              <p class="t-quote__who">
+                <span class={`t-ava t-ava--lg t-ava--${['a', 'b', 'c'][i]}`} aria-hidden="true">{initials(q.name)}</span>
+                <span><b>{q.name}</b><small>{q.role}</small></span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="t-section t-pricing" id="pricing" aria-labelledby="t-pricing-title">
+      <div class="t-wrap">
+        <div class="t-head t-reveal">
+          <h2 id="t-pricing-title">{t('pricing.title')}</h2>
+          <p>{t('pricing.lead')}</p>
+        </div>
+        <div class="t-billing" role="group" aria-label={t('pricing.group')}>
+          <button type="button" data-billing="monthly" aria-pressed="true">{t('pricing.monthly')}</button>
+          <button type="button" data-billing="annual" aria-pressed="false">{t('pricing.annual')}<span class="t-save">{t('pricing.save')}</span></button>
+        </div>
+        <ul class="t-plans" role="list">
+          {plans.map((p) => (
+            <li class={`t-plan${p.id === 'pro' ? ' t-plan--pop' : ''}`}>
+              {p.id === 'pro' && <span class="t-plan__badge">{t('pricing.popular')}</span>}
+              <h3>{p.name}</h3>
+              <p class="t-plan__for">{p.for}</p>
+              <p class="t-plan__price">
+                <b class="t-b-m">{price(p.monthly)}</b>
+                <b class="t-b-a">{price(p.annual)}</b>
+                <span>{t('pricing.per')}</span>
+              </p>
+              <p class="t-plan__bill">
+                <span class="t-b-m">{t('pricing.billedMonthly')}</span>
+                <span class="t-b-a">{t('pricing.billedAnnual', { n: p.annual * 12 })}</span>
+              </p>
+              <button type="button" class={`t-btn t-btn--block ${p.id === 'pro' ? 't-btn--mint' : 't-btn--primary'}`} data-signup={p.id}>{p.cta}</button>
+              <ul class="t-checks" role="list">
+                {p.features.map((f) => <li><Icon name="check" size={18} />{f}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ul>
+        <details class="t-compare">
+          <summary><span>{t('pricing.compare.summary')}</span><Icon name="down" size={20} /></summary>
+          <div class="t-compare__scroll">
+            <table>
+              <caption class="sr-only">{t('pricing.compare.caption')}</caption>
+              <thead>
+                <tr><th scope="col">{t('pricing.compare.feature')}</th>{plans.map((p) => <th scope="col">{p.name}</th>)}</tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr>
+                    <th scope="row">{r.label}</th>
+                    {r.v.map((v) => (
+                      <td>
+                        {v === true ? <span class="t-yes"><Icon name="check" size={18} label={t('a11y.included')} /></span>
+                          : v === false ? <span class="t-no"><Icon name="x" size={16} label={t('a11y.notIncluded')} /></span>
+                          : v}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+        <p class="t-note">{t('pricing.note')}</p>
+      </div>
+    </section>
+
+    <section class="t-section t-faq" id="faq" aria-labelledby="t-faq-title">
+      <div class="t-wrap t-faq__in">
+        <div class="t-head t-reveal">
+          <h2 id="t-faq-title">{t('faq.title')}</h2>
+        </div>
+        <div class="t-faq__list">
+          {faqs.map((f) => (
+            <details class="t-qa">
+              <summary><span>{f.q}</span><span class="t-qa__ic" aria-hidden="true"><Icon name="plus" size={20} /></span></summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="t-final" aria-labelledby="t-final-title">
+      <div class="t-wrap t-final__in t-reveal">
+        <h2 id="t-final-title">{t('final.title')}</h2>
+        <p>{t('final.text')}</p>
+        <div class="t-hero__ctas t-final__ctas">
+          <button type="button" class="t-btn t-btn--mint t-btn--lg" data-signup="pro">{t('final.cta')}<Icon name="arrow" size={20} /></button>
+        </div>
+        <ul class="t-reassure" role="list">
+          {t.raw<string[]>('hero.reassure').map((r) => <li><Icon name="check" size={16} />{r}</li>)}
+        </ul>
+        <button type="button" class="t-steven" data-open-contact>{t('final.contact')}<Icon name="arrow" size={16} /></button>
+      </div>
+    </section>
+
+    <SignupDialog lang={lang} />
+  </main>
+
+  <footer class="t-footer">
+    <div class="t-wrap t-footer__in">
+      <div>
+        <span class="t-brand t-brand--dark">
+          <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#0B3D2E" /><path d="M9 12.5h14M16 12.5V23" stroke="#7CF3B6" stroke-width="3.2" stroke-linecap="round" /><circle cx="22.5" cy="21.5" r="2.4" fill="#FFB547" /></svg>
+          <span>turnio</span>
+        </span>
+        <p>{t('footer.tagline')}</p>
+      </div>
+      <nav aria-label={t('footer.cols')}>
+        <a href="#tour">{t('nav.product')}</a>
+        <a href="#how">{t('nav.how')}</a>
+        <a href="#pricing">{t('nav.pricing')}</a>
+        <a href="#faq">{t('nav.faq')}</a>
+      </nav>
+      <p class="t-footer__rights">{t('footer.rights')}</p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  import '../../../../demos/turnio/scripts/turnio';
+</script>

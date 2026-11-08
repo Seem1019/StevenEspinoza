@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "name": "Brinco",
+    "title": "Brinco · Bouncing deals up to 85% off (demo)",
+    "tagline": "Mass-discount marketplace: 240 products, a coupon prize wheel and an instant cart.",
+    "description": "Brinco is a fictional deals store with 240 products, flash sales with a live countdown and a prize wheel that hands out coupons. Filters, quick view, cart and a simulated checkout all work on the same page, with no reloads.",
+    "features": [
+      "Infinite 240-product catalog, no pagination",
+      "Prize wheel whose coupon flies into the cart",
+      "Filters, quick view and cart with shareable URLs",
+      "Simulated checkout inside the cart"
+    ]
+  },
+  "ticker": {
+    "label": "Promotions",
+    "items": [
+      "FREE shipping on orders over {free}",
+      "New to Brinco? Spin the wheel for up to 15% extra off",
+      "Fresh flash deals every midnight",
+      "Free returns within 30 days",
+      "240+ products on sale right now"
+    ]
+  },
+  "header": {
+    "home": "Brinco, store home",
+    "searchLabel": "Search products",
+    "searchPlaceholder": "Search headphones, thermos, caps…",
+    "searchSubmit": "Search",
+    "cart": "Cart",
+    "cartCount": "{n} in your cart"
+  },
+  "hero": {
+    "kicker": "Season mega sale",
+    "title": "Prices that bounce up to 85% off",
+    "sub": "Thousands of deals on tech, home, fashion and more. Free shipping over {free} and a coupon waiting on the wheel.",
+    "ctaShop": "Shop deals",
+    "ctaSpin": "Spin to win",
+    "stickerOff": "-85%",
+    "stickerShip": "Free shipping",
+    "stickerNew": "Extra coupon",
+    "teaser": "Your spin today",
+    "teaserPrize": "up to 15% off"
+  },
+  "flash": {
+    "title": "Flash deals",
+    "ends": "Ending in",
+    "h": "h",
+    "m": "min",
+    "s": "s",
+    "left": "Only {n} left",
+    "claimed": "{n}% claimed"
+  },
+  "catalog": {
+    "title": "Deals for you",
+    "sample": "Prices, ratings and sales are sample data.",
+    "all": "All",
+    "chipsLabel": "Categories",
+    "filters": "Filters",
+    "sort": "Sort",
+    "sorts": {
+      "pop": "Most popular",
+      "low": "Price: low to high",
+      "high": "Price: high to low",
+      "off": "Biggest discount",
+      "rating": "Top rated"
+    },
+    "results": "{n} products",
+    "searching": "Results for “{q}”",
+    "empty": "No deals match those filters.",
+    "clear": "Clear filters",
+    "more": "Show more products",
+    "loading": "Loading more deals…",
+    "end": "You've seen the whole catalog!"
+  },
+  "card": {
+    "view": "Quick view of {name}",
+    "add": "Add",
+    "addLabel": "Add {name} to cart",
+    "added": "Done!",
+    "before": "Was",
+    "sold": "{n} sold",
+    "low": "Only {n} left!",
+    "rating": "{r} out of 5"
+  },
+  "badges": { "flash": "Flash", "hot": "Best seller", "new": "New", "top": "Lowest price" },
+  "filters": {
+    "title": "Filters",
+    "close": "Close filters",
+    "category": "Category",
+    "price": "Max price",
+    "priceAny": "No limit",
+    "priceUpTo": "Up to {v}",
+    "discount": "Minimum discount",
+    "discountAny": "All",
+    "discountN": "{n}% off or more",
+    "apply": "Show {n} products",
+    "clear": "Clear"
+  },
+  "quick": {
+    "close": "Close quick view",
+    "viewing": "{n} people are viewing this",
+    "simulated": "simulated",
+    "stock": "{n} units left",
+    "qty": "Quantity",
+    "less": "Remove one",
+    "more": "Add one",
+    "add": "Add to cart",
+    "added": "Added to cart!",
+    "goCart": "View cart",
+    "save": "You save {amount}",
+    "desc": "Fictional demo product. Fast shipping, free 30-day returns and the Brinco guarantee.",
+    "ratingNote": "sample rating"
+  },
+  "cart": {
+    "title": "Your cart",
+    "close": "Close cart",
+    "empty": "Your cart is empty. Deals don't wait!",
+    "emptyCta": "Browse deals",
+    "less": "Remove one {name}",
+    "more": "Add one more {name}",
+    "remove": "Remove {name}",
+    "subtotal": "Subtotal",
+    "coupon": "Coupon {code}",
+    "couponRemove": "Remove coupon",
+    "noCoupon": "No coupon? Spin the wheel",
+    "shipping": "Shipping",
+    "free": "Free",
+    "remaining": "{amount} away from free shipping",
+    "unlocked": "You unlocked free shipping!",
+    "total": "Total",
+    "savings": "You save {amount} today",
+    "checkout": "Checkout"
+  },
+  "checkout": {
+    "back": "Back",
+    "steps": ["Cart", "Shipping", "Payment", "Done"],
+    "shippingTitle": "How should we ship it?",
+    "standard": "Standard",
+    "standardTime": "5 to 8 business days",
+    "express": "Express",
+    "expressTime": "48 hours",
+    "city": "Delivery city",
+    "cities": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Bucaramanga", "Pereira"],
+    "next": "Continue to payment",
+    "payTitle": "Choose how to pay",
+    "methods": { "card": "Card", "transfer": "Bank transfer", "wallet": "Digital wallet", "cash": "Cash on delivery" },
+    "note": "Demo: nothing is charged and no payment details are asked.",
+    "pay": "Pay {amount}",
+    "doneTitle": "Order confirmed!",
+    "doneOrder": "Order {id}",
+    "doneText": "We simulated your purchase end to end. In a real store the confirmation email would arrive now.",
+    "doneCta": "Keep shopping"
+  },
+  "wheel": {
+    "title": "Spin to win",
+    "sub": "One spin per visit. Every prize is a coupon!",
+    "close": "Close wheel",
+    "spin": "Spin now!",
+    "spinning": "Spinning…",
+    "won": "You won {prize}!",
+    "wonText": "Coupon {code} is ready. We apply it to your cart automatically.",
+    "use": "Apply to my cart",
+    "segments": ["-5%", "Ship", "-10%", "-3%", "-15%", "-8%", "-12%", "-20%*"],
+    "prize": "15% off",
+    "terms": "*Demo prizes. The result is predetermined.",
+    "applied": "Coupon {code} applied: {pct}% off",
+    "spent": "You already spun this visit"
+  },
+  "social": {
+    "region": "Recent purchase notices",
+    "bought": "Someone in {city} bought {product}",
+    "ago": "{n} min ago",
+    "sample": "sample data",
+    "pause": "Pause notices",
+    "cities": ["Bogotá", "Medellín", "Cali", "Quito", "Lima", "Guadalajara", "Santiago", "Panama City"]
+  },
+  "sticky": {
+    "remaining": "{amount} away from free shipping",
+    "unlocked": "Free shipping unlocked!",
+    "open": "View cart"
+  },
+  "final": {
+    "title": "Want a store this fast?",
+    "text": "Huge catalogs that load instantly, a cart with no reloads and gamification that sells. This demo was built by Steven Espinoza.",
+    "cta": "Want a store like this? Talk to Steven"
+  },
+  "footer": {
+    "label": "Footer",
+    "help": "Help",
+    "helpItems": ["Track your order", "Returns", "Payment methods", "FAQ"],
+    "about": "Brinco",
+    "aboutItems": ["About us", "Sell on Brinco", "Rewards program", "Careers"],
+    "pay": "Accepted payments (illustrative)",
+    "note": "Brinco is a fictional store built as a demo by Steven Espinoza. Products, prices, ratings, sales and notices are sample data; nothing is sold or charged.",
+    "made": "Portfolio demo · Steven Espinoza"
+  },
+  "catalogVocab": {
+    "cats": ["Tech", "Home", "Beauty", "Fashion", "Sports", "Toys", "Kitchen", "Pets"],
+    "nouns": [
+      ["Headphones", "Charger", "Speaker", "Smartwatch", "Keyboard", "Mouse", "Power bank", "Phone stand"],
+      ["Lamp", "Organizer", "Cushion", "Curtain", "Mirror", "Wall clock", "Rug", "Diffuser"],
+      ["Brush set", "Serum", "Curler", "Hair dryer", "Nail polish", "Cream", "Vanity mirror", "Face massager"],
+      ["T-shirt", "Cap", "Bag", "Sunglasses", "Jacket", "Socks", "Belt", "Hoodie"],
+      ["Dumbbells", "Resistance band", "Bottle", "Yoga mat", "Jump rope", "Gloves", "Knee brace", "Gym bag"],
+      ["Puzzle cube", "Mini drone", "Plush toy", "Blocks", "RC car", "Jigsaw puzzle", "Slime", "Magic kit"],
+      ["Frying pan", "Blender", "Knife set", "Baking mold", "Thermos", "Grater", "Cutting board", "Spatula"],
+      ["Pet bed", "Chew toy", "Collar", "Food bowl", "Scratcher", "Leash", "Brush", "Water fountain"]
+    ],
+    "adjs": ["Pro", "Max", "Turbo", "Neon", "XL", "Mini", "Ultra", "Express", "360", "Plus", "2.0", "Air", "Duo", "Flash", "Lite", "Zen"]
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens: coral #FF2E4D · yellow #FFE600 · ink #111 · savings #007A3D",
+      "type": "type: Rubik 400–900 · display 900 · -0.03em",
+      "layout": "layout: ticker 34 · sticky header 64 · hero 2 col",
+      "skTicker": "ticker: fixed height 34 px · transform marquee",
+      "skHeader": "header: logo + search + cart with badge",
+      "skHero": "hero: h1 in initial HTML (text LCP)",
+      "skWheel": "wheel: SVG 8 segments · conic-gradient fallback",
+      "skFlash": "flash: yellow band · scroll-snap x",
+      "skGrid": "grid 5 col · gap 12 · aspect 1/1 · content-visibility",
+      "skCards": "cards: reserved height · contain-intrinsic-size 380px",
+      "skFooter": "footer: 3 columns · sample data note",
+      "cTicker": "copy: free shipping over $29 · new-user bonus",
+      "cHeader": "copy: search placeholder with real examples",
+      "cHero": "copy: “Prices that bounce up to 85% off”",
+      "cWheel": "copy: 8 prizes · predetermined result 15% off",
+      "cFlash": "countdown to local midnight · tabular-nums",
+      "cGrid": "240 products · seeded PRNG · i18n vocabulary",
+      "cCards": "Intl prices es-CO/en-US · % derived from real price",
+      "cFooter": "copy: fictional store notice",
+      "mTicker": "motion: marquee translateX 30 s · paused on reduced-motion",
+      "mWheel": "motion: spin via transform transition 4.2 s",
+      "mFlash": "motion: stock bars scaleX",
+      "mCards": "motion: add pulse · badge bump · burst",
+      "batches": "infinite scroll: IO rootMargin 1200px · JSON batches of 24",
+      "qaContrast": "QA contrast: black on coral 6.1:1 · OK",
+      "qaCls": "QA CLS: 0.00 · overlays use position: fixed",
+      "qaLcp": "QA LCP: h1.hero (text) · no initial opacity",
+      "qaKeys": "QA keyboard: focus trapped in dialogs · Esc closes · Back closes"
+    }
+  }
+}

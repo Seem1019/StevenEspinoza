@@ -1,0 +1,94 @@
+---
+/**
+ * Static exploded view (inline SVG). Used for reduced motion / no WebGL in the 3D stage and in BuildPreview.
+ * Parts left → right: cap, shell, battery, board, driver, cushion; headband above. Colours from [data-finish].
+ */
+interface Props { uid: string; label: string; class?: string }
+const { uid, label, class: cls } = Astro.props;
+const id = (s: string) => `${uid}-${s}`;
+const url = (s: string) => `url(#${id(s)})`;
+const xs = [110, 270, 430, 590, 750, 910];
+const y = (i: number) => 250 - i * 6;
+---
+
+<svg class:list={['isola-exploded', cls]} viewBox="0 0 1040 440" role="img" aria-label={label} preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id={id('hi')} cx="0.3" cy="0.25" r="0.85">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.32" />
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.03" />
+      <stop offset="1" stop-color="#000" stop-opacity="0.3" />
+    </radialGradient>
+    <radialGradient id={id('cone')} cx="0.45" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#4a5057" />
+      <stop offset="0.7" stop-color="#1d2024" />
+      <stop offset="1" stop-color="#2c3036" />
+    </radialGradient>
+    <linearGradient id={id('band')} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.28" />
+      <stop offset="1" stop-color="#000" stop-opacity="0.2" />
+    </linearGradient>
+    <radialGradient id={id('shadow')} cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#1b2026" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#1b2026" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="520" cy="418" rx="470" ry="14" fill={url('shadow')} />
+  <path d={`M${xs[0]} ${y(0)} L${xs[5]} ${y(5)}`} stroke="#9aa3ad" stroke-width="1" stroke-dasharray="3 6" />
+
+  <!-- headband -->
+  <path d="M330 120 C 360 20, 680 10, 710 112" fill="none" stroke="var(--cushion)" stroke-width="20" stroke-linecap="round" transform="translate(0 10)" />
+  <path d="M330 120 C 360 20, 680 10, 710 112" fill="none" stroke="var(--shell)" stroke-width="18" stroke-linecap="round" />
+  <path d="M330 120 C 360 20, 680 10, 710 112" fill="none" stroke={url('band')} stroke-width="18" stroke-linecap="round" />
+  <rect x="326" y="112" width="7" height="34" rx="3.5" fill="var(--metal)" />
+  <rect x="707" y="104" width="7" height="34" rx="3.5" fill="var(--metal)" />
+
+  <!-- cap -->
+  <g transform={`translate(${xs[0]} ${y(0)})`}>
+    <ellipse rx="52" ry="122" fill="var(--plate)" />
+    <ellipse rx="52" ry="122" fill={url('hi')} />
+    <ellipse rx="56" ry="127" fill="none" stroke="var(--metal)" stroke-width="2.5" />
+    <text y="6" text-anchor="middle" font-family="var(--font-isola), system-ui, sans-serif" font-size="13" font-weight="300" letter-spacing="2" fill="var(--mark)" transform="scale(0.6 1)">isola</text>
+  </g>
+  <!-- shell -->
+  <g transform={`translate(${xs[1]} ${y(1)})`}>
+    <ellipse rx="62" ry="140" fill="var(--shell)" />
+    <ellipse rx="62" ry="140" fill={url('hi')} />
+    <ellipse cx="6" rx="44" ry="112" fill="#000" opacity="0.32" />
+  </g>
+  <!-- battery -->
+  <g transform={`translate(${xs[2]} ${y(2)})`}>
+    <rect x="-30" y="-78" width="60" height="156" rx="12" fill="#e9ecef" />
+    <rect x="-30" y="-78" width="60" height="156" rx="12" fill={url('hi')} opacity="0.6" />
+    <rect x="-30" y="-20" width="60" height="14" fill="#4c6a5c" />
+    <rect x="-10" y="-86" width="20" height="8" rx="2" fill="#aeb5bc" />
+  </g>
+  <!-- board -->
+  <g transform={`translate(${xs[3]} ${y(3)})`}>
+    <ellipse rx="44" ry="104" fill="#1f2a2f" />
+    <ellipse rx="44" ry="104" fill="none" stroke="#5f6f69" stroke-width="2" />
+    <rect x="-18" y="-30" width="36" height="44" rx="3" fill="#0e1012" />
+    <rect x="-12" y="-24" width="24" height="32" rx="2" fill="none" stroke="#6f8f7f" stroke-width="1.5" />
+    <rect x="-14" y="30" width="12" height="20" rx="2" fill="#0e1012" />
+    <rect x="4" y="30" width="10" height="14" rx="2" fill="#0e1012" />
+    <rect x="-10" y="-70" width="20" height="18" rx="2" fill="#0e1012" />
+  </g>
+  <!-- driver -->
+  <g transform={`translate(${xs[4]} ${y(4)})`}>
+    <ellipse rx="52" ry="118" fill="#2a2e33" />
+    <ellipse rx="44" ry="102" fill={url('cone')} />
+    <ellipse rx="49" ry="111" fill="none" stroke="#6f8f7f" stroke-width="3" />
+    <ellipse rx="14" ry="32" fill="#3a3f45" />
+    <ellipse cx="-3" cy="-6" rx="6" ry="12" fill="#fff" opacity="0.18" />
+  </g>
+  <!-- cushion -->
+  <g transform={`translate(${xs[5]} ${y(5)})`}>
+    <ellipse rx="56" ry="132" fill="var(--cushion)" />
+    <ellipse rx="56" ry="132" fill={url('hi')} />
+    <ellipse cx="2" rx="30" ry="88" fill="#121417" opacity="0.8" />
+  </g>
+</svg>
+
+<style>
+  .isola-exploded { width: 100%; height: 100%; }
+</style>

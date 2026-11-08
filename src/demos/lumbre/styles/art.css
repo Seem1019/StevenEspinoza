@@ -1,0 +1,74 @@
+/*
+ * Lumbre — scene art primitives (imported by every scene component, so the BuildPreview
+ * thumbnails get them too). Art canvas = 1600×1000 with `xMidYMid slice`.
+ * `.lb-at` places an HTML element at canvas coordinates (--x, --y, --w, --h in canvas units)
+ * using container query units of the layer, so particles line up with the SVG at any aspect ratio.
+ */
+.lb-cam, .lb-push { position: absolute; inset: 0; }
+.lb-layer { position: absolute; inset: 0; container-type: size; pointer-events: none; }
+.lb-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; }
+.lb-at {
+  position: absolute;
+  --u: max(100cqw / 1600, 100cqh / 1000);
+  left: calc(50cqw + (var(--x) - 800) * var(--u));
+  top: calc(50cqh + (var(--y) - 500) * var(--u));
+  width: calc(var(--w, 0) * var(--u));
+  height: calc(var(--h, 0) * var(--u));
+}
+.lb-at > svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* ---- ambient fx (static pose by default) ---- */
+.lb-ember {
+  border-radius: 50%;
+  background: #ffd890;
+  box-shadow: 0 0 6px 2px rgb(240 122 38 / 0.85);
+  opacity: 0.8;
+}
+.lb-smoke {
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(196 176 160 / 0.2), rgb(196 176 160 / 0.08) 55%, transparent);
+  opacity: 0.6;
+}
+.lb-bokeh {
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 202 120 / 0.55), rgb(255 160 70 / 0.18) 60%, transparent);
+}
+.lb-flame { transform-origin: 50% 100%; }
+.lb-lamp { transform-origin: 50% 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .lb-fx-flicker { animation: lb-flicker 3.2s steps(1, end) infinite; }
+  .lb-flame { animation: lb-flame var(--t, 1.4s) ease-in-out var(--d, 0s) infinite alternate; }
+  .lb-ember { animation: lb-ember var(--t, 3s) linear var(--d, 0s) infinite; }
+  .lb-smoke { animation: lb-smoke var(--t, 9s) linear var(--d, 0s) infinite; }
+  .lb-lamp { animation: lb-sway var(--t, 6s) ease-in-out var(--d, 0s) infinite alternate; }
+  .lb-bokeh { animation: lb-twinkle var(--t, 5s) ease-in-out var(--d, 0s) infinite alternate; }
+  .lb-candle { animation: lb-candle 0.9s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+}
+
+@keyframes lb-flicker {
+  0%, 100% { opacity: 1; }
+  41% { opacity: 0.86; }
+  43% { opacity: 1; }
+  71% { opacity: 0.92; }
+  73% { opacity: 1; }
+}
+@keyframes lb-flame {
+  0% { transform: scale(0.94, 0.9) skewX(-2deg); opacity: 0.88; }
+  50% { transform: scale(1.03, 1.06) skewX(2deg); opacity: 1; }
+  100% { transform: scale(0.97, 1.12) skewX(-1deg); opacity: 0.92; }
+}
+@keyframes lb-ember {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  12% { opacity: 1; }
+  70% { opacity: 0.8; }
+  100% { transform: translate3d(var(--dx, 2cqw), -34cqh, 0) scale(0.4); opacity: 0; }
+}
+@keyframes lb-smoke {
+  0% { transform: translate3d(0, 6cqh, 0) scale(0.6); opacity: 0; }
+  30% { opacity: 0.7; }
+  100% { transform: translate3d(var(--dx, -3cqw), -26cqh, 0) scale(1.5); opacity: 0; }
+}
+@keyframes lb-sway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }
+@keyframes lb-twinkle { from { opacity: 0.45; transform: scale(0.92); } to { opacity: 1; transform: scale(1.06); } }
+@keyframes lb-candle { from { transform: scale(0.92, 0.88) skewX(-3deg); } to { transform: scale(1.04, 1.08) skewX(3deg); } }

@@ -1,0 +1,164 @@
+---
+/**
+ * Static miniature of the Isola H1 page for the agents showcase + gallery thumbnail.
+ * Designed at 1280px wide. No JS, no network, no three.js: the 3D stage is shown as the exploded SVG strip.
+ */
+import { useT, type Lang } from '../../i18n';
+import Product from './components/Product.astro';
+import Exploded from './components/Exploded.astro';
+import { finishes, fromPrice } from './data';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'isola');
+const nf = new Intl.NumberFormat(lang);
+const money = (n: number) => t('currency', { n: nf.format(n) });
+const callouts = t.raw<{ id: string; title: string; body: string }[]>('stage.callouts');
+const features = t.raw<{ id: string; title: string; body: string; stat: string; statLabel: string }[]>('features.items');
+const specs = t.raw<[string, string][]>('specs.rows').slice(0, 5);
+const f = finishes[0];
+const vars = `--shell:${f.shell};--plate:${f.plate};--cushion:${f.cushion};--metal:${f.metal};--mark:${f.mark}`;
+---
+
+<div class="bp" style={vars} lang={lang}>
+  <div class="bp-nav" data-build="nav">
+    <span class="bp-logo"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.3" /><circle cx="12" cy="12" r="4" fill="currentColor" /></svg>isola</span>
+    <span class="bp-links"><span>{t('nav.design')}</span><span>{t('nav.tech')}</span><span>{t('nav.finish')}</span><span>{t('nav.specs')}</span></span>
+    <span class="bp-btn bp-btn--sm">{t('nav.buy')}</span>
+  </div>
+
+  <div class="bp-hero" data-build="hero">
+    <div class="bp-hero__copy">
+      <div data-build="hero-title">
+        <p class="bp-eyebrow">{t('hero.eyebrow')}</p>
+        <p class="bp-h1">{t('hero.title')}</p>
+      </div>
+      <div data-build="hero-copy">
+        <p class="bp-promise">{t('hero.promise')}</p>
+        <p class="bp-body">{t('hero.body')}</p>
+      </div>
+      <div class="bp-buy" data-build="hero-cta">
+        <p class="bp-price">{t('hero.price', { price: money(fromPrice) })}</p>
+        <div class="bp-ctas"><span class="bp-btn">{t('hero.cta')}</span><span class="bp-btn bp-btn--ghost">{t('hero.secondary')}</span></div>
+      </div>
+    </div>
+    <div class="bp-hero__art" data-build="hero-product">
+      <Product uid="bp-hero" label={t('hero.alt')} />
+    </div>
+  </div>
+
+  <div class="bp-stage" data-build="explode">
+    <p class="bp-h2 bp-center">{t('stage.titleB')}</p>
+    <div class="bp-exploded"><Exploded uid="bp-x" label={t('stage.explodedAlt')} /></div>
+    <ul class="bp-notes" data-build="callouts">
+      {callouts.map((c) => <li><strong>{c.title}</strong><span>{c.body}</span></li>)}
+    </ul>
+  </div>
+
+  <div class="bp-feats" data-build="features">
+    <p class="bp-h2">{t('features.title')}</p>
+    <div class="bp-feats__grid">
+      {features.map((x) => (
+        <div class="bp-feat">
+          <p class="bp-stat">{x.stat}</p>
+          <p class="bp-statlabel">{x.statLabel}</p>
+          <p class="bp-feat__t">{x.title}</p>
+          <p class="bp-feat__b">{x.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="bp-specs" data-build="specs">
+    <p class="bp-h2">{t('specs.title')}</p>
+    <dl>
+      {specs.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+    </dl>
+  </div>
+
+  <div class="bp-cta" data-build="cta">
+    <p class="bp-h2">{t('cta.title')}</p>
+    <span class="bp-btn bp-btn--light">{t('cta.button')}</span>
+  </div>
+
+  <div class="bp-foot" data-build="footer">
+    <span>isola</span>
+    <span>{t('footer.brand')}</span>
+  </div>
+</div>
+
+<style>
+  .bp {
+    --bg: #ffffff; --steel-1: #f4f6f8; --steel-2: #e8ecf0; --steel-3: #d3d9df; --line: #e1e6eb;
+    --text: #16191d; --muted: #59626b; --accent: #4c6a5c;
+    --build-accent: #4c6a5c;
+    width: 1280px; background: var(--bg); color: var(--text);
+    font-family: var(--font-isola, system-ui), system-ui, sans-serif; font-size: 15px; line-height: 1.55;
+  }
+  .bp p { margin: 0; }
+  .bp-nav { height: 64px; display: flex; align-items: center; gap: 24px; padding: 0 64px; border-bottom: 1px solid var(--line); }
+  .bp-logo { display: inline-flex; align-items: center; gap: 8px; font-weight: 300; font-size: 21px; letter-spacing: 0.06em; }
+  .bp-links { margin-left: auto; display: flex; gap: 28px; color: var(--muted); font-size: 14px; font-weight: 500; }
+  .bp-btn { display: inline-flex; align-items: center; height: 46px; padding: 0 22px; border-radius: 4px; background: var(--accent); color: #fff; font-weight: 600; font-size: 14px; border: 1px solid transparent; }
+  .bp-btn--sm { height: 38px; padding: 0 16px; }
+  .bp-btn--ghost { background: transparent; color: var(--text); border-color: var(--text); }
+  .bp-btn--light { background: #f4f6f8; color: var(--text); }
+
+  .bp-hero { display: grid; grid-template-columns: 5fr 7fr; gap: 40px; align-items: center; padding: 32px 64px 40px; height: 600px; }
+  .bp-eyebrow { color: var(--muted); font-size: 14px; font-weight: 500; margin-bottom: 18px; }
+  .bp-h1 { font-weight: 200; font-size: 132px; line-height: 0.9; letter-spacing: -0.055em; margin-left: -4px; }
+  .bp-promise { font-weight: 300; font-size: 28px; letter-spacing: -0.02em; line-height: 1.2; margin-top: 20px; }
+  .bp-body { color: var(--muted); max-width: 40ch; margin-top: 14px; }
+  .bp-buy { margin-top: 30px; display: grid; gap: 16px; }
+  .bp-price { font-weight: 500; font-size: 18px; }
+  .bp-ctas { display: flex; gap: 12px; }
+  .bp-hero__art { height: 100%; background: radial-gradient(55% 50% at 55% 52%, var(--steel-2) 0%, rgb(232 236 240 / 0) 72%); }
+
+  .bp-h2 { font-weight: 300; font-size: 42px; line-height: 1.04; letter-spacing: -0.035em; }
+  .bp-center { text-align: center; max-width: 20ch; margin-inline: auto !important; }
+  .bp-stage { padding: 48px 64px 48px; background: radial-gradient(60% 55% at 50% 50%, var(--steel-1), rgb(244 246 248 / 0) 72%), var(--bg); border-top: 1px solid var(--line); }
+  .bp-exploded { height: 330px; margin-top: 12px; }
+  .bp-notes { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .bp-notes li { display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--steel-3); font-size: 13px; }
+  .bp-notes strong { font-weight: 600; font-size: 14px; }
+  .bp-notes span { color: var(--muted); }
+
+  .bp-feats { padding: 56px 64px; border-top: 1px solid var(--line); }
+  .bp-feats__grid { margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .bp-feat { border-top: 1px solid var(--text); padding-top: 20px; }
+  .bp-stat { font-weight: 200; font-size: 48px; letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
+  .bp-statlabel { color: var(--muted); font-size: 12px; font-weight: 500; margin-top: 6px !important; }
+  .bp-feat__t { font-weight: 500; font-size: 16px; margin-top: 24px !important; }
+  .bp-feat__b { color: var(--muted); font-size: 13px; line-height: 1.45; margin-top: 8px !important; }
+
+  .bp-specs { display: grid; grid-template-columns: 4fr 8fr; gap: 40px; padding: 56px 64px; background: var(--steel-1); }
+  .bp-specs dl { margin: 0; }
+  .bp-specs dl div { display: grid; grid-template-columns: 38% 1fr; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .bp-specs dl div:first-child { border-top: 1px solid var(--text); }
+  .bp-specs dt { font-weight: 500; }
+  .bp-specs dd { margin: 0; color: var(--muted); }
+
+  .bp-cta { background: var(--text); color: #f4f6f8; padding: 56px 64px; display: grid; gap: 24px; justify-items: start; }
+  .bp-cta .bp-h2 { max-width: 16ch; }
+  .bp-foot { display: flex; gap: 24px; align-items: center; padding: 32px 64px 40px; color: var(--muted); font-size: 13px; }
+  .bp-foot span:first-child { color: var(--text); font-weight: 300; font-size: 18px; letter-spacing: 0.06em; }
+
+  /* motion state (showcase only) */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-build-state='motion'] .bp-hero__art :global(svg),
+    .bp-hero__art[data-build-state='motion'] :global(svg) { animation: bp-float 4.8s ease-in-out infinite; }
+    .bp-stage[data-build-state='motion'] .bp-exploded :global(svg) { animation: bp-explode 1.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .bp-notes[data-build-state='motion'] li { animation: bp-fade 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .bp-notes[data-build-state='motion'] li:nth-child(2) { animation-delay: 120ms; }
+    .bp-notes[data-build-state='motion'] li:nth-child(3) { animation-delay: 240ms; }
+    .bp-notes[data-build-state='motion'] li:nth-child(4) { animation-delay: 360ms; }
+    .bp-notes[data-build-state='motion'] li:nth-child(5) { animation-delay: 480ms; }
+    .bp-feats[data-build-state='motion'] .bp-feat { animation: bp-fade 800ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .bp-feats[data-build-state='motion'] .bp-feat:nth-child(2) { animation-delay: 120ms; }
+    .bp-feats[data-build-state='motion'] .bp-feat:nth-child(3) { animation-delay: 240ms; }
+    .bp-feats[data-build-state='motion'] .bp-feat:nth-child(4) { animation-delay: 360ms; }
+  }
+  @keyframes bp-float { 50% { transform: translateY(-8px) rotate(-0.6deg); } }
+  @keyframes bp-explode { from { transform: scaleX(0.55); opacity: 0.4; } }
+  @keyframes bp-fade { from { opacity: 0; transform: translateY(14px); } }
+</style>

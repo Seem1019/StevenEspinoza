@@ -1,0 +1,88 @@
+---
+/**
+ * Reservation sheet (<dialog>). Opens from any [data-lb-reserve]; URL ?reserva=1 (deep link, Back closes).
+ * Simulated: nothing is sent. Day chips get their labels on the client (relative to today).
+ */
+import { useT, type Lang } from '../../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'lumbre');
+const lunch = ['13:00', '13:30', '14:00', '14:30', '15:00'];
+const dinner = ['20:00', '20:30', '21:00', '21:30', '22:00', '22:30'];
+const strings = {
+  today: t('reserve.today'), tomorrow: t('reserve.tomorrow'), closed: t('reserve.closed'), full: t('reserve.full'),
+  people: t('reserve.people'), person: t('reserve.person'), doneFor: t('reserve.doneFor'), errorTime: t('reserve.errorTime'),
+};
+---
+<dialog id="lb-reserve" class="lb-sheet" aria-labelledby="lb-reserve-title" data-lb-sheet data-lang={lang} data-strings={JSON.stringify(strings)}>
+  <div class="lb-sheet__panel">
+    <header class="lb-sheet__head">
+      <h2 id="lb-reserve-title" class="lb-sheet__title">{t('reserve.title')}</h2>
+      <button type="button" class="lb-icon-btn" data-lb-close aria-label={t('reserve.close')}>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><use href="#lb-i-close" /></svg>
+      </button>
+    </header>
+
+    <form class="lb-form" data-lb-form novalidate>
+      <fieldset class="lb-field">
+        <legend>{t('reserve.day')}</legend>
+        <div class="lb-days" data-lb-days>
+          {Array.from({ length: 7 }, (_, i) => (
+            <label class="lb-chip lb-chip--day">
+              <input type="radio" name="day" value={String(i)} checked={i === 0} />
+              <span class="lb-chip__top" data-dow>{i === 0 ? t('reserve.today') : i === 1 ? t('reserve.tomorrow') : '·'}</span>
+              <span class="lb-chip__big" data-dom>·</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset class="lb-field">
+        <legend>{t('reserve.time')}</legend>
+        {[{ k: 'lunch', list: lunch }, { k: 'dinner', list: dinner }].map((g) => (
+          <div class="lb-slots-group">
+            <p class="lb-slots-label">{t(`reserve.${g.k}`)}</p>
+            <div class="lb-slots">
+              {g.list.map((h) => (
+                <label class="lb-chip lb-chip--slot">
+                  <input type="radio" name="time" value={h} />
+                  <span>{h}</span>
+                  <span class="lb-chip__full" aria-hidden="true">{t('reserve.full')}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+        <p class="lb-error" data-lb-error aria-live="polite"></p>
+      </fieldset>
+
+      <div class="lb-field lb-field--row">
+        <span class="lb-legend" id="lb-party-label">{t('reserve.party')}</span>
+        <div class="lb-stepper" role="group" aria-labelledby="lb-party-label">
+          <button type="button" class="lb-icon-btn" data-lb-step="-1" aria-label={t('reserve.less')}>−</button>
+          <output class="lb-stepper__value" data-lb-party aria-live="polite">{t('reserve.people', { n: 2 })}</output>
+          <button type="button" class="lb-icon-btn" data-lb-step="1" aria-label={t('reserve.more')}>+</button>
+        </div>
+      </div>
+
+      <div class="lb-field">
+        <label class="lb-legend" for="lb-name">{t('reserve.name')}</label>
+        <input class="lb-input" id="lb-name" name="name" type="text" autocomplete="off" maxlength="40" placeholder={t('reserve.namePh')} />
+      </div>
+
+      <p class="lb-demo-note">{t('reserve.note')}</p>
+      <button type="submit" class="lb-btn lb-btn--primary lb-btn--block">{t('reserve.submit')}</button>
+    </form>
+
+    <div class="lb-done" data-lb-done hidden>
+      <span class="lb-done__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30"><use href="#lb-i-check" /></svg></span>
+      <h3 class="lb-done__title" tabindex="-1" data-lb-done-title>{t('reserve.doneTitle')}</h3>
+      <p class="lb-done__summary" data-lb-summary></p>
+      <p class="lb-demo-note">{t('reserve.doneNote')}</p>
+      <div class="lb-actions">
+        <button type="button" class="lb-btn lb-btn--primary" data-lb-close>{t('reserve.doneClose')}</button>
+        <button type="button" class="lb-btn lb-btn--ghost" data-lb-again>{t('reserve.again')}</button>
+      </div>
+    </div>
+  </div>
+</dialog>

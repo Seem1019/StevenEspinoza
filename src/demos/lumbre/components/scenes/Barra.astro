@@ -1,0 +1,160 @@
+---
+/** Scene 2 — the bar. Back: back-bar shelves with bottles. Mid: swaying pendant lamps. Front: counter, glasses, stools. */
+import '../../styles/art.css';
+interface Props { p?: string }
+const { p = 'lbB' } = Astro.props;
+const id = (s: string) => `${p}-${s}`;
+const url = (s: string) => `url(#${id(s)})`;
+let seed = 23;
+const r = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const colors = ['#8a4a17', '#2f4a2c', '#5a1a18', '#7a6248', '#3a2414', '#a0621f', '#24391f'];
+const shelves = [318, 488, 658];
+type Bottle = { d: string; c: string; hx: number; hy: number; hh: number };
+const bottles: Bottle[] = [];
+for (const base of shelves) {
+  let x = 150;
+  while (x < 1460) {
+    const w = 26 + r() * 14;
+    const h = 92 + r() * 52;
+    const n = 9 + r() * 3;
+    const body = h * (0.52 + r() * 0.12);
+    const neckB = base - body - 22;
+    const top = base - h;
+    const L = x - w / 2, R = x + w / 2;
+    const d = `M${L.toFixed(1)} ${base}V${(base - body).toFixed(1)}Q${L.toFixed(1)} ${neckB.toFixed(1)} ${(x - n / 2).toFixed(1)} ${neckB.toFixed(1)}V${top.toFixed(1)}H${(x + n / 2).toFixed(1)}V${neckB.toFixed(1)}Q${R.toFixed(1)} ${neckB.toFixed(1)} ${R.toFixed(1)} ${(base - body).toFixed(1)}V${base}Z`;
+    bottles.push({ d, c: colors[Math.floor(r() * colors.length)], hx: L + 4, hy: base - body + 6, hh: body - 14 });
+    x += w + 6 + (r() < 0.12 ? 40 : r() * 10);
+  }
+}
+const lamps = [
+  { x: 420, len: 230, t: 6.5, d: -1 }, { x: 620, len: 300, t: 5.6, d: -3 }, { x: 800, len: 250, t: 7, d: -2 },
+  { x: 980, len: 300, t: 6, d: -4 }, { x: 1180, len: 230, t: 6.8, d: -0.5 },
+];
+---
+<div class="lb-cam">
+  <div class="lb-push">
+    <div class="lb-layer lb-layer--back">
+      <svg class="lb-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={id('wall')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#140c08" />
+            <stop offset="1" stop-color="#2a180e" />
+          </linearGradient>
+          <linearGradient id={id('mirror')} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3a2416" />
+            <stop offset="0.5" stop-color="#4a2e1a" />
+            <stop offset="1" stop-color="#2a180e" />
+          </linearGradient>
+          <linearGradient id={id('led')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffb860" stop-opacity="0" />
+            <stop offset="1" stop-color="#ffb860" stop-opacity="0.55" />
+          </linearGradient>
+        </defs>
+        <rect width="1600" height="1000" fill={url('wall')} />
+        <path d="M0 0v1000M200 0v1000M1400 0v1000M1600 0v1000" stroke="#0c0705" stroke-width="10" />
+        <rect x="110" y="140" width="1380" height="540" fill={url('mirror')} />
+        <rect x="110" y="140" width="1380" height="540" fill="none" stroke="#8d6a32" stroke-width="4" />
+        {shelves.map((y) => <rect x="110" y={y - 150} width="1380" height="150" fill={url('led')} />)}
+        {bottles.map((b) => (
+          <g>
+            <path d={b.d} fill={b.c} opacity="0.92" />
+            <rect x={b.hx.toFixed(1)} y={b.hy.toFixed(1)} width="3" height={b.hh.toFixed(1)} fill="#ffe2b0" opacity="0.35" />
+          </g>
+        ))}
+        {shelves.map((y) => (
+          <g>
+            <rect x="104" y={y} width="1392" height="10" fill="#c9a15a" />
+            <rect x="104" y={y + 10} width="1392" height="6" fill="#4a3018" />
+          </g>
+        ))}
+        <rect x="104" y="128" width="1392" height="14" fill="#2a180e" />
+      </svg>
+    </div>
+
+    <div class="lb-layer lb-layer--mid">
+      {lamps.map((l, i) => (
+        <div class="lb-at lb-lamp lb-fx" style={`--x:${l.x - 160};--y:-20;--w:320;--h:${l.len + 520};--t:${l.t}s;--d:${l.d}s`}>
+          <svg viewBox={`0 0 320 ${l.len + 520}`} aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id={id(`cone${i}`)} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffd28a" stop-opacity="0.34" />
+                <stop offset="1" stop-color="#ffd28a" stop-opacity="0" />
+              </linearGradient>
+              <radialGradient id={id(`bulb${i}`)}>
+                <stop offset="0" stop-color="#fff3d0" stop-opacity="0.95" />
+                <stop offset="0.35" stop-color="#ffc46e" stop-opacity="0.5" />
+                <stop offset="1" stop-color="#ffc46e" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <path d={`M118 ${l.len + 58}L0 ${l.len + 520}H320L202 ${l.len + 58}z`} fill={url(`cone${i}`)} />
+            <path d={`M160 0v${l.len}`} stroke="#0a0604" stroke-width="3" />
+            <path d={`M152 ${l.len}h16v10h-16z`} fill="#8d6a32" />
+            <path d={`M160 ${l.len + 8}c-34 0-56 22-62 52h124c-6-30-28-52-62-52z`} fill="#c9a15a" />
+            <path d={`M160 ${l.len + 8}c-34 0-56 22-62 52h22c4-26 20-46 40-52z`} fill="#f1d08a" opacity="0.6" />
+            <circle cx="160" cy={l.len + 64} r="70" fill={url(`bulb${i}`)} />
+            <ellipse cx="160" cy={l.len + 61} rx="22" ry="8" fill="#fff6dc" />
+          </svg>
+        </div>
+      ))}
+    </div>
+
+    <div class="lb-layer lb-layer--front">
+      <svg class="lb-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={id('top')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6a3c1c" />
+            <stop offset="1" stop-color="#3a2010" />
+          </linearGradient>
+          <linearGradient id={id('panel')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#26150b" />
+            <stop offset="1" stop-color="#0e0805" />
+          </linearGradient>
+          <linearGradient id={id('glass')} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffe9c4" stop-opacity="0.5" />
+            <stop offset="0.4" stop-color="#ffe9c4" stop-opacity="0.08" />
+            <stop offset="1" stop-color="#ffe9c4" stop-opacity="0.3" />
+          </linearGradient>
+        </defs>
+        <!-- counter -->
+        <rect x="0" y="716" width="1600" height="40" fill={url('top')} />
+        <rect x="0" y="716" width="1600" height="4" fill="#f1c27a" opacity="0.55" />
+        <rect x="0" y="756" width="1600" height="244" fill={url('panel')} />
+        <path d="M100 760v240M300 760v240M500 760v240M700 760v240M900 760v240M1100 760v240M1300 760v240M1500 760v240" stroke="#050302" stroke-width="4" opacity="0.7" />
+        <rect x="0" y="842" width="1600" height="12" rx="6" fill="#c9a15a" />
+        <rect x="0" y="842" width="1600" height="4" rx="2" fill="#f1d08a" opacity="0.7" />
+        <!-- wine glass -->
+        <g transform="translate(690 590)">
+          <path d="M-34 0h68c2 50-14 78-34 80-20-2-36-30-34-80z" fill={url('glass')} stroke="#ffe9c4" stroke-opacity="0.5" stroke-width="2" />
+          <path d="M-32 34h64c-4 28-16 44-32 46-16-2-28-18-32-46z" fill="#7a1a18" />
+          <path d="M0 80v44M-24 126h48" stroke="#ffe9c4" stroke-opacity="0.55" stroke-width="3" />
+        </g>
+        <!-- coupe -->
+        <g transform="translate(850 640)">
+          <path d="M-48 0h96c-6 26-26 38-48 38S-42 26-48 0z" fill="#e89a3a" opacity="0.9" />
+          <path d="M-48 0h96" stroke="#ffe9c4" stroke-opacity="0.6" stroke-width="2" />
+          <path d="M0 38v40M-22 78h44" stroke="#ffe9c4" stroke-opacity="0.55" stroke-width="3" />
+          <path d="M18 -8l22-22" stroke="#3b5a2c" stroke-width="3" /><circle cx="42" cy="-32" r="6" fill="#d9e8a0" />
+        </g>
+        <!-- tumbler + bottle -->
+        <g transform="translate(980 640)">
+          <rect x="-30" y="0" width="60" height="76" rx="4" fill={url('glass')} stroke="#ffe9c4" stroke-opacity="0.45" stroke-width="2" />
+          <rect x="-27" y="34" width="54" height="40" fill="#b4621f" opacity="0.85" />
+          <rect x="-16" y="22" width="22" height="22" rx="3" fill="#f6efe6" opacity="0.35" />
+        </g>
+        <g transform="translate(1090 520)">
+          <path d="M-26 196V80q0-30 18-40V0h16v40q18 10 18 40v116z" fill="#24391f" />
+          <rect x="-20" y="110" width="40" height="50" fill="#e9dcc2" opacity="0.85" />
+          <rect x="-22" y="86" width="4" height="100" fill="#d9f0c0" opacity="0.3" />
+        </g>
+        <!-- stools (foreground silhouettes) -->
+        {[560, 1050].map((x) => (
+          <g fill="#070403">
+            <ellipse cx={x} cy="900" rx="78" ry="22" />
+            <rect x={x - 70} y="900" width="140" height="22" />
+            <path d={`M${x - 8} 922h16v80h-16z M${x - 52} 1000l44-80h16l44 80z`} />
+          </g>
+        ))}
+      </svg>
+    </div>
+  </div>
+</div>

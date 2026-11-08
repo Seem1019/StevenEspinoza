@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "name": "Lumbre",
+    "title": "Lumbre · wood-fire kitchen (demo)",
+    "tagline": "A wood-fire restaurant you walk through as you scroll: from the door to your table.",
+    "description": "Lumbre is a fictional wood-fire restaurant: as you scroll you step through the door, past the bar and the grill, and sit down at your table. Tabbed menu, opening hours and booking on the same page, with no reloads.",
+    "features": ["Scroll walk-through of the venue (CSS)", "Zero video: layered SVG illustrations", "Tabbed menu with shareable URL", "Booking in a side panel, no page change"]
+  },
+  "head": {
+    "home": "Lumbre, back to the top",
+    "nav": "Sections",
+    "menu": "Menu",
+    "hours": "Hours",
+    "reserve": "Book"
+  },
+  "world": {
+    "label": "A walk through Lumbre",
+    "rail": "Walk through the venue",
+    "hint": "Scroll to step inside",
+    "scenes": {
+      "entrada": {
+        "rail": "Entrance",
+        "title": "Lumbre",
+        "line": "Slow wood-fire cooking in the old quarter. Holm-oak embers, seasonal produce and long evenings.",
+        "tags": ["Holm-oak embers", "Seasonal produce", "Open till midnight"]
+      },
+      "barra": {
+        "rail": "Bar",
+        "title": "The bar",
+        "line": "Vermouth on tap, natural wines and smoked cocktails while the fire gets going.",
+        "tags": ["House vermouth", "Wines by the glass", "Smoked cocktails"]
+      },
+      "cocina": {
+        "rail": "Kitchen",
+        "title": "The kitchen",
+        "line": "An open grill in full view: every cut goes over the embers right in front of you.",
+        "tags": ["Open grill", "Dry-aged meats", "Catch of the day"]
+      },
+      "mesa": {
+        "rail": "Table",
+        "title": "Your table",
+        "line": "Sharing plates down the middle. Book now and we’ll keep you a seat by the fire.",
+        "tags": ["Up to 10 guests", "Terrace in summer"],
+        "cta": "Book a table",
+        "cta2": "See the menu"
+      }
+    }
+  },
+  "menu": {
+    "title": "The menu",
+    "intro": "It changes with the season and with what the market brings. Everything meets the fire at some point.",
+    "note": "Sample prices, fictional.",
+    "tabsLabel": "Menu sections",
+    "tabs": { "empezar": "To start", "fuego": "From the fire", "postres": "Desserts", "bebidas": "Drinks" },
+    "items": {
+      "empezar": [
+        { "name": "Ember-toasted sourdough", "desc": "With smoked butter and flaky salt.", "price": "6", "icon": "bread" },
+        { "name": "Fire-roasted peppers", "desc": "Roasted in the embers, with anchovy and garlic oil.", "price": "12", "icon": "pepper" },
+        { "name": "Smoked ham croquettes", "desc": "Creamy inside, six pieces.", "price": "11", "icon": "bowl" },
+        { "name": "Burrata, charred tomato", "desc": "Garden tomatoes blistered over the flame, basil.", "price": "14", "icon": "cheese" }
+      ],
+      "fuego": [
+        { "name": "45-day dry-aged rib steak", "desc": "Cut to share. Salt, embers, nothing else.", "price": "68", "icon": "steak" },
+        { "name": "Grilled octopus", "desc": "With crushed potatoes and smoked paprika.", "price": "26", "icon": "fish" },
+        { "name": "Salt-baked catch of the day", "desc": "Market fish with grilled lemon.", "price": "29", "icon": "fish" },
+        { "name": "Whole ember-roasted cauliflower", "desc": "With tahini, pomegranate and herbs.", "price": "17", "icon": "veg" }
+      ],
+      "postres": [
+        { "name": "Caramelised torrija", "desc": "Brioche, infused milk and vanilla ice cream.", "price": "9", "icon": "dessert" },
+        { "name": "Grilled pineapple", "desc": "Glazed with dark rum and lime.", "price": "8", "icon": "fruit" },
+        { "name": "Goat cheese, smoked honey", "desc": "With fire-toasted walnuts.", "price": "10", "icon": "cheese" },
+        { "name": "Chocolate, salt and oil", "desc": "Warm ganache, olive oil and toast.", "price": "9", "icon": "dessert" }
+      ],
+      "bebidas": [
+        { "name": "Vermouth on tap", "desc": "Red, with orange and an olive.", "price": "5", "icon": "glass" },
+        { "name": "Glass of natural wine", "desc": "Ask about this week’s selection.", "price": "6", "icon": "wine" },
+        { "name": "Smoked old fashioned", "desc": "Smoked with holm-oak wood at the bar.", "price": "11", "icon": "cocktail" },
+        { "name": "Rosemary lemonade", "desc": "Alcohol-free, with grilled rosemary.", "price": "5", "icon": "glass" }
+      ]
+    }
+  },
+  "info": {
+    "title": "Hours and address",
+    "hoursTitle": "Opening hours",
+    "hours": [
+      { "d": "Tuesday to Thursday", "h": "1:00–4:00 pm · 8:00–11:30 pm" },
+      { "d": "Friday and Saturday", "h": "1:00–4:30 pm · 8:00 pm–12:30 am" },
+      { "d": "Sunday", "h": "1:00–5:00 pm" },
+      { "d": "Monday", "h": "Closed" }
+    ],
+    "addressTitle": "Find us",
+    "address": "14 Charcoal Street, Old Quarter",
+    "addressNote": "Fictional address: Lumbre is a made-up restaurant.",
+    "mapLabel": "Illustrative map of the area",
+    "reserve": "Book a table"
+  },
+  "reserve": {
+    "title": "Book your table",
+    "close": "Close booking",
+    "day": "Day",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "closed": "Closed",
+    "time": "Time",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "full": "Full",
+    "party": "Guests",
+    "less": "One guest less",
+    "more": "One guest more",
+    "people": "{n} guests",
+    "person": "1 guest",
+    "name": "Name (optional)",
+    "namePh": "Who is the booking for?",
+    "submit": "Confirm booking",
+    "errorTime": "Pick a time to continue.",
+    "note": "Demo: no booking is sent anywhere.",
+    "doneTitle": "Table booked",
+    "doneFor": "for {name}",
+    "doneNote": "This is a simulation: nothing has been sent anywhere.",
+    "again": "Make another booking",
+    "doneClose": "Close"
+  },
+  "band": {
+    "lead": "Want a website like this for your restaurant?",
+    "cta": "Talk to Steven"
+  },
+  "footer": {
+    "line": "Lumbre is a fictional restaurant. A web design and development demo by Steven Espinoza.",
+    "top": "Back to the door"
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens: charcoal #120c09 · ember #e8742c · brass #c9a15a",
+      "type": "Fraunces 600 display · Work Sans 400–600 body",
+      "nav": "sticky header 60px · margin-bottom -60px (no CLS)",
+      "stage": "sticky stage 100svh · overflow clip · grid-area 1/1",
+      "track": "track: 3×135svh + 100svh · view-timeline per segment",
+      "layers": "scenes 1600×1000 · xMidYMid slice · 4 layers",
+      "rail": "rail 4 stops · 44px buttons · aria-current",
+      "strips": "bar · kitchen · table: inline SVG, 0 images",
+      "menuGrid": "menu 2 col · gap 24 · 28px SVG icons",
+      "tabs": "role=tablist · arrow keys · ?menu= via setParams",
+      "reserve": "booking <dialog> · openUi({ reserva: '1' })",
+      "footer": "footer · contact band data-open-contact",
+      "copyHero": "h1 \"Lumbre\" + tagline in the initial HTML",
+      "copyScenes": "copy per scene: title, one line, 2–3 tags",
+      "copyMenu": "16 fictional dishes · prices labelled as sample",
+      "copyInfo": "hours + labelled fictional address",
+      "copyCta": "CTA: \"Book a table\" (verb + outcome)",
+      "motionCam": "camera: scale 0.9→1 in · push 1→2.2 out",
+      "motionParallax": "per-layer parallax: animation-range entry 0% exit 100%",
+      "motionFire": "flames + embers: transform/opacity, paused off-screen",
+      "motionFallback": "no animation-timeline → 4 stacked static scenes",
+      "qaLcp": "LCP: h1.lb-title (text) · no opacity 0 on load",
+      "qaCls": "CLS 0.00 · fixed 100svh stage · overlay panel",
+      "qaContrast": "text contrast #f6e7d2 / #120c09 = 16:1",
+      "qaKeyboard": "keyboard: rail, tabs, booking and Esc ✓",
+      "qaMotion": "prefers-reduced-motion: static scenes ✓"
+    }
+  }
+}

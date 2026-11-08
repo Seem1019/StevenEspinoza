@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "name": "Turnio",
+    "title": "Turnio · Agenda online con recordatorios por WhatsApp para negocios de servicios",
+    "tagline": "Landing SaaS que convierte: reservas online, recordatorios y menos inasistencias.",
+    "description": "Turnio es un SaaS ficticio de reservas para clínicas, salones, talleres y estudios: agenda online 24/7, recordatorios por WhatsApp y anticipos que reducen las inasistencias. Demo de landing orientada a conversión con tour interactivo, precios mensual/anual y alta en la misma página.",
+    "features": [
+      "Mock del producto en HTML/CSS con tour por pestañas",
+      "Precios mensual/anual instantáneos con estado en la URL",
+      "Alta en panel con validación y enlace directo",
+      "FAQ con datos estructurados y revelado al hacer scroll"
+    ]
+  },
+  "a11y": {
+    "home": "Turnio, volver arriba",
+    "nav": "Secciones",
+    "mock": "Vista de ejemplo de la agenda de Turnio",
+    "included": "Incluido",
+    "notIncluded": "No incluido"
+  },
+  "nav": {
+    "product": "Producto",
+    "how": "Cómo funciona",
+    "pricing": "Precios",
+    "faq": "Preguntas",
+    "cta": "Prueba gratis"
+  },
+  "hero": {
+    "eyebrow": "Agenda online para negocios de servicios",
+    "titleA": "Llena tu agenda",
+    "titleB": "y deja de perder citas por inasistencias",
+    "subtitle": "Tus clientes reservan solos 24/7, Turnio les recuerda la cita por WhatsApp y cobra un anticipo para que cada hora reservada se cumpla. Para clínicas, salones, talleres y estudios.",
+    "cta": "Empieza gratis 14 días",
+    "ctaSecondary": "Ver el producto en acción",
+    "reassure": ["Sin tarjeta de crédito", "Lista en 10 minutos", "Cancela cuando quieras"]
+  },
+  "mock": {
+    "app": "Clínica Alba",
+    "week": "Semana 46 · 9 al 13 nov",
+    "today": "Hoy",
+    "search": "Buscar cliente",
+    "newBooking": "Nueva cita",
+    "days": ["Lun 9", "Mar 10", "Mié 11", "Jue 12", "Vie 13"],
+    "hours": ["9:00", "10:00", "11:00", "12:00", "13:00"],
+    "appts": [
+      { "d": 0, "s": 1, "l": 2, "t": "Limpieza dental", "w": "Lucía M.", "c": "a" },
+      { "d": 0, "s": 4, "l": 3, "t": "Ortodoncia", "w": "Tomás R.", "c": "b" },
+      { "d": 1, "s": 0, "l": 2, "t": "Control", "w": "Ana P.", "c": "c" },
+      { "d": 1, "s": 3, "l": 2, "t": "Blanqueamiento", "w": "Diego F.", "c": "a" },
+      { "d": 1, "s": 6, "l": 3, "t": "Endodoncia", "w": "Rosa V.", "c": "b" },
+      { "d": 2, "s": 2, "l": 2, "t": "Limpieza dental", "w": "Marta S.", "c": "c" },
+      { "d": 2, "s": 5, "l": 2, "t": "Revisión", "w": "Iván L.", "c": "a", "n": true },
+      { "d": 3, "s": 0, "l": 3, "t": "Implante", "w": "Carla G.", "c": "b" },
+      { "d": 3, "s": 6, "l": 2, "t": "Control", "w": "Pablo N.", "c": "c" },
+      { "d": 4, "s": 1, "l": 2, "t": "Ortodoncia", "w": "Sofía T.", "c": "b" },
+      { "d": 4, "s": 4, "l": 2, "t": "Limpieza dental", "w": "Hugo B.", "c": "a" }
+    ],
+    "toastTitle": "Recordatorio enviado por WhatsApp",
+    "toastBody": "Lucía M. · Mañana, 10:30",
+    "toastStatus": "Confirmó",
+    "widgetTitle": "Reserva online",
+    "widgetService": "Limpieza dental · 45 min",
+    "widgetDay": "Miércoles 11",
+    "widgetSlots": ["10:00", "10:45", "11:30", "16:15"],
+    "widgetCta": "Reservar y pagar anticipo",
+    "widgetDeposit": "Anticipo US$ 10, se descuenta del total",
+    "chip": "Inasistencias este mes",
+    "chipValue": "−38%"
+  },
+  "proof": {
+    "label": "Clientes de ejemplo",
+    "lead": "Negocios como estos ya organizan su agenda con Turnio",
+    "names": ["Clínica Alba", "Norte Barber Co.", "Taller Ruedas", "Brisa Pilates", "VetPatitas", "Odonto Sur"]
+  },
+  "problem": {
+    "title": "Tu agenda no debería vivir en tu WhatsApp personal",
+    "lead": "Cada cita que se coordina a mano es tiempo que no facturas, y cada inasistencia es una hora que ya no vuelve.",
+    "beforeTitle": "Sin Turnio",
+    "before": [
+      "Respondes mensajes de reservas a las 23:00",
+      "Uno de cada cinco clientes no llega y no avisa",
+      "Dos personas reservan la misma hora con colaboradores distintos",
+      "Los anticipos se cobran por transferencia y se pierden en el chat"
+    ],
+    "afterTitle": "Con Turnio",
+    "after": [
+      "Tus clientes reservan solos desde Instagram, Google o tu web",
+      "Recordatorios automáticos que piden confirmar o reprogramar",
+      "Una sola agenda para todo el equipo, sin solapes",
+      "Anticipo cobrado al reservar y conciliado solo"
+    ]
+  },
+  "benefits": {
+    "title": "Resultados que se notan en el primer mes",
+    "label": "Datos de ejemplo",
+    "items": [
+      { "metric": "−38%", "metricLabel": "inasistencias", "title": "Menos sillas vacías", "text": "Recordatorios a 24 h y 2 h con botón de confirmar. Si alguien cancela, Turnio ofrece el hueco a tu lista de espera." },
+      { "metric": "6 h", "metricLabel": "recuperadas por semana", "title": "Adiós al ida y vuelta", "text": "Nadie te pregunta \"¿tienes hora el jueves?\": tu disponibilidad real está publicada y se actualiza sola." },
+      { "metric": "+24%", "metricLabel": "reservas fuera de horario", "title": "Vendes mientras duermes", "text": "Casi una de cada cuatro citas llega de noche o en fin de semana, cuando antes nadie contestaba." }
+    ]
+  },
+  "how": {
+    "title": "En marcha antes del próximo cliente",
+    "lead": "Sin instalaciones ni migraciones eternas. Importa tu agenda actual en un clic.",
+    "steps": [
+      { "title": "Configura servicios y horarios", "text": "Duración, precio, colaboradores y pausas. Importa clientes desde Excel o Google Calendar.", "meta": "10 minutos" },
+      { "title": "Comparte tu enlace de reservas", "text": "Ponlo en tu bio de Instagram, en Google Maps y en tu WhatsApp Business.", "meta": "1 enlace" },
+      { "title": "Turnio confirma, recuerda y cobra", "text": "Recordatorios automáticos, anticipo al reservar y reprogramación sin llamadas.", "meta": "Automático" }
+    ]
+  },
+  "tour": {
+    "title": "Mira cómo trabaja Turnio por ti",
+    "lead": "Cambia de pestaña: es el mismo panel que usarás desde el primer día.",
+    "tabs": { "agenda": "Agenda", "reminders": "Recordatorios", "payments": "Pagos", "reports": "Informes" },
+    "agenda": {
+      "title": "Todo tu equipo en una sola vista",
+      "text": "Arrastra para mover citas, bloquea pausas y ve al instante quién tiene huecos libres.",
+      "points": ["Agendas por colaborador y por sala", "Lista de espera que rellena cancelaciones", "Sincroniza con Google y Outlook"],
+      "date": "Hoy · martes 10",
+      "staff": ["Dra. Paula", "Andrés", "Camila"],
+      "slots": [
+        { "s": 0, "l": 2, "t": "Control", "w": "Ana P.", "c": "a" },
+        { "s": 3, "l": 3, "t": "Endodoncia", "w": "Rosa V.", "c": "b" },
+        { "s": 1, "l": 2, "t": "Limpieza", "w": "Jorge A.", "c": "c" },
+        { "s": 4, "l": 2, "t": "Blanqueamiento", "w": "Diego F.", "c": "a" },
+        { "s": 0, "l": 2, "t": "Revisión", "w": "Elena C.", "c": "c" },
+        { "s": 2, "l": 3, "t": "Ortodoncia", "w": "Mateo K.", "c": "b" }
+      ],
+      "free": "Hueco libre 13:00",
+      "freeAction": "Ofrecido a 3 en lista de espera"
+    },
+    "reminders": {
+      "title": "Recordatorios que la gente sí responde",
+      "text": "Mensajes por WhatsApp, email o SMS con botones de confirmar y reprogramar. Tú no escribes nada.",
+      "points": ["Plantillas en tu tono y tu idioma", "Secuencia 48 h, 24 h y 2 h antes", "Reprogramación con un toque"],
+      "chatName": "Clínica Alba",
+      "chatStatus": "Cuenta de empresa",
+      "message": "Hola Lucía, te esperamos mañana martes a las 10:30 para tu limpieza dental con la Dra. Paula. ¿Confirmas tu cita?",
+      "confirm": "Confirmar",
+      "reschedule": "Reprogramar",
+      "reply": "Confirmar",
+      "done": "Cita confirmada. Te esperamos.",
+      "schedule": [
+        { "when": "48 h antes", "channel": "Email" },
+        { "when": "24 h antes", "channel": "WhatsApp" },
+        { "when": "2 h antes", "channel": "SMS" }
+      ]
+    },
+    "payments": {
+      "title": "Anticipos que filtran a quien no piensa venir",
+      "text": "Cobra un porcentaje o un monto fijo al reservar. Si cancelan a tiempo, el reembolso es automático.",
+      "points": ["Tarjeta, transferencia y billeteras", "Reglas por servicio", "Conciliación diaria sin planillas"],
+      "rule": "Anticipo al reservar",
+      "ruleValue": "30%",
+      "refund": "Reembolso automático si cancela con 24 h",
+      "listTitle": "Cobros de hoy",
+      "rows": [
+        { "who": "Lucía M.", "what": "Limpieza dental", "amount": "US$ 12", "status": "Pagado" },
+        { "who": "Diego F.", "what": "Blanqueamiento", "amount": "US$ 36", "status": "Pagado" },
+        { "who": "Rosa V.", "what": "Endodoncia", "amount": "US$ 45", "status": "Pendiente" },
+        { "who": "Iván L.", "what": "Revisión", "amount": "US$ 9", "status": "Reembolsado" }
+      ],
+      "total": "Total cobrado",
+      "totalValue": "US$ 102"
+    },
+    "reports": {
+      "title": "Sabes qué llena tu agenda y qué la vacía",
+      "text": "Ocupación, ingresos e inasistencias por colaborador y servicio, sin exportar nada.",
+      "points": ["Informe semanal en tu email", "Clientes que hace tiempo no vuelven", "Exporta a Excel cuando quieras"],
+      "label": "Datos de ejemplo",
+      "kpis": [
+        { "label": "Ocupación", "value": "87%" },
+        { "label": "Inasistencias", "value": "4,1%" },
+        { "label": "Ingresos", "value": "US$ 8.420" }
+      ],
+      "chartTitle": "Citas por día",
+      "bars": [
+        { "d": "L", "v": 62 },
+        { "d": "M", "v": 88 },
+        { "d": "X", "v": 74 },
+        { "d": "J", "v": 95 },
+        { "d": "V", "v": 81 },
+        { "d": "S", "v": 56 },
+        { "d": "D", "v": 18 }
+      ]
+    }
+  },
+  "testimonials": {
+    "title": "Negocios que dejaron de perseguir a sus clientes",
+    "label": "Testimonios de ejemplo",
+    "items": [
+      { "quote": "Teníamos tres o cuatro inasistencias por día. Con el anticipo y el recordatorio de 2 horas bajamos a menos de una.", "name": "Valeria Ríos", "role": "Directora, Clínica Alba" },
+      { "quote": "Dejé de contestar el teléfono mientras corto. Los clientes reservan desde Instagram y yo solo miro la agenda.", "name": "Martín Correa", "role": "Dueño, Norte Barber Co." },
+      { "quote": "Con cuatro mecánicos y dos elevadores era un caos. Ahora cada uno ve su día y el cliente recibe aviso cuando el auto está listo.", "name": "Gabriela Soto", "role": "Gerente, Taller Ruedas" }
+    ]
+  },
+  "pricing": {
+    "title": "Un plan para cada tamaño de agenda",
+    "lead": "Todos incluyen 14 días gratis del plan Pro. Sin tarjeta, sin permanencia.",
+    "group": "Periodo de facturación",
+    "monthly": "Mensual",
+    "annual": "Anual",
+    "save": "2 meses gratis",
+    "price": "US$ {n}",
+    "per": "/mes",
+    "billedMonthly": "Facturado mes a mes",
+    "billedAnnual": "US$ {n} al año",
+    "popular": "Más elegido",
+    "plans": [
+      { "id": "solo", "name": "Solo", "for": "Para profesionales independientes", "monthly": 12, "annual": 10, "features": ["1 agenda", "Reservas online ilimitadas", "Recordatorios por email", "Página de reservas propia"], "cta": "Empieza con Solo" },
+      { "id": "pro", "name": "Pro", "for": "Para negocios con equipo pequeño", "monthly": 29, "annual": 24, "features": ["Hasta 5 agendas", "Recordatorios por WhatsApp y SMS", "Anticipos y pagos online", "Lista de espera automática"], "cta": "Empieza con Pro" },
+      { "id": "team", "name": "Equipo", "for": "Para clínicas y cadenas", "monthly": 59, "annual": 49, "features": ["Agendas ilimitadas", "Varias sucursales", "Informes avanzados", "Soporte prioritario"], "cta": "Empieza con Equipo" }
+    ],
+    "compare": {
+      "summary": "Comparar todas las funciones",
+      "caption": "Comparación de funciones por plan",
+      "feature": "Función",
+      "rows": [
+        { "label": "Agendas de colaboradores", "v": ["1", "5", "Ilimitadas"] },
+        { "label": "Reservas online", "v": [true, true, true] },
+        { "label": "Recordatorios por email", "v": [true, true, true] },
+        { "label": "Recordatorios por WhatsApp y SMS", "v": [false, true, true] },
+        { "label": "Anticipos y pagos online", "v": [false, true, true] },
+        { "label": "Lista de espera automática", "v": [false, true, true] },
+        { "label": "Varias sucursales", "v": [false, false, true] },
+        { "label": "Informes avanzados", "v": [false, false, true] },
+        { "label": "Soporte", "v": ["Email", "Chat", "Prioritario"] }
+      ]
+    },
+    "note": "Precios ficticios de demostración."
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      { "q": "¿Necesito tarjeta para la prueba de 14 días?", "a": "No. Creas tu cuenta con tu email y usas todas las funciones del plan Pro. Al terminar eliges un plan o tu cuenta pasa a modo solo lectura." },
+      { "q": "¿Cómo funcionan los recordatorios por WhatsApp?", "a": "Turnio envía mensajes desde una cuenta de empresa verificada con botones para confirmar o reprogramar. Puedes editar el texto y elegir cuándo se envían." },
+      { "q": "¿Puedo importar mi agenda actual?", "a": "Sí. Importa clientes y citas desde Excel, CSV o Google Calendar. La importación tarda unos minutos y no borra nada de tu calendario original." },
+      { "q": "¿Qué pasa si un cliente cancela tarde?", "a": "Tú defines la regla: puedes retener el anticipo, devolverlo o convertirlo en saldo a favor. Turnio aplica la regla de forma automática." },
+      { "q": "¿Mis clientes tienen que descargar una app?", "a": "No. Reservan desde un enlace que se abre en cualquier navegador. Tú y tu equipo usan Turnio desde el móvil o el computador." },
+      { "q": "¿Sirve para varias sucursales?", "a": "Sí, con el plan Equipo. Cada sucursal tiene su agenda, horarios y colaboradores, y tú ves los informes consolidados." },
+      { "q": "¿Mis datos están seguros?", "a": "Los datos se cifran en tránsito y en reposo, con copias de seguridad diarias. Puedes exportar o eliminar tu información cuando quieras." },
+      { "q": "¿Puedo cambiar de plan o cancelar?", "a": "Cuando quieras y desde el panel. Si pasas a anual se aplica el descuento de inmediato; si cancelas, no se cobra el siguiente periodo." }
+    ]
+  },
+  "final": {
+    "title": "Tu próxima semana, llena y confirmada",
+    "text": "Crea tu cuenta en 2 minutos y publica tu enlace de reservas hoy mismo.",
+    "cta": "Empieza gratis 14 días",
+    "contact": "¿Quieres una landing así para tu SaaS? Habla con Steven"
+  },
+  "footer": {
+    "tagline": "Agenda online, recordatorios y anticipos para negocios de servicios.",
+    "rights": "© 2026 Turnio. Marca ficticia: demo creada por Steven Espinoza.",
+    "cols": "Producto"
+  },
+  "signup": {
+    "title": "Crea tu cuenta Turnio",
+    "close": "Cerrar",
+    "planLabel": "Plan",
+    "trial": "14 días gratis, sin tarjeta",
+    "after": "Después {price}",
+    "email": "Email de trabajo",
+    "emailPh": "tu@negocio.com",
+    "emailRequired": "Escribe tu email para crear la cuenta.",
+    "emailInvalid": "Revisa el email: falta la @ o el dominio.",
+    "business": "Tipo de negocio",
+    "businessPh": "Elige una opción",
+    "businessRequired": "Elige el tipo de negocio para adaptar tu agenda.",
+    "businessOptions": ["Clínica o consulta", "Peluquería o barbería", "Centro de estética o spa", "Taller mecánico", "Estudio de yoga, pilates o gimnasio", "Otro servicio con citas"],
+    "submit": "Crear mi cuenta gratis",
+    "demoNote": "Demo: no se envía nada.",
+    "successTitle": "Tu prueba de {plan} está lista",
+    "successText": "En un producto real te llegaría el acceso a {email}. En esta demo no se envía nada.",
+    "successNext": ["Configura tus servicios", "Comparte tu enlace de reservas", "Activa los recordatorios"],
+    "successCta": "Volver a la página"
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens: forest #0B3D2E · mint #7CF3B6 · amber #FFB547",
+      "grid": "grid 12 col · max 1200 · gutter clamp(16,4vw,48)",
+      "header": "header sticky · h 64 · nav anchors + CTA",
+      "hero": "hero 5/7 · h1 60/60 700 · max 680",
+      "mock": "mock: semana 5 col × 10 slots · grid-row span",
+      "floating": "toast + widget · position absolute · sin CLS",
+      "logos": "proof strip · 6 wordmarks · label \"clientes de ejemplo\"",
+      "benefits": "benefits 3 col · métricas tabular-nums",
+      "steps": "timeline 3 pasos · conector SVG · sin 01/02/03",
+      "pricing": "pricing 3 cards · Pro destacado · toggle aria-pressed",
+      "faq": "faq 8 · details/summary · FAQPage JSON-LD",
+      "footer": "footer · 2 col · enlaces internos",
+      "copyHero": "h1: resultado + dolor · CTA verbo + resultado",
+      "copySub": "subhead: quién, cómo y para quién",
+      "copyMock": "mock: datos de ejemplo de una clínica dental",
+      "copyProof": "wordmarks inventados por sector",
+      "copyBenefits": "métricas marcadas \"datos de ejemplo\"",
+      "copyPricing": "Solo 12 · Pro 29 · Equipo 59 · anual −2 meses",
+      "copyFaq": "objeciones: tarjeta, WhatsApp, importación, cancelación",
+      "copyFinal": "CTA final idéntico al del hero",
+      "motionToast": "toast: translateY loop 6s · tras load",
+      "motionSlot": "slot nuevo: pulse 1× · transform/opacity",
+      "motionReveal": "reveal: animation-timeline view() en @supports",
+      "motionReduced": "prefers-reduced-motion: animaciones off",
+      "qaContrast": "contraste: mint/forest 9.1:1 · muted/white 6.3:1",
+      "qaCls": "CLS 0.00 · alturas reservadas en mock y tabs",
+      "qaLcp": "LCP: h1.hero (texto) · fuente precargada",
+      "qaKeyboard": "teclado: tabs ←/→ · dialog Esc · foco visible",
+      "qaUrl": "URL: ?tour= ?billing= ?signup= · Atrás cierra el panel",
+      "done": "listo para revisión"
+    }
+  }
+}

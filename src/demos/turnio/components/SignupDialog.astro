@@ -1,0 +1,82 @@
+---
+/**
+ * Signup panel. Opens via openUi({ signup: '<plan>' }) (deep link ?signup=pro, Back closes).
+ * Plan summary is CSS-driven by [data-plan] on the dialog and [data-billing] on main. Nothing is sent.
+ */
+import { useT, type Lang } from '../../../i18n';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'turnio');
+type Plan = { id: string; name: string; for: string; monthly: number; annual: number; features: string[] };
+const plans = t.raw<Plan[]>('pricing.plans');
+const options = t.raw<string[]>('signup.businessOptions');
+const next = t.raw<string[]>('signup.successNext');
+const price = (n: number) => t('pricing.price', { n });
+---
+<dialog id="t-signup" class="t-signup" aria-labelledby="t-signup-title" data-plan="pro">
+  <div class="t-signup__panel">
+    <header class="t-signup__head">
+      <span class="t-brand t-brand--sm" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28"><rect width="32" height="32" rx="9" fill="#0B3D2E" /><path d="M9 12.5h14M16 12.5V23" stroke="#7CF3B6" stroke-width="3.2" stroke-linecap="round" /><circle cx="22.5" cy="21.5" r="2.4" fill="#FFB547" /></svg>
+      </span>
+      <h2 id="t-signup-title">{t('signup.title')}</h2>
+      <button type="button" class="t-icon-btn" data-t-close aria-label={t('signup.close')}><Icon name="x" size={20} /></button>
+    </header>
+
+    <div class="t-signup__view" data-view="form">
+      <div class="t-sum">
+        {plans.map((p) => (
+          <div class="t-sum__plan" data-for={p.id}>
+            <div>
+              <span class="t-sum__label">{t('signup.planLabel')}</span>
+              <b class="t-sum__name">{p.name}</b>
+              <span class="t-sum__for">{p.for}</span>
+            </div>
+            <div class="t-sum__price">
+              <b>{t('signup.trial')}</b>
+              <span class="t-b-m">{t('signup.after', { price: price(p.monthly) + t('pricing.per') })}</span>
+              <span class="t-b-a">{t('signup.after', { price: price(p.annual) + t('pricing.per') })}</span>
+            </div>
+          </div>
+        ))}
+        <label class="t-sum__change">
+          <span class="sr-only">{t('signup.planLabel')}</span>
+          <select name="plan" data-t-plan>
+            {plans.map((p) => <option value={p.id}>{p.name}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <form class="t-form" novalidate data-t-form>
+        <div class="t-field">
+          <label for="t-email">{t('signup.email')}</label>
+          <input id="t-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder={t('signup.emailPh')} aria-describedby="t-email-err" required />
+          <p class="t-err" id="t-email-err" data-required={t('signup.emailRequired')} data-invalid={t('signup.emailInvalid')}></p>
+        </div>
+        <div class="t-field">
+          <label for="t-biz">{t('signup.business')}</label>
+          <select id="t-biz" name="business" aria-describedby="t-biz-err" required>
+            <option value="">{t('signup.businessPh')}</option>
+            {options.map((o) => <option value={o}>{o}</option>)}
+          </select>
+          <p class="t-err" id="t-biz-err" data-required={t('signup.businessRequired')}></p>
+        </div>
+        <button type="submit" class="t-btn t-btn--primary t-btn--block">{t('signup.submit')}<Icon name="arrow" size={18} /></button>
+        <p class="t-demo-note"><Icon name="shield" size={14} />{t('signup.demoNote')}</p>
+      </form>
+    </div>
+
+    <div class="t-signup__view t-success" data-view="success" hidden>
+      <span class="t-success__icon"><Icon name="check" size={32} /></span>
+      <h3 tabindex="-1" data-t-success-title data-tpl={t('signup.successTitle')}></h3>
+      <p data-t-success-text data-tpl={t('signup.successText')}></p>
+      <ul role="list" class="t-checks">
+        {next.map((n) => <li><Icon name="check" size={18} />{n}</li>)}
+      </ul>
+      <button type="button" class="t-btn t-btn--primary t-btn--block" data-t-close>{t('signup.successCta')}</button>
+      <p class="t-demo-note"><Icon name="shield" size={14} />{t('signup.demoNote')}</p>
+    </div>
+    <p class="sr-only" aria-live="polite" data-t-live></p>
+  </div>
+</dialog>

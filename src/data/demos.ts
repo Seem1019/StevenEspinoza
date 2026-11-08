@@ -32,7 +32,7 @@ export const demos: DemoEntry[] = [
     slug: 'isola',
     ns: 'isola',
     sector: 'premium',
-    card: { bg: '#E9ECEF', fg: '#111315', accent: '#111315' },
+    card: { bg: '#E9ECEF', fg: '#16191D', accent: '#4C6A5C' },
     techniques: ['threeD', 'cssScroll', 'lazyIslands', 'typography'],
   },
   {

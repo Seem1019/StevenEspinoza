@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "name": "Isola",
+    "title": "Isola H1 · Wireless over-ear headphones — demo",
+    "tagline": "Premium launch page with a scroll-driven 3D teardown.",
+    "description": "Launch page for fictional premium headphones: precise typography, a 3D model that comes apart as you scroll and an in-page reservation. three.js only downloads when needed, so the first view loads as text.",
+    "features": ["Procedural 3D model that turns and explodes with scroll", "three.js loaded on demand: zero weight on first view", "Finish picker that recolours both illustration and model", "Reservation drawer with deep link and Back support"]
+  },
+  "currency": "${n}",
+  "nav": {
+    "home": "Isola, home",
+    "label": "Sections",
+    "design": "Design",
+    "tech": "Technology",
+    "specs": "Specs",
+    "finish": "Finishes",
+    "buy": "Buy"
+  },
+  "hero": {
+    "eyebrow": "New · Wireless headphones",
+    "title": "Isola H1",
+    "promise": "Silence, tuned to the last detail.",
+    "body": "Adaptive noise cancelling, a 40 mm driver and 60 hours of battery in 254 grams of aluminium and memory foam.",
+    "price": "From {price}",
+    "priceNote": "Shipping and taxes included",
+    "cta": "Buy",
+    "secondary": "See inside",
+    "alt": "Isola H1 over-ear headphones, three-quarter view"
+  },
+  "stage": {
+    "label": "Inside Isola H1",
+    "titleA": "A shape that disappears once you wear it.",
+    "titleB": "And inside, every part has a reason.",
+    "hint": "Keep scrolling to take it apart",
+    "canvas": "3D model of the Isola H1 headphones that turns and comes apart as you scroll",
+    "posterAlt": "Isola H1 headphones assembled",
+    "explodedAlt": "Exploded view of the Isola H1 headphones: cushion, driver, board, battery, shell and cap",
+    "callouts": [
+      { "id": "cushion", "title": "Memory foam cushions", "body": "Breathable vegan leather. Swap them in ten seconds." },
+      { "id": "driver", "title": "40 mm driver", "body": "Carbon fibre diaphragm, from 4 Hz to 40 kHz." },
+      { "id": "chip", "title": "I1 ANC chip", "body": "Eight microphones, 48,000 noise adjustments a second." },
+      { "id": "battery", "title": "60 h battery", "body": "Ten minutes of charging give six hours of music." },
+      { "id": "band", "title": "Aluminium headband", "body": "Stepless fit and 254 g in total." }
+    ]
+  },
+  "features": {
+    "title": "Designed to disappear.",
+    "items": [
+      { "id": "anc", "title": "Silence that adapts", "body": "The I1 chip listens with eight microphones and tunes cancelling for the plane, the office or the street. No pressure in your ears.", "stat": "−42 dB", "statLabel": "average noise reduction" },
+      { "id": "sound", "title": "Studio sound, uncoloured", "body": "A 40 mm driver with a carbon fibre diaphragm renders every detail with the flat response mixing engineers rely on.", "stat": "4 Hz – 40 kHz", "statLabel": "frequency response" },
+      { "id": "battery", "title": "A whole week of travel", "body": "Up to 60 hours without cancelling and 45 with it. Ten minutes on USB-C give you six more hours.", "stat": "60 h", "statLabel": "of playback" },
+      { "id": "build", "title": "Built to last for years", "body": "Anodised aluminium headband, visible screws and replaceable cushions. Everything is repairable, nothing is thrown away.", "stat": "254 g", "statLabel": "total weight" }
+    ]
+  },
+  "specs": {
+    "title": "Specifications",
+    "note": "Fictional product: data created for this demo.",
+    "rows": [
+      ["Driver", "40 mm dynamic, carbon fibre"],
+      ["Frequency response", "4 Hz – 40 kHz"],
+      ["Noise cancelling", "Adaptive hybrid, 8 microphones, I1 chip"],
+      ["Battery", "60 h (45 h with ANC) · fast charge 10 min = 6 h"],
+      ["Connectivity", "Bluetooth 5.4, multipoint, USB-C audio"],
+      ["Codecs", "LC3, AAC, SBC"],
+      ["Weight", "254 g"],
+      ["In the box", "Hard case, USB-C to USB-C cable, flight adapter"]
+    ]
+  },
+  "finish": {
+    "title": "Three finishes. None of them shout.",
+    "body": "Anodised aluminium with matching foam. Your choice updates the illustration and the 3D model.",
+    "legend": "Finish",
+    "current": "{name} finish · {price}",
+    "options": {
+      "graphite": "Graphite",
+      "mist": "Mist",
+      "sage": "Sage"
+    },
+    "cta": "Buy in this finish",
+    "alt": "Isola H1 headphones in the selected finish"
+  },
+  "buy": {
+    "title": "Reserve your Isola H1",
+    "close": "Close",
+    "finish": "Finish",
+    "qty": "Quantity",
+    "dec": "Remove one unit",
+    "inc": "Add one unit",
+    "unit": "Price per unit",
+    "shipping": "Shipping",
+    "shippingValue": "Free",
+    "total": "Total",
+    "submit": "Reserve a unit",
+    "note": "Demo: nothing is charged.",
+    "successTitle": "Unit reserved",
+    "successBody": "We are holding {qty} × Isola H1 in {finish}. This is a demo: nothing was charged and no data was requested.",
+    "done": "Back to the page",
+    "live": "{qty} units, total {total}"
+  },
+  "cta": {
+    "title": "Want a launch like this?",
+    "body": "A product page that loads as text, shows the product from the inside and closes the sale without leaving it.",
+    "button": "Talk to Steven"
+  },
+  "footer": {
+    "brand": "Isola is a fictional brand created for this demo. Product, prices and specifications are made up.",
+    "made": "Demo designed and built by Steven Espinoza."
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens · bg #FFFFFF · steel #E8ECF0 · sage accent #4C6A5C",
+      "grid": "grid 12 col · max 1240 · gutter 56",
+      "type": "Manrope 200 · 148 px · tracking −0.05em",
+      "nav": "nav: wordmark + 4 anchors + 4 px button",
+      "hero": "hero 2 col · text 5/12 · product 7/12",
+      "product": "inline product SVG · 0 requests",
+      "explode": "exploded strip · 6 parts in a row",
+      "callouts": "callouts: 1 px rule + 500 title",
+      "features": "features 4 col · gap 32",
+      "specs": "specs table · 2 col · hairline rows",
+      "cta": "final band · data-open-contact button",
+      "footer": "footer: fictional brand notice",
+      "heroCopy": "h1 “Isola H1” + one-line promise",
+      "priceCopy": "“from” price via Intl in the page locale",
+      "calloutsCopy": "callouts: 40 mm · 60 h · ANC chip · cushions",
+      "featuresCopy": "4 blocks: silence, sound, battery, materials",
+      "specsCopy": "8 spec rows (fictional product)",
+      "ctaCopy": "CTA: “Want a launch like this?”",
+      "productPaint": "graphite finish: shell, cap, cushion",
+      "motionReveal": "reveal: animation-timeline view() · entry 0–30 %",
+      "motionStage": "three.js via import() after IO + first interaction",
+      "motionExplode": "scroll explode 0.42 → 0.75 · damped",
+      "motionCallouts": "callouts fade by scroll progress",
+      "qaContrast": "secondary text contrast 6.2:1 · AA ok",
+      "qaCls": "CLS 0 · canvas fills the poster box",
+      "qaLcp": "LCP: h1.hero (text in initial HTML)",
+      "qaKeyboard": "keyboard: buy drawer, Esc and Back close it",
+      "qaThree": "no scroll, no three.js download"
+    }
+  }
+}

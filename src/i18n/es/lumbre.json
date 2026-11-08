@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "name": "Lumbre",
+    "title": "Lumbre · cocina de fuego (demo)",
+    "tagline": "Un restaurante de brasa que se recorre con el scroll: de la puerta a la mesa.",
+    "description": "Lumbre es un restaurante ficticio de cocina de fuego: al hacer scroll entras por la puerta, pasas por la barra y la parrilla y llegas a tu mesa. Carta con pestañas, horario y reserva en la misma página, sin recargas.",
+    "features": ["Recorrido por el local con scroll (CSS)", "Cero vídeo: ilustraciones SVG por capas", "Carta con pestañas y URL compartible", "Reserva en panel, sin salir de la página"]
+  },
+  "head": {
+    "home": "Lumbre, volver al inicio",
+    "nav": "Secciones",
+    "menu": "Carta",
+    "hours": "Horario",
+    "reserve": "Reservar"
+  },
+  "world": {
+    "label": "Recorrido por Lumbre",
+    "rail": "Recorrido por el local",
+    "hint": "Desliza para entrar",
+    "scenes": {
+      "entrada": {
+        "rail": "Entrada",
+        "title": "Lumbre",
+        "line": "Cocina de fuego lento en el barrio viejo. Brasa de encina, producto de temporada y sobremesa larga.",
+        "tags": ["Brasa de encina", "Producto de temporada", "Hasta medianoche"]
+      },
+      "barra": {
+        "rail": "Barra",
+        "title": "La barra",
+        "line": "Vermut de grifo, vinos naturales y cócteles ahumados mientras se enciende el fuego.",
+        "tags": ["Vermut de la casa", "Vinos por copa", "Cócteles al humo"]
+      },
+      "cocina": {
+        "rail": "Cocina",
+        "title": "La cocina",
+        "line": "Una parrilla abierta a la vista: cada pieza pasa por la brasa delante de ti.",
+        "tags": ["Parrilla abierta", "Carnes maduradas", "Pescado del día"]
+      },
+      "mesa": {
+        "rail": "Mesa",
+        "title": "Tu mesa",
+        "line": "Platos al centro para compartir. Reserva y te guardamos sitio junto al fuego.",
+        "tags": ["Hasta 10 personas", "Terraza en verano"],
+        "cta": "Reservar mesa",
+        "cta2": "Ver la carta"
+      }
+    }
+  },
+  "menu": {
+    "title": "La carta",
+    "intro": "Cambia con la temporada y con lo que llega al mercado. Todo pasa, en algún momento, por el fuego.",
+    "note": "Precios de ejemplo, ficticios.",
+    "tabsLabel": "Secciones de la carta",
+    "tabs": { "empezar": "Para empezar", "fuego": "Del fuego", "postres": "Postres", "bebidas": "Bebidas" },
+    "items": {
+      "empezar": [
+        { "name": "Pan de masa madre a la brasa", "desc": "Con mantequilla ahumada y sal en escamas.", "price": "6", "icon": "bread" },
+        { "name": "Pimientos asados", "desc": "Asados en el rescoldo, con anchoa y aceite de ajo.", "price": "12", "icon": "pepper" },
+        { "name": "Croquetas de jamón y humo", "desc": "Cremosas por dentro, seis unidades.", "price": "11", "icon": "bowl" },
+        { "name": "Burrata con tomate quemado", "desc": "Tomate de huerta tostado a la llama y albahaca.", "price": "14", "icon": "cheese" }
+      ],
+      "fuego": [
+        { "name": "Chuletón madurado 45 días", "desc": "Al corte, para compartir. Sal, brasa y nada más.", "price": "68", "icon": "steak" },
+        { "name": "Pulpo a la brasa", "desc": "Con papas aplastadas y pimentón de la Vera.", "price": "26", "icon": "fish" },
+        { "name": "Pescado del día a la sal", "desc": "Según mercado, con limón asado.", "price": "29", "icon": "fish" },
+        { "name": "Coliflor entera al rescoldo", "desc": "Con tahini, granada y hierbas.", "price": "17", "icon": "veg" }
+      ],
+      "postres": [
+        { "name": "Torrija caramelizada", "desc": "Brioche, leche infusionada y helado de vainilla.", "price": "9", "icon": "dessert" },
+        { "name": "Piña asada", "desc": "Glaseada con ron oscuro y lima.", "price": "8", "icon": "fruit" },
+        { "name": "Queso de cabra y miel ahumada", "desc": "Con nueces tostadas al fuego.", "price": "10", "icon": "cheese" },
+        { "name": "Chocolate, sal y aceite", "desc": "Ganache tibia, aceite de oliva y pan tostado.", "price": "9", "icon": "dessert" }
+      ],
+      "bebidas": [
+        { "name": "Vermut de grifo", "desc": "Rojo, con naranja y aceituna.", "price": "5", "icon": "glass" },
+        { "name": "Copa de vino natural", "desc": "Pregunta por la selección de la semana.", "price": "6", "icon": "wine" },
+        { "name": "Old fashioned ahumado", "desc": "Ahumado con madera de encina en la barra.", "price": "11", "icon": "cocktail" },
+        { "name": "Limonada de romero", "desc": "Sin alcohol, con romero a la brasa.", "price": "5", "icon": "glass" }
+      ]
+    }
+  },
+  "info": {
+    "title": "Horario y dirección",
+    "hoursTitle": "Horario",
+    "hours": [
+      { "d": "Martes a jueves", "h": "13:00–16:00 · 20:00–23:30" },
+      { "d": "Viernes y sábado", "h": "13:00–16:30 · 20:00–00:30" },
+      { "d": "Domingo", "h": "13:00–17:00" },
+      { "d": "Lunes", "h": "Cerrado" }
+    ],
+    "addressTitle": "Dónde estamos",
+    "address": "Calle del Carbón 14, Barrio Viejo",
+    "addressNote": "Dirección ficticia: Lumbre es un restaurante inventado.",
+    "mapLabel": "Mapa ilustrativo de la zona",
+    "reserve": "Reservar mesa"
+  },
+  "reserve": {
+    "title": "Reserva tu mesa",
+    "close": "Cerrar reserva",
+    "day": "Día",
+    "today": "Hoy",
+    "tomorrow": "Mañana",
+    "closed": "Cerrado",
+    "time": "Hora",
+    "lunch": "Comida",
+    "dinner": "Cena",
+    "full": "Completo",
+    "party": "Personas",
+    "less": "Una persona menos",
+    "more": "Una persona más",
+    "people": "{n} personas",
+    "person": "1 persona",
+    "name": "Nombre (opcional)",
+    "namePh": "¿A nombre de quién?",
+    "submit": "Confirmar reserva",
+    "errorTime": "Elige una hora para continuar.",
+    "note": "Demo: no se envía ninguna reserva.",
+    "doneTitle": "Mesa reservada",
+    "doneFor": "a nombre de {name}",
+    "doneNote": "Es una simulación: no se ha enviado nada a ningún sitio.",
+    "again": "Hacer otra reserva",
+    "doneClose": "Cerrar"
+  },
+  "band": {
+    "lead": "¿Quieres una web así para tu restaurante?",
+    "cta": "Habla con Steven"
+  },
+  "footer": {
+    "line": "Lumbre es un restaurante ficticio. Demo de diseño y desarrollo web de Steven Espinoza.",
+    "top": "Volver a la puerta"
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens: carbón #120c09 · brasa #e8742c · latón #c9a15a",
+      "type": "Fraunces 600 display · Work Sans 400–600 cuerpo",
+      "nav": "header sticky 60px · margin-bottom -60px (sin CLS)",
+      "stage": "stage sticky 100svh · overflow clip · grid-area 1/1",
+      "track": "pista: 3×135svh + 100svh · view-timeline por tramo",
+      "layers": "escenas 1600×1000 · xMidYMid slice · 4 capas",
+      "rail": "raíl 4 paradas · botones 44px · aria-current",
+      "strips": "barra · cocina · mesa: SVG en línea, 0 imágenes",
+      "menuGrid": "carta 2 col · gap 24 · iconos SVG 28px",
+      "tabs": "role=tablist · flechas · ?menu= con setParams",
+      "reserve": "<dialog> de reserva · openUi({ reserva: '1' })",
+      "footer": "footer · banda de contacto data-open-contact",
+      "copyHero": "h1 \"Lumbre\" + tagline en el HTML inicial",
+      "copyScenes": "copy por escena: título, una línea, 2–3 etiquetas",
+      "copyMenu": "16 platos ficticios · precios marcados como ejemplo",
+      "copyInfo": "horario + dirección ficticia etiquetada",
+      "copyCta": "CTA: \"Reservar mesa\" (verbo + resultado)",
+      "motionCam": "cámara: scale 0.9→1 entrada · push 1→2.2 salida",
+      "motionParallax": "parallax por capa: animation-range entry 0% exit 100%",
+      "motionFire": "llamas + brasas: transform/opacity, pausa fuera de vista",
+      "motionFallback": "sin animation-timeline → 4 escenas apiladas estáticas",
+      "qaLcp": "LCP: h1.lb-title (texto) · sin opacity 0 al cargar",
+      "qaCls": "CLS 0.00 · stage 100svh fijo · panel overlay",
+      "qaContrast": "contraste texto #f6e7d2 / #120c09 = 16:1",
+      "qaKeyboard": "teclado: raíl, pestañas, reserva y Esc ✓",
+      "qaMotion": "prefers-reduced-motion: escenas estáticas ✓"
+    }
+  }
+}

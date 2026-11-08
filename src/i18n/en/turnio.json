@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "name": "Turnio",
+    "title": "Turnio · Online booking with WhatsApp reminders for service businesses",
+    "tagline": "A SaaS landing built to convert: online booking, reminders, fewer no-shows.",
+    "description": "Turnio is a fictional booking SaaS for clinics, salons, workshops and studios: 24/7 online booking, WhatsApp reminders and deposits that cut no-shows. A conversion-focused landing demo with an interactive tour, monthly/annual pricing and in-page signup.",
+    "features": [
+      "HTML/CSS product mock with a tabbed tour",
+      "Instant monthly/annual pricing with URL state",
+      "In-page signup panel with validation and deep link",
+      "FAQ with structured data and scroll reveals"
+    ]
+  },
+  "a11y": {
+    "home": "Turnio, back to top",
+    "nav": "Sections",
+    "mock": "Sample view of the Turnio calendar",
+    "included": "Included",
+    "notIncluded": "Not included"
+  },
+  "nav": {
+    "product": "Product",
+    "how": "How it works",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "cta": "Try it free"
+  },
+  "hero": {
+    "eyebrow": "Online booking for service businesses",
+    "titleA": "Fill your calendar",
+    "titleB": "and stop losing appointments to no-shows",
+    "subtitle": "Clients book themselves 24/7, Turnio reminds them on WhatsApp and takes a deposit so every booked hour actually happens. For clinics, salons, workshops and studios.",
+    "cta": "Start free for 14 days",
+    "ctaSecondary": "See the product in action",
+    "reassure": ["No credit card", "Ready in 10 minutes", "Cancel anytime"]
+  },
+  "mock": {
+    "app": "Alba Clinic",
+    "week": "Week 46 · Nov 9 to 13",
+    "today": "Today",
+    "search": "Find client",
+    "newBooking": "New booking",
+    "days": ["Mon 9", "Tue 10", "Wed 11", "Thu 12", "Fri 13"],
+    "hours": ["9:00", "10:00", "11:00", "12:00", "13:00"],
+    "appts": [
+      { "d": 0, "s": 1, "l": 2, "t": "Cleaning", "w": "Lucy M.", "c": "a" },
+      { "d": 0, "s": 4, "l": 3, "t": "Orthodontics", "w": "Tom R.", "c": "b" },
+      { "d": 1, "s": 0, "l": 2, "t": "Checkup", "w": "Ann P.", "c": "c" },
+      { "d": 1, "s": 3, "l": 2, "t": "Whitening", "w": "Dan F.", "c": "a" },
+      { "d": 1, "s": 6, "l": 3, "t": "Root canal", "w": "Rose V.", "c": "b" },
+      { "d": 2, "s": 2, "l": 2, "t": "Cleaning", "w": "Marta S.", "c": "c" },
+      { "d": 2, "s": 5, "l": 2, "t": "Review", "w": "Ivan L.", "c": "a", "n": true },
+      { "d": 3, "s": 0, "l": 3, "t": "Implant", "w": "Carla G.", "c": "b" },
+      { "d": 3, "s": 6, "l": 2, "t": "Checkup", "w": "Paul N.", "c": "c" },
+      { "d": 4, "s": 1, "l": 2, "t": "Orthodontics", "w": "Sophie T.", "c": "b" },
+      { "d": 4, "s": 4, "l": 2, "t": "Cleaning", "w": "Hugo B.", "c": "a" }
+    ],
+    "toastTitle": "WhatsApp reminder sent",
+    "toastBody": "Lucy M. · Tomorrow, 10:30",
+    "toastStatus": "Confirmed",
+    "widgetTitle": "Online booking",
+    "widgetService": "Dental cleaning · 45 min",
+    "widgetDay": "Wednesday 11",
+    "widgetSlots": ["10:00", "10:45", "11:30", "16:15"],
+    "widgetCta": "Book and pay deposit",
+    "widgetDeposit": "$10 deposit, deducted from the total",
+    "chip": "No-shows this month",
+    "chipValue": "−38%"
+  },
+  "proof": {
+    "label": "Sample clients",
+    "lead": "Businesses like these already run their calendar on Turnio",
+    "names": ["Alba Clinic", "Norte Barber Co.", "Ruedas Garage", "Brisa Pilates", "VetPatitas", "Odonto Sur"]
+  },
+  "problem": {
+    "title": "Your calendar shouldn't live in your personal WhatsApp",
+    "lead": "Every appointment you arrange by hand is time you don't bill, and every no-show is an hour you never get back.",
+    "beforeTitle": "Without Turnio",
+    "before": [
+      "You answer booking messages at 11 pm",
+      "One in five clients doesn't show up or warn you",
+      "Two people book the same slot with different staff",
+      "Deposits arrive by bank transfer and get lost in the chat"
+    ],
+    "afterTitle": "With Turnio",
+    "after": [
+      "Clients book themselves from Instagram, Google or your site",
+      "Automatic reminders that ask to confirm or reschedule",
+      "One calendar for the whole team, no overlaps",
+      "Deposit charged at booking and reconciled for you"
+    ]
+  },
+  "benefits": {
+    "title": "Results you notice in the first month",
+    "label": "Sample data",
+    "items": [
+      { "metric": "−38%", "metricLabel": "no-shows", "title": "Fewer empty chairs", "text": "Reminders 24 h and 2 h before, with a confirm button. If someone cancels, Turnio offers the slot to your waitlist." },
+      { "metric": "6 h", "metricLabel": "saved every week", "title": "No more back and forth", "text": "Nobody asks \"are you free on Thursday?\": your real availability is published and updates itself." },
+      { "metric": "+24%", "metricLabel": "after-hours bookings", "title": "Sell while you sleep", "text": "Almost one in four bookings arrives at night or on weekends, when nobody used to answer." }
+    ]
+  },
+  "how": {
+    "title": "Up and running before your next client",
+    "lead": "No installs, no endless migrations. Import your current calendar in one click.",
+    "steps": [
+      { "title": "Set up services and hours", "text": "Duration, price, staff and breaks. Import clients from Excel or Google Calendar.", "meta": "10 minutes" },
+      { "title": "Share your booking link", "text": "Put it in your Instagram bio, on Google Maps and in WhatsApp Business.", "meta": "1 link" },
+      { "title": "Turnio confirms, reminds and charges", "text": "Automatic reminders, a deposit at booking and rescheduling without phone calls.", "meta": "Automatic" }
+    ]
+  },
+  "tour": {
+    "title": "See how Turnio works for you",
+    "lead": "Switch tabs: it is the same panel you will use from day one.",
+    "tabs": { "agenda": "Calendar", "reminders": "Reminders", "payments": "Payments", "reports": "Reports" },
+    "agenda": {
+      "title": "Your whole team in one view",
+      "text": "Drag to move bookings, block breaks and see at a glance who has free slots.",
+      "points": ["Calendars per staff member and per room", "Waitlist that fills cancellations", "Syncs with Google and Outlook"],
+      "date": "Today · Tuesday 10",
+      "staff": ["Dr. Paula", "Andrew", "Camila"],
+      "slots": [
+        { "s": 0, "l": 2, "t": "Checkup", "w": "Ann P.", "c": "a" },
+        { "s": 3, "l": 3, "t": "Root canal", "w": "Rose V.", "c": "b" },
+        { "s": 1, "l": 2, "t": "Cleaning", "w": "George A.", "c": "c" },
+        { "s": 4, "l": 2, "t": "Whitening", "w": "Dan F.", "c": "a" },
+        { "s": 0, "l": 2, "t": "Review", "w": "Ellen C.", "c": "c" },
+        { "s": 2, "l": 3, "t": "Orthodontics", "w": "Matt K.", "c": "b" }
+      ],
+      "free": "Free slot 13:00",
+      "freeAction": "Offered to 3 on the waitlist"
+    },
+    "reminders": {
+      "title": "Reminders people actually answer",
+      "text": "WhatsApp, email or SMS messages with confirm and reschedule buttons. You don't type a thing.",
+      "points": ["Templates in your tone and language", "Sequence 48 h, 24 h and 2 h before", "One-tap rescheduling"],
+      "chatName": "Alba Clinic",
+      "chatStatus": "Business account",
+      "message": "Hi Lucy, see you tomorrow, Tuesday at 10:30, for your dental cleaning with Dr. Paula. Can you confirm?",
+      "confirm": "Confirm",
+      "reschedule": "Reschedule",
+      "reply": "Confirm",
+      "done": "Booking confirmed. See you soon.",
+      "schedule": [
+        { "when": "48 h before", "channel": "Email" },
+        { "when": "24 h before", "channel": "WhatsApp" },
+        { "when": "2 h before", "channel": "SMS" }
+      ]
+    },
+    "payments": {
+      "title": "Deposits that filter out no-shows",
+      "text": "Charge a percentage or a fixed amount at booking. If they cancel in time, the refund is automatic.",
+      "points": ["Card, bank transfer and wallets", "Rules per service", "Daily reconciliation, no spreadsheets"],
+      "rule": "Deposit at booking",
+      "ruleValue": "30%",
+      "refund": "Automatic refund if cancelled 24 h ahead",
+      "listTitle": "Today's payments",
+      "rows": [
+        { "who": "Lucy M.", "what": "Dental cleaning", "amount": "$12", "status": "Paid" },
+        { "who": "Dan F.", "what": "Whitening", "amount": "$36", "status": "Paid" },
+        { "who": "Rose V.", "what": "Root canal", "amount": "$45", "status": "Pending" },
+        { "who": "Ivan L.", "what": "Review", "amount": "$9", "status": "Refunded" }
+      ],
+      "total": "Total collected",
+      "totalValue": "$102"
+    },
+    "reports": {
+      "title": "Know what fills your calendar and what empties it",
+      "text": "Occupancy, revenue and no-shows by staff member and service, without exporting anything.",
+      "points": ["Weekly report in your inbox", "Clients who haven't returned in a while", "Export to Excel whenever you want"],
+      "label": "Sample data",
+      "kpis": [
+        { "label": "Occupancy", "value": "87%" },
+        { "label": "No-shows", "value": "4.1%" },
+        { "label": "Revenue", "value": "$8,420" }
+      ],
+      "chartTitle": "Bookings per day",
+      "bars": [
+        { "d": "M", "v": 62 },
+        { "d": "T", "v": 88 },
+        { "d": "W", "v": 74 },
+        { "d": "T", "v": 95 },
+        { "d": "F", "v": 81 },
+        { "d": "S", "v": 56 },
+        { "d": "S", "v": 18 }
+      ]
+    }
+  },
+  "testimonials": {
+    "title": "Businesses that stopped chasing their clients",
+    "label": "Sample testimonials",
+    "items": [
+      { "quote": "We had three or four no-shows a day. With the deposit and the 2-hour reminder we dropped to less than one.", "name": "Valeria Ríos", "role": "Director, Alba Clinic" },
+      { "quote": "I stopped answering the phone mid-haircut. Clients book from Instagram and I just check the calendar.", "name": "Martín Correa", "role": "Owner, Norte Barber Co." },
+      { "quote": "Four mechanics and two lifts was chaos. Now everyone sees their day and the client gets a message when the car is ready.", "name": "Gabriela Soto", "role": "Manager, Ruedas Garage" }
+    ]
+  },
+  "pricing": {
+    "title": "A plan for every size of calendar",
+    "lead": "Every plan starts with 14 days of Pro for free. No card, no lock-in.",
+    "group": "Billing period",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save": "2 months free",
+    "price": "${n}",
+    "per": "/mo",
+    "billedMonthly": "Billed monthly",
+    "billedAnnual": "${n} per year",
+    "popular": "Most chosen",
+    "plans": [
+      { "id": "solo", "name": "Solo", "for": "For independent professionals", "monthly": 12, "annual": 10, "features": ["1 calendar", "Unlimited online bookings", "Email reminders", "Your own booking page"], "cta": "Start with Solo" },
+      { "id": "pro", "name": "Pro", "for": "For businesses with a small team", "monthly": 29, "annual": 24, "features": ["Up to 5 calendars", "WhatsApp and SMS reminders", "Deposits and online payments", "Automatic waitlist"], "cta": "Start with Pro" },
+      { "id": "team", "name": "Team", "for": "For clinics and chains", "monthly": 59, "annual": 49, "features": ["Unlimited calendars", "Multiple locations", "Advanced reports", "Priority support"], "cta": "Start with Team" }
+    ],
+    "compare": {
+      "summary": "Compare all features",
+      "caption": "Feature comparison by plan",
+      "feature": "Feature",
+      "rows": [
+        { "label": "Staff calendars", "v": ["1", "5", "Unlimited"] },
+        { "label": "Online booking", "v": [true, true, true] },
+        { "label": "Email reminders", "v": [true, true, true] },
+        { "label": "WhatsApp and SMS reminders", "v": [false, true, true] },
+        { "label": "Deposits and online payments", "v": [false, true, true] },
+        { "label": "Automatic waitlist", "v": [false, true, true] },
+        { "label": "Multiple locations", "v": [false, false, true] },
+        { "label": "Advanced reports", "v": [false, false, true] },
+        { "label": "Support", "v": ["Email", "Chat", "Priority"] }
+      ]
+    },
+    "note": "Fictional demo prices."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      { "q": "Do I need a card for the 14-day trial?", "a": "No. You sign up with your email and use every Pro feature. When it ends you pick a plan or your account switches to read-only." },
+      { "q": "How do WhatsApp reminders work?", "a": "Turnio sends messages from a verified business account with buttons to confirm or reschedule. You can edit the text and choose when they go out." },
+      { "q": "Can I import my current calendar?", "a": "Yes. Import clients and bookings from Excel, CSV or Google Calendar. It takes a few minutes and deletes nothing from your original calendar." },
+      { "q": "What if a client cancels late?", "a": "You set the rule: keep the deposit, refund it or turn it into store credit. Turnio applies the rule automatically." },
+      { "q": "Do my clients need to download an app?", "a": "No. They book from a link that opens in any browser. You and your team use Turnio from your phone or computer." },
+      { "q": "Does it work for multiple locations?", "a": "Yes, on the Team plan. Each location has its own calendar, hours and staff, and you see consolidated reports." },
+      { "q": "Is my data safe?", "a": "Data is encrypted in transit and at rest, with daily backups. You can export or delete your information whenever you want." },
+      { "q": "Can I change plans or cancel?", "a": "Anytime, from the dashboard. Switching to annual applies the discount right away; if you cancel, the next period is not charged." }
+    ]
+  },
+  "final": {
+    "title": "Your next week, full and confirmed",
+    "text": "Create your account in 2 minutes and publish your booking link today.",
+    "cta": "Start free for 14 days",
+    "contact": "Want a landing like this for your SaaS? Talk to Steven"
+  },
+  "footer": {
+    "tagline": "Online booking, reminders and deposits for service businesses.",
+    "rights": "© 2026 Turnio. Fictional brand: a demo by Steven Espinoza.",
+    "cols": "Product"
+  },
+  "signup": {
+    "title": "Create your Turnio account",
+    "close": "Close",
+    "planLabel": "Plan",
+    "trial": "14 days free, no card",
+    "after": "Then {price}",
+    "email": "Work email",
+    "emailPh": "you@business.com",
+    "emailRequired": "Enter your email to create the account.",
+    "emailInvalid": "Check the email: the @ or the domain is missing.",
+    "business": "Business type",
+    "businessPh": "Choose an option",
+    "businessRequired": "Choose a business type so we can tailor your calendar.",
+    "businessOptions": ["Clinic or practice", "Hair salon or barbershop", "Beauty center or spa", "Car repair shop", "Yoga, pilates studio or gym", "Other appointment-based service"],
+    "submit": "Create my free account",
+    "demoNote": "Demo: nothing is sent.",
+    "successTitle": "Your {plan} trial is ready",
+    "successText": "In a real product, access would arrive at {email}. In this demo nothing is sent.",
+    "successNext": ["Set up your services", "Share your booking link", "Turn on reminders"],
+    "successCta": "Back to the page"
+  },
+  "showcase": {
+    "logs": {
+      "tokens": "tokens: forest #0B3D2E · mint #7CF3B6 · amber #FFB547",
+      "grid": "grid 12 col · max 1200 · gutter clamp(16,4vw,48)",
+      "header": "header sticky · h 64 · nav anchors + CTA",
+      "hero": "hero 5/7 · h1 60/60 700 · max 680",
+      "mock": "mock: week 5 col × 10 slots · grid-row span",
+      "floating": "toast + widget · position absolute · no CLS",
+      "logos": "proof strip · 6 wordmarks · label \"sample clients\"",
+      "benefits": "benefits 3 col · tabular-nums metrics",
+      "steps": "timeline 3 steps · SVG connector · no 01/02/03",
+      "pricing": "pricing 3 cards · Pro highlighted · toggle aria-pressed",
+      "faq": "faq 8 · details/summary · FAQPage JSON-LD",
+      "footer": "footer · 2 col · internal links",
+      "copyHero": "h1: outcome + pain · CTA verb + outcome",
+      "copySub": "subhead: who, how and for whom",
+      "copyMock": "mock: sample data from a dental clinic",
+      "copyProof": "invented wordmarks per industry",
+      "copyBenefits": "metrics labelled \"sample data\"",
+      "copyPricing": "Solo 12 · Pro 29 · Team 59 · annual −2 months",
+      "copyFaq": "objections: card, WhatsApp, import, cancellation",
+      "copyFinal": "final CTA identical to the hero",
+      "motionToast": "toast: translateY loop 6s · after load",
+      "motionSlot": "new slot: pulse 1× · transform/opacity",
+      "motionReveal": "reveal: animation-timeline view() in @supports",
+      "motionReduced": "prefers-reduced-motion: animations off",
+      "qaContrast": "contrast: mint/forest 9.1:1 · muted/white 6.3:1",
+      "qaCls": "CLS 0.00 · reserved heights in mock and tabs",
+      "qaLcp": "LCP: h1.hero (text) · font preloaded",
+      "qaKeyboard": "keyboard: tabs ←/→ · dialog Esc · visible focus",
+      "qaUrl": "URL: ?tour= ?billing= ?signup= · Back closes the panel",
+      "done": "ready for review"
+    }
+  }
+}

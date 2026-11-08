@@ -1,0 +1,162 @@
+---
+/**
+ * Static 1280px miniature of Brinco for the agents showcase + gallery thumbnail. No JS, no network:
+ * product art is the public sprite inlined at build time (ids prefixed to avoid collisions).
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { useT, type Lang } from '../../i18n';
+import Wheel from './Wheel.astro';
+import { buildCatalog, decode, flashPicks, locale, BG, FREE_SHIP, type Vocab } from './catalog';
+import { money, moneyShort } from './format';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'brinco');
+const loc = locale(lang);
+const all = buildCatalog(t.raw<Vocab>('catalogVocab'));
+const cards = all.slice(0, 5).map(decode);
+const flash = flashPicks(all).slice(0, 6).map(decode);
+let sprite = '';
+try {
+  sprite = readFileSync(join(process.cwd(), 'public/demos/brinco/sprite.svg'), 'utf8')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<svg[^>]*>/, '')
+    .replace('</svg>', '')
+    .replace(/id="i(\d+)"/g, 'id="bpb-i$1"');
+} catch { /* preview still renders without art */ }
+const free = moneyShort(FREE_SHIP, loc);
+const ticker = t.raw<string[]>('ticker.items').slice(0, 3).map((s) => s.replace('{free}', free));
+const cats = t.raw<Vocab>('catalogVocab').cats;
+---
+
+<div class="bpb" data-lang={lang}>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" set:html={sprite} />
+  <div class="bpb-ticker" data-build="ticker">{ticker.map((s) => <span>{s}</span>)}</div>
+  <div class="bpb-header" data-build="header">
+    <span class="bpb-logo"><b>b</b>brinco</span>
+    <span class="bpb-search">{t('header.searchPlaceholder')}<i></i></span>
+    <span class="bpb-cart">{t('header.cart')}<em>3</em></span>
+  </div>
+  <section class="bpb-hero" data-build="hero">
+    <div data-build="title">
+      <p class="bpb-kicker">{t('hero.kicker')}</p>
+      <p class="bpb-h1">{t('hero.title')}</p>
+      <p class="bpb-sub">{t('hero.sub', { free })}</p>
+      <p class="bpb-ctas"><span class="bpb-btn bpb-btn--y">{t('hero.ctaShop')}</span><span class="bpb-btn bpb-btn--r">{t('hero.ctaSpin')}</span></p>
+    </div>
+    <div class="bpb-wheelbox" data-build="wheel">
+      <span class="bpb-st bpb-st--a">{t('hero.stickerOff')}</span>
+      <span class="bpb-st bpb-st--b">{t('hero.stickerShip')}</span>
+      <span class="bpb-pin"></span>
+      <div class="bpb-wheel"><Wheel labels={t.raw<string[]>('wheel.segments')} /></div>
+    </div>
+  </section>
+  <section class="bpb-flash" data-build="flash">
+    <div class="bpb-flash__head">
+      <p class="bpb-h2">{t('flash.title')}</p>
+      <p class="bpb-cd" data-build="timer"><span>{t('flash.ends')}</span><b>07</b><b>42</b><b>19</b></p>
+    </div>
+    <div class="bpb-flash__row">
+      {flash.map((p) => (
+        <div class="bpb-fc">
+          <span class="bpb-fc__art" style={`--bg:${BG[p.bg]}`}><svg viewBox="0 0 64 64"><use href={`#bpb-i${p.icon}`} /></svg><em>-{p.off}%</em></span>
+          <strong>{money(p.price, loc)}</strong>
+          <span class="bpb-bar"><i style={`transform:scaleX(${0.6 + (p.id % 4) / 10})`}></i></span>
+          <small>{t('flash.left', { n: p.stock })}</small>
+        </div>
+      ))}
+    </div>
+  </section>
+  <section class="bpb-cat">
+    <p class="bpb-h2 bpb-h2--dark">{t('catalog.title')}</p>
+    <p class="bpb-chips"><span class="is-on">{t('catalog.all')}</span>{cats.slice(0, 6).map((c) => <span>{c}</span>)}</p>
+    <div class="bpb-grid" data-build="grid">
+      {cards.map((p, i) => (
+        <div class="bpb-card" data-build={`card${i + 1}`}>
+          <span class="bpb-card__art" style={`--bg:${BG[p.bg]}`}><svg viewBox="0 0 64 64"><use href={`#bpb-i${p.icon}`} /></svg><em>-{p.off}%</em></span>
+          <span class="bpb-card__name">{p.name}</span>
+          <span class="bpb-card__price"><strong>{money(p.price, loc)}</strong> <s>{money(p.orig, loc)}</s></span>
+          <span class="bpb-card__add">+ {t('card.add')}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+  <footer class="bpb-footer" data-build="footer">
+    <span class="bpb-logo bpb-logo--foot"><b>b</b>brinco</span>
+    <p>{t('footer.note')}</p>
+  </footer>
+</div>
+
+<style>
+  .bpb {
+    --r: #ff2e4d; --y: #ffe600; --k: #111; --g: #19e07a;
+    width: 1280px; background: #f2f2f2; color: var(--k); font-family: var(--font-brinco, system-ui), system-ui, sans-serif; overflow: hidden; line-height: 1.2;
+  }
+  .bpb p { margin: 0; }
+  .bpb-ticker { height: 34px; display: flex; gap: 48px; align-items: center; padding: 0 24px; background: var(--k); color: var(--y); font-weight: 800; font-size: 13px; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+  .bpb-header { height: 72px; display: flex; align-items: center; gap: 20px; padding: 0 40px; background: var(--r); border-bottom: 3px solid var(--k); }
+  .bpb-logo { display: inline-flex; align-items: center; gap: 6px; font-weight: 900; font-size: 28px; letter-spacing: -0.05em; }
+  .bpb-logo b { display: grid; place-items: center; width: 38px; height: 38px; background: var(--y); border: 2.5px solid var(--k); transform: rotate(-8deg); box-shadow: 3px 3px 0 var(--k); }
+  .bpb-search { flex: 1; height: 44px; display: flex; align-items: center; padding-left: 14px; background: #fff; border: 2.5px solid var(--k); box-shadow: 4px 4px 0 var(--k); color: #666; font-size: 15px; position: relative; }
+  .bpb-search i { position: absolute; right: 0; top: 0; bottom: 0; width: 50px; background: var(--y); border-left: 2.5px solid var(--k); }
+  .bpb-cart { position: relative; height: 46px; display: inline-flex; align-items: center; padding: 0 18px; background: var(--k); color: #fff; font-weight: 800; box-shadow: 3px 3px 0 var(--y); }
+  .bpb-cart em { position: absolute; top: -10px; right: -10px; font-style: normal; background: var(--y); color: var(--k); border: 2.5px solid var(--k); padding: 1px 7px; font-weight: 900; transform: rotate(6deg); }
+  .bpb-hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; padding: 44px 40px; background: var(--k); color: #fff; }
+  .bpb-kicker { display: inline-block; background: var(--y); color: var(--k); font-weight: 900; text-transform: uppercase; font-size: 13px; padding: 6px 10px; transform: rotate(-2deg); margin-bottom: 14px !important; }
+  .bpb-h1 { font-weight: 900; font-size: 80px; line-height: 0.92; letter-spacing: -0.035em; text-transform: uppercase; max-width: 12ch; }
+  .bpb-sub { margin-top: 16px !important; font-size: 18px; color: #e8e8e8; max-width: 44ch; }
+  .bpb-ctas { display: flex; gap: 14px; margin-top: 22px !important; }
+  .bpb-btn { display: inline-flex; align-items: center; height: 54px; padding: 0 24px; border: 2.5px solid var(--k); font-weight: 900; text-transform: uppercase; color: var(--k); }
+  .bpb-btn--y { background: var(--y); box-shadow: 4px 4px 0 var(--r); }
+  .bpb-btn--r { background: var(--r); box-shadow: 4px 4px 0 var(--y); }
+  .bpb-wheelbox { position: relative; height: 340px; display: grid; place-items: center; }
+  .bpb-wheel { width: 300px; height: 300px; }
+  .bpb-wheel :global(svg) { width: 100%; height: 100%; }
+  .bpb-pin { position: absolute; z-index: 2; top: 12px; left: 50%; transform: translateX(-50%); border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 26px solid var(--y); }
+  .bpb-st { position: absolute; z-index: 3; border: 2.5px solid var(--k); font-weight: 900; text-transform: uppercase; padding: 6px 10px; color: var(--k); }
+  .bpb-st--a { left: 0; top: 10px; background: var(--r); font-size: 38px; transform: rotate(-10deg); box-shadow: 4px 4px 0 var(--y); }
+  .bpb-st--b { right: 0; bottom: 20px; background: var(--g); font-size: 14px; transform: rotate(8deg); }
+  .bpb-flash { background: var(--y); padding: 22px 40px 26px; border-block: 3px solid var(--k); }
+  .bpb-flash__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .bpb-h2 { font-weight: 900; font-size: 36px; text-transform: uppercase; letter-spacing: -0.03em; }
+  .bpb-cd { display: flex; gap: 6px; align-items: center; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+  .bpb-cd b { background: var(--k); color: #fff; padding: 6px 12px; font-size: 22px; font-variant-numeric: tabular-nums; }
+  .bpb-flash__row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .bpb-fc { display: grid; gap: 6px; padding-bottom: 10px; background: #fff; border: 2.5px solid var(--k); box-shadow: 4px 4px 0 var(--k); }
+  .bpb-fc > :not(.bpb-fc__art) { margin-inline: 10px; }
+  .bpb-fc__art, .bpb-card__art { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 3; background: var(--bg); border-bottom: 2.5px solid var(--k); }
+  .bpb-fc__art svg { width: 52%; height: 52%; }
+  .bpb-fc__art em, .bpb-card__art em { position: absolute; left: 6px; top: 6px; font-style: normal; font-weight: 900; background: var(--r); border: 2px solid var(--k); padding: 2px 6px; transform: rotate(-6deg); }
+  .bpb-fc strong, .bpb-card__price strong { color: #c8001f; font-weight: 900; font-size: 19px; }
+  .bpb-bar { display: block; height: 10px; border: 2px solid var(--k); overflow: hidden; }
+  .bpb-bar i { display: block; height: 100%; background: var(--r); transform-origin: left; }
+  .bpb-fc small { font-weight: 800; font-size: 12px; color: #c8001f; }
+  .bpb-cat { padding: 28px 40px 32px; }
+  .bpb-chips { display: flex; gap: 8px; margin: 14px 0 18px !important; }
+  .bpb-chips span { padding: 10px 14px; border: 2.5px solid var(--k); background: #fff; font-weight: 700; font-size: 15px; }
+  .bpb-chips span.is-on { background: var(--k); color: var(--y); box-shadow: 3px 3px 0 var(--r); }
+  .bpb-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .bpb-card { display: grid; gap: 6px; padding-bottom: 12px; background: #fff; border: 2.5px solid var(--k); box-shadow: 4px 4px 0 var(--k); }
+  .bpb-card > :not(.bpb-card__art) { margin-inline: 10px; }
+  .bpb-card__art { aspect-ratio: 1; }
+  .bpb-card__art svg { width: 56%; height: 56%; }
+  .bpb-card__name { font-weight: 600; font-size: 15px; }
+  .bpb-card__price s { color: #5a5a5a; font-size: 13px; }
+  .bpb-card__add { height: 44px; display: grid; place-items: center; background: var(--y); border: 2.5px solid var(--k); font-weight: 900; text-transform: uppercase; font-size: 15px; }
+  .bpb-footer { display: flex; gap: 32px; align-items: center; padding: 32px 40px 40px; background: var(--k); color: #ddd; font-size: 14px; }
+  .bpb-logo--foot { color: #fff; }
+  .bpb-footer p { max-width: 70ch; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bpb-wheelbox[data-build-state='motion'] .bpb-wheel :global(svg) { animation: bpb-spin 6s cubic-bezier(0.2, 0.7, 0.2, 1) infinite; }
+    .bpb-ticker[data-build-state='motion'] span { animation: bpb-slide 6s linear infinite; }
+    .bpb-flash[data-build-state='motion'] .bpb-bar i { animation: bpb-fill 1.6s ease-out infinite alternate; }
+    .bpb-cd[data-build-state='motion'] b:last-child { animation: bpb-pulse 1s steps(2) infinite; }
+    .bpb-card[data-build-state='motion'] .bpb-card__add { animation: bpb-pulse 1.4s ease-in-out infinite; }
+  }
+  @keyframes bpb-slide { to { transform: translateX(-120px); } }
+  @keyframes bpb-spin { from { transform: rotate(0); } to { transform: rotate(1080deg); } }
+  @keyframes bpb-fill { from { transform: scaleX(0.3); } }
+  @keyframes bpb-pulse { 50% { transform: scale(1.06); } }
+</style>

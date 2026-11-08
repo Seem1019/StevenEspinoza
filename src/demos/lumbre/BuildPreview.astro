@@ -1,0 +1,145 @@
+---
+/**
+ * Static 1280px miniature of Lumbre for the showcase + gallery thumbnail. No JS, no network.
+ * Reuses the real scene art (own id prefixes). Ambient fx stay paused unless the part is in the `motion` state.
+ */
+import { useT, type Lang } from '../../i18n';
+import Entrada from './components/scenes/Entrada.astro';
+import Barra from './components/scenes/Barra.astro';
+import Cocina from './components/scenes/Cocina.astro';
+import Mesa from './components/scenes/Mesa.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'lumbre');
+const tabs = ['empezar', 'fuego', 'postres', 'bebidas'] as const;
+const dishes = t.raw<{ name: string; desc: string; price: string }[]>('menu.items.fuego');
+const strips = [
+  { k: 'barra', A: Barra, p: 'lbpB' },
+  { k: 'cocina', A: Cocina, p: 'lbpC' },
+  { k: 'mesa', A: Mesa, p: 'lbpM' },
+] as const;
+---
+<div class="bp">
+  <header class="bp-nav" data-build="nav">
+    <span class="bp-brand"><span class="bp-flame" aria-hidden="true"></span>Lumbre</span>
+    <span class="bp-links"><span>{t('head.menu')}</span><span>{t('head.hours')}</span><span class="bp-btn">{t('head.reserve')}</span></span>
+  </header>
+
+  <section class="bp-hero" data-build="hero">
+    <div class="bp-art"><Entrada p="lbpE" /><div class="bp-scrim"></div></div>
+    <div class="bp-copy" data-build="hero-copy">
+      <p class="bp-h1">{t('world.scenes.entrada.title')}</p>
+      <p class="bp-line">{t('world.scenes.entrada.line')}</p>
+      <p class="bp-tags">{t.raw<string[]>('world.scenes.entrada.tags').map((x) => <span>{x}</span>)}</p>
+    </div>
+    <ol class="bp-rail" data-build="rail">
+      {(['entrada', 'barra', 'cocina', 'mesa'] as const).map((k, i) => (
+        <li class={i === 0 ? 'is-on' : ''}><span>{t(`world.scenes.${k}.rail`)}</span><i></i></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="bp-strips">
+    {strips.map(({ k, A, p }) => (
+      <div class="bp-strip" data-build={`strip-${k}`}>
+        <div class="bp-art"><A p={p} /><div class="bp-scrim"></div></div>
+        <p class="bp-strip__title">{t(`world.scenes.${k}.title`)}</p>
+      </div>
+    ))}
+  </section>
+
+  <section class="bp-menu">
+    <div data-build="menu-head">
+      <p class="bp-h2">{t('menu.title')}</p>
+      <p class="bp-lead">{t('menu.intro')}</p>
+    </div>
+    <div class="bp-tabs" data-build="tabs">
+      {tabs.map((k) => <span class={k === 'fuego' ? 'is-on' : ''}>{t(`menu.tabs.${k}`)}</span>)}
+    </div>
+    <ul class="bp-dishes" data-build="dishes">
+      {dishes.map((d) => (
+        <li><span class="bp-ico" aria-hidden="true"></span><span class="bp-dn"><b>{d.name}</b><small>{d.desc}</small></span><span class="bp-price">{d.price}</span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="bp-reserve" data-build="reserve">
+    <div>
+      <p class="bp-h3">{t('world.scenes.mesa.title')}</p>
+      <p class="bp-lead">{t('world.scenes.mesa.line')}</p>
+    </div>
+    <span class="bp-btn bp-btn--lg">{t('world.scenes.mesa.cta')}</span>
+  </section>
+
+  <footer class="bp-foot" data-build="footer">
+    <span class="bp-brand bp-brand--sm"><span class="bp-flame" aria-hidden="true"></span>Lumbre</span>
+    <span>{t('footer.line')}</span>
+  </footer>
+</div>
+
+<style>
+  .bp {
+    width: 1280px; background: #120c09; color: #f6e7d2; overflow: hidden;
+    font-family: var(--font-lumbre-body), system-ui, sans-serif; font-size: 16px; line-height: 1.45;
+    --d: var(--font-lumbre-display), Georgia, serif;
+  }
+  .bp p { margin: 0; }
+  .bp :global(.lb-fx) { animation-play-state: paused; }
+  .bp [data-build-state='motion'] :global(.lb-fx) { animation-play-state: running; }
+
+  .bp-nav { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; background: #120c09; border-bottom: 1px solid #3a2a1f; }
+  .bp-brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--d); font-weight: 600; font-size: 26px; }
+  .bp-brand--sm { font-size: 20px; }
+  .bp-flame { width: 14px; height: 18px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(circle at 50% 75%, #ffd28a, #e8742c 70%); }
+  .bp-links { display: flex; align-items: center; gap: 28px; font-weight: 500; font-size: 15px; }
+  .bp-btn { display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 6px; background: #e8742c; color: #1a0f0a; font-weight: 600; }
+  .bp-btn--lg { height: 52px; padding: 0 26px; font-size: 17px; }
+
+  .bp-hero { position: relative; height: 720px; display: flex; align-items: flex-end; }
+  .bp-art { position: absolute; inset: 0; overflow: hidden; }
+  .bp-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgb(12 8 6 / 0.9), rgb(12 8 6 / 0) 55%), linear-gradient(to right, rgb(12 8 6 / 0.55), rgb(12 8 6 / 0) 50%); }
+  .bp-copy { position: relative; padding: 0 0 64px 72px; max-width: 620px; }
+  .bp-h1 { font-family: var(--d); font-weight: 600; font-size: 150px; line-height: 0.92; letter-spacing: -0.035em; }
+  .bp-line { margin-top: 14px !important; font-size: 20px; max-width: 30em; }
+  .bp-tags { display: flex; gap: 8px; margin-top: 18px !important; }
+  .bp-tags span { padding: 6px 10px; border: 1px solid rgb(201 161 90 / 0.6); border-radius: 4px; color: #ffd28a; font-size: 13px; font-weight: 500; background: rgb(18 12 9 / 0.55); }
+  .bp-rail { position: absolute; right: 40px; top: 260px; margin: 0; padding: 0; list-style: none; display: grid; gap: 22px; border-right: 2px solid rgb(201 161 90 / 0.35); padding-right: 0; }
+  .bp-rail li { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-right: -8px; font-size: 14px; color: #cdb8a0; }
+  .bp-rail i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #c9a15a; background: #120c09; }
+  .bp-rail .is-on { color: #f6e7d2; }
+  .bp-rail .is-on i { background: #e8742c; border-color: #ffd28a; }
+
+  .bp-strips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: #120c09; }
+  .bp-strip { position: relative; height: 300px; display: flex; align-items: flex-end; }
+  .bp-strip__title { position: relative; padding: 0 0 22px 26px; font-family: var(--d); font-weight: 600; font-size: 40px; letter-spacing: -0.02em; }
+
+  .bp-menu { padding: 72px 72px 40px; }
+  .bp-h2 { font-family: var(--d); font-weight: 600; font-size: 64px; letter-spacing: -0.025em; line-height: 1; }
+  .bp-h3 { font-family: var(--d); font-weight: 600; font-size: 44px; letter-spacing: -0.02em; line-height: 1; }
+  .bp-lead { margin-top: 12px !important; color: #cdb8a0; font-size: 17px; max-width: 40em; }
+  .bp-tabs { display: flex; gap: 8px; margin-top: 32px; border-bottom: 1px solid #3a2a1f; }
+  .bp-tabs span { padding: 14px 16px; color: #cdb8a0; font-weight: 500; }
+  .bp-tabs .is-on { color: #f6e7d2; box-shadow: inset 0 -3px 0 #e8742c; }
+  .bp-dishes { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
+  .bp-dishes li { display: grid; grid-template-columns: 52px 1fr auto; gap: 16px; padding: 22px 0; border-bottom: 1px solid #3a2a1f; }
+  .bp-ico { width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 50% 60%, #c9a15a 0 7px, transparent 8px), #261a13; border: 1px solid #3a2a1f; }
+  .bp-dn { display: grid; gap: 4px; }
+  .bp-dn b { font-family: var(--d); font-weight: 500; font-size: 21px; }
+  .bp-dn small { color: #cdb8a0; font-size: 15px; }
+  .bp-price { font-family: var(--d); font-weight: 600; font-size: 21px; color: #f4a547; }
+
+  .bp-reserve {
+    margin: 32px 72px 56px; padding: 36px 40px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    background: radial-gradient(120% 140% at 100% 100%, rgb(232 116 44 / 0.3), rgb(232 116 44 / 0) 60%), #1b120d; border: 1px solid rgb(232 116 44 / 0.5);
+  }
+  .bp-foot { display: flex; align-items: center; gap: 24px; padding: 28px 72px 36px; border-top: 1px solid #3a2a1f; color: #a28c76; font-size: 14px; }
+  .bp-foot .bp-brand { color: #f6e7d2; }
+
+  [data-build-state='motion'].bp-hero .bp-rail i { transition: transform 300ms; }
+  @media (prefers-reduced-motion: no-preference) {
+    .bp-hero[data-build-state='motion'] .bp-copy { animation: bp-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .bp-hero[data-build-state='motion'] :global(.lb-push) { animation: bp-dolly 6s ease-in-out infinite alternate; transform-origin: 50% 72%; }
+  }
+  @keyframes bp-rise { from { opacity: 0.4; transform: translateY(14px); } }
+  @keyframes bp-dolly { from { transform: scale(1); } to { transform: scale(1.08); } }
+</style>

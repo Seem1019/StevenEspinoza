@@ -1,0 +1,28 @@
+---
+/** Prize wheel SVG (8 segments, clockwise from 12 o'clock). Used by the wheel dialog, the hero teaser and BuildPreview. */
+interface Props { labels: string[]; class?: string; id?: string }
+const { labels, class: cls, id } = Astro.props;
+const C = 110, R = 102;
+const FILL = ['#FF2E4D', '#FFE600', '#19E07A', '#FFFFFF'];
+const INK = ['#111111', '#111111', '#111111', '#111111'];
+const pt = (deg: number, r = R) => {
+  const a = (deg * Math.PI) / 180;
+  return `${(C + r * Math.sin(a)).toFixed(2)} ${(C - r * Math.cos(a)).toFixed(2)}`;
+};
+const segs = labels.map((label, i) => ({
+  d: `M${C} ${C} L${pt(i * 45)} A${R} ${R} 0 0 1 ${pt((i + 1) * 45)} Z`,
+  fill: FILL[i % 4],
+  ink: INK[i % 4],
+  mid: i * 45 + 22.5,
+  label,
+}));
+---
+<svg class={cls} id={id} viewBox="0 0 220 220" aria-hidden="true">
+  <circle cx={C} cy={C} r={R + 5} fill="#111" stroke="#FFE600" stroke-width="3" />
+  {segs.map((s) => <path d={s.d} fill={s.fill} stroke="#111" stroke-width="3" />)}
+  {segs.map((s) => (
+    <text x={C + 60} y={C} fill={s.ink} transform={`rotate(${s.mid - 90} ${C} ${C})`} text-anchor="middle" dominant-baseline="middle" font-size="19" font-weight="900" font-family="var(--font-brinco), system-ui, sans-serif">{s.label}</text>
+  ))}
+  <circle cx={C} cy={C} r="18" fill="#FFE600" stroke="#111" stroke-width="4" />
+  <circle cx={C} cy={C} r="6" fill="#111" />
+</svg>

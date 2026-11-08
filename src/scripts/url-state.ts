@@ -23,22 +23,21 @@ const isUiState = (s: unknown) => !!s && typeof s === 'object' && (s as { ui?: b
 
 if (typeof window !== 'undefined') {
   onUiEntry = isUiState(history.state);
-  window.addEventListener(
-    'popstate',
-    (ev) => {
-      const landingIsUi = isUiState(ev.state);
-      const sameDoc = location.pathname === pagePath;
-      if (sameDoc && (landingIsUi || onUiEntry)) {
-        ev.stopImmediatePropagation();
-        onUiEntry = landingIsUi;
-        const url = new URL(location.href);
-        listeners.forEach((fn) => fn(url));
-      } else {
-        onUiEntry = landingIsUi;
-      }
-    },
-    { capture: true },
-  );
+  /**
+   * Called by the inline listener in BaseLayout <head>, which is registered before Astro's router
+   * (window listeners run in registration order). Returning true stops the router's handler.
+   */
+  (window as unknown as { __uiPopHandler: (ev: PopStateEvent) => boolean }).__uiPopHandler = (ev) => {
+    const landingIsUi = isUiState(ev.state);
+    const sameDoc = location.pathname === pagePath;
+    const handled = sameDoc && (landingIsUi || onUiEntry);
+    onUiEntry = landingIsUi;
+    if (handled) {
+      const url = new URL(location.href);
+      listeners.forEach((fn) => fn(url));
+    }
+    return handled;
+  };
   document.addEventListener('astro:page-load', () => {
     pagePath = location.pathname;
     onUiEntry = isUiState(history.state);

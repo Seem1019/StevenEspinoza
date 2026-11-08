@@ -1,0 +1,78 @@
+---
+/** Hero product mock: week calendar + reminder toast + booking widget. Pure HTML/CSS (no JS). */
+import { useT, type Lang } from '../../../i18n';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'turnio');
+type Appt = { d: number; s: number; l: number; t: string; w: string; c: string; n?: boolean };
+const days = t.raw<string[]>('mock.days');
+const hours = t.raw<string[]>('mock.hours');
+const appts = t.raw<Appt[]>('mock.appts');
+const slots = t.raw<string[]>('mock.widgetSlots');
+---
+<div class="t-mock" role="img" aria-label={t('a11y.mock')}>
+  <div class="t-mock__frame" aria-hidden="true">
+    <div class="t-mock__bar">
+      <span class="t-mock__dots"><i></i><i></i><i></i></span>
+      <span class="t-mock__app"><span class="t-logo-dot"></span>{t('mock.app')}</span>
+      <span class="t-mock__search"><Icon name="search" size={14} />{t('mock.search')}</span>
+      <span class="t-mock__new"><Icon name="plus" size={14} />{t('mock.newBooking')}</span>
+    </div>
+    <div class="t-mock__body">
+      <div class="t-mock__side">
+        <span class="is-on"><Icon name="calendar" size={18} /></span>
+        <span><Icon name="bell" size={18} /></span>
+        <span><Icon name="card" size={18} /></span>
+        <span><Icon name="chart" size={18} /></span>
+        <span><Icon name="users" size={18} /></span>
+      </div>
+      <div class="t-mock__main">
+        <div class="t-mock__head">
+          <strong>{t('mock.week')}</strong>
+          <span class="t-mock__today">{t('mock.today')}</span>
+        </div>
+        <div class="t-cal">
+          <span class="t-cal__corner"></span>
+          {days.map((d, i) => <span class={`t-cal__day d${i}`} style={`grid-column:${i + 2}`}>{d}</span>)}
+          {hours.map((h, i) => <span class="t-cal__hour" style={`grid-row:${i * 2 + 2} / span 2`}>{h}</span>)}
+          {hours.map((_, i) => <span class="t-cal__line" style={`grid-row:${i * 2 + 2}`}></span>)}
+          {appts.map((a) => (
+            <span
+              class={`t-appt t-appt--${a.c} d${a.d}${a.n ? ' is-new' : ''}`}
+              style={`grid-column:${a.d + 2};grid-row:${a.s + 2} / span ${a.l}`}
+            >
+              <b>{a.t}</b>
+              <span>{a.w}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="t-float t-toast" aria-hidden="true">
+    <span class="t-toast__icon"><Icon name="chat" size={18} /></span>
+    <span class="t-toast__txt">
+      <b>{t('mock.toastTitle')}</b>
+      <span>{t('mock.toastBody')}</span>
+    </span>
+    <span class="t-toast__status"><Icon name="check" size={14} />{t('mock.toastStatus')}</span>
+  </div>
+
+  <div class="t-float t-widget" aria-hidden="true">
+    <b class="t-widget__title">{t('mock.widgetTitle')}</b>
+    <span class="t-widget__svc">{t('mock.widgetService')}</span>
+    <span class="t-widget__day"><Icon name="calendar" size={14} />{t('mock.widgetDay')}</span>
+    <span class="t-widget__slots">
+      {slots.map((s, i) => <span class={i === 1 ? 'is-on' : ''}>{s}</span>)}
+    </span>
+    <span class="t-widget__cta">{t('mock.widgetCta')}</span>
+    <span class="t-widget__note">{t('mock.widgetDeposit')}</span>
+  </div>
+
+  <div class="t-float t-chip" aria-hidden="true">
+    <span>{t('mock.chip')}</span>
+    <b>{t('mock.chipValue')}</b>
+  </div>
+</div>

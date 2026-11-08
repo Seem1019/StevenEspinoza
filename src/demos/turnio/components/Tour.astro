@@ -1,0 +1,148 @@
+---
+/** Interactive product tour. Tabs switch panels in place; state in ?tour= (setParams, no history). */
+import { useT, type Lang } from '../../../i18n';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'turnio');
+const keys = ['agenda', 'reminders', 'payments', 'reports'] as const;
+const icons = { agenda: 'calendar', reminders: 'bell', payments: 'card', reports: 'chart' } as const;
+type Slot = { s: number; l: number; t: string; w: string; c: string };
+const staff = t.raw<string[]>('tour.agenda.staff');
+const agendaSlots = t.raw<Slot[]>('tour.agenda.slots');
+const schedule = t.raw<{ when: string; channel: string }[]>('tour.reminders.schedule');
+const rows = t.raw<{ who: string; what: string; amount: string; status: string }[]>('tour.payments.rows');
+const kpis = t.raw<{ label: string; value: string }[]>('tour.reports.kpis');
+const bars = t.raw<{ d: string; v: number }[]>('tour.reports.bars');
+const hours = ['9:00', '10:00', '11:00', '12:00', '13:00'];
+---
+<section class="t-section t-tour" id="tour" aria-labelledby="tour-title">
+  <div class="t-wrap">
+    <div class="t-head t-reveal">
+      <h2 id="tour-title">{t('tour.title')}</h2>
+      <p>{t('tour.lead')}</p>
+    </div>
+
+    <div class="t-tabs" role="tablist" aria-label={t('tour.title')}>
+      {keys.map((k, i) => (
+        <button
+          type="button"
+          role="tab"
+          class="t-tab"
+          id={`tab-${k}`}
+          data-tour={k}
+          aria-controls={`panel-${k}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          <Icon name={icons[k]} size={18} />
+          <span>{t(`tour.tabs.${k}`)}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="t-panels">
+      {keys.map((k, i) => (
+        <div class="t-panel" role="tabpanel" id={`panel-${k}`} aria-labelledby={`tab-${k}`} data-panel={k} hidden={i !== 0} tabindex="0">
+          <div class="t-panel__copy">
+            <h3>{t(`tour.${k}.title`)}</h3>
+            <p>{t(`tour.${k}.text`)}</p>
+            <ul role="list" class="t-checks">
+              {t.raw<string[]>(`tour.${k}.points`).map((p) => (
+                <li><Icon name="check" size={18} />{p}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="t-screen" aria-hidden="true">
+            {k === 'agenda' && (
+              <div class="t-day">
+                <div class="t-screen__top"><strong>{t('tour.agenda.date')}</strong><span class="t-pill-dot">3</span></div>
+                <div class="t-day__grid">
+                  <span></span>
+                  {staff.map((s, si) => (
+                    <span class="t-day__staff" style={`grid-column:${si + 2}`}>
+                      <i class={`t-ava t-ava--${['a', 'b', 'c'][si]}`}>{s.replace(/^(Dra?\.|Dr\.)\s*/, '').slice(0, 1)}</i>{s}
+                    </span>
+                  ))}
+                  {hours.map((h, hi) => <span class="t-cal__hour" style={`grid-row:${hi * 2 + 2} / span 2`}>{h}</span>)}
+                  {hours.map((_, hi) => <span class="t-cal__line" style={`grid-row:${hi * 2 + 2}`}></span>)}
+                  {agendaSlots.map((a, ai) => (
+                    <span class={`t-appt t-appt--${a.c}`} style={`grid-column:${Math.floor(ai / 2) + 2};grid-row:${a.s + 2} / span ${a.l}`}>
+                      <b>{a.t}</b><span>{a.w}</span>
+                    </span>
+                  ))}
+                  <span class="t-free" style="grid-column:4;grid-row:9 / span 3">
+                    <b>{t('tour.agenda.free')}</b><span>{t('tour.agenda.freeAction')}</span>
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {k === 'reminders' && (
+              <div class="t-chat">
+                <div class="t-chat__head">
+                  <i class="t-ava t-ava--a">A</i>
+                  <span><b>{t('tour.reminders.chatName')}</b><small><Icon name="shield" size={12} />{t('tour.reminders.chatStatus')}</small></span>
+                </div>
+                <div class="t-chat__body">
+                  <div class="t-bubble">
+                    <p>{t('tour.reminders.message')}</p>
+                    <span class="t-bubble__btns"><span>{t('tour.reminders.confirm')}</span><span>{t('tour.reminders.reschedule')}</span></span>
+                  </div>
+                  <div class="t-bubble t-bubble--me"><Icon name="check" size={14} />{t('tour.reminders.reply')}</div>
+                  <div class="t-bubble"><p>{t('tour.reminders.done')}</p></div>
+                </div>
+                <ol class="t-seq" role="list">
+                  {schedule.map((s, si) => (
+                    <li class={si === 1 ? 'is-on' : ''}><Icon name={si === 0 ? 'chat' : si === 1 ? 'bell' : 'clock'} size={14} /><b>{s.when}</b><span>{s.channel}</span></li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {k === 'payments' && (
+              <div class="t-pay">
+                <div class="t-pay__rule">
+                  <span><Icon name="shield" size={18} />{t('tour.payments.rule')}</span>
+                  <b>{t('tour.payments.ruleValue')}</b>
+                  <span class="t-switch is-on"><i></i></span>
+                </div>
+                <p class="t-pay__refund"><Icon name="check" size={14} />{t('tour.payments.refund')}</p>
+                <div class="t-pay__list">
+                  <strong>{t('tour.payments.listTitle')}</strong>
+                  {rows.map((r, ri) => (
+                    <div class="t-pay__row">
+                      <i class={`t-ava t-ava--${['a', 'b', 'c', 'a'][ri]}`}>{r.who.slice(0, 1)}</i>
+                      <span><b>{r.who}</b><small>{r.what}</small></span>
+                      <span class="t-pay__amt">{r.amount}</span>
+                      <span class={`t-status t-status--${ri < 2 ? 'ok' : ri === 2 ? 'wait' : 'back'}`}>{r.status}</span>
+                    </div>
+                  ))}
+                  <div class="t-pay__total"><span>{t('tour.payments.total')}</span><b>{t('tour.payments.totalValue')}</b></div>
+                </div>
+              </div>
+            )}
+
+            {k === 'reports' && (
+              <div class="t-rep">
+                <span class="t-sample">{t('tour.reports.label')}</span>
+                <div class="t-rep__kpis">
+                  {kpis.map((kp) => <span><small>{kp.label}</small><b>{kp.value}</b></span>)}
+                </div>
+                <div class="t-rep__chart">
+                  <strong>{t('tour.reports.chartTitle')}</strong>
+                  <div class="t-bars">
+                    {bars.map((b, bi) => (
+                      <span class={bi === 3 ? 'is-top' : ''}><i style={`--v:${b.v / 100}`}></i><small>{b.d}</small></span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+/**
+ * Scroll-world: sticky stage (4 layered scenes + rail) over a tall track of 4 segments.
+ * World mode (CSS scroll-driven) is enabled in lumbre.css only with animation-timeline + timeline-scope
+ * support and no reduced motion; otherwise scenes render as 4 stacked static sections.
+ */
+import { useT, type Lang } from '../../../i18n';
+import Entrada from './scenes/Entrada.astro';
+import Barra from './scenes/Barra.astro';
+import Cocina from './scenes/Cocina.astro';
+import Mesa from './scenes/Mesa.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'lumbre');
+const keys = ['entrada', 'barra', 'cocina', 'mesa'] as const;
+const Art = { entrada: Entrada, barra: Barra, cocina: Cocina, mesa: Mesa };
+---
+<section class="lb-world" aria-label={t('world.label')} data-lb-world>
+  <div class="lb-stage">
+    {keys.map((k) => {
+      const A = Art[k];
+      const tags = t.raw<string[]>(`world.scenes.${k}.tags`);
+      return (
+        <div class={`lb-scene lb-scene--${k}`} id={`lb-${k}`} data-scene={k}>
+          <div class="lb-art" aria-hidden="true"><A /><div class="lb-scrim" /></div>
+          <div class="lb-copy">
+            <div class="lb-copy__inner">
+              {k === 'entrada'
+                ? <h1 class="lb-title lb-title--hero">{t(`world.scenes.${k}.title`)}</h1>
+                : <h2 class="lb-title">{t(`world.scenes.${k}.title`)}</h2>}
+              <p class="lb-line">{t(`world.scenes.${k}.line`)}</p>
+              <ul class="lb-tags" role="list">{tags.map((tag) => <li>{tag}</li>)}</ul>
+              {k === 'mesa' && (
+                <div class="lb-actions">
+                  <button type="button" class="lb-btn lb-btn--primary" data-lb-reserve>{t('world.scenes.mesa.cta')}</button>
+                  <button type="button" class="lb-btn lb-btn--ghost" data-lb-goto="lb-carta">{t('world.scenes.mesa.cta2')}</button>
+                </div>
+              )}
+              {k === 'entrada' && (
+                <p class="lb-hint"><span class="lb-hint__dot" aria-hidden="true" />{t('world.hint')}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    })}
+    <div class="lb-rail-wrap">
+      <nav class="lb-rail" aria-label={t('world.rail')}>
+        <span class="lb-rail__line" aria-hidden="true"><span class="lb-rail__fill" /></span>
+        <ol role="list">
+          {keys.map((k, i) => (
+            <li>
+              <button type="button" class="lb-rail__stop" data-lb-rail={k} aria-current={i === 0 ? 'step' : undefined}>
+                <span class="lb-rail__dot" aria-hidden="true" />
+                <span class="lb-rail__label">{t(`world.scenes.${k}.rail`)}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="lb-track" aria-hidden="true">
+    {keys.map((k) => <div class={`lb-seg lb-seg--${k}`} data-seg={k} />)}
+  </div>
+</section>
