@@ -73,7 +73,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 /** Builds an internal URL with base + locale + trailing slash. `path` like 'demos/brinco/' or '' for home. */
 export function localePath(lang: Lang, path = ''): string {
   const clean = path.replace(/^\/+/, '');
-  const [p, rest = ''] = clean.split(/(?=[?#])/);
+  // split at the FIRST ? or # only: 'demos/x/?a=1#b' -> ['demos/x/', '?a=1#b']; '#demos' -> ['', '#demos']
+  const [, p = '', rest = ''] = clean.match(/^([^?#]*)(.*)$/) ?? [];
   const withSlash = p === '' || p.endsWith('/') ? p : `${p}/`;
   return `${BASE}${lang}/${withSlash}${rest}`;
 }

@@ -42,8 +42,9 @@ dialog { color: inherit; }
   --radius-sm: 4px;
   --radius: 8px;
   --radius-lg: 14px;
-  --font-display: var(--font-brand-display), system-ui, sans-serif;
-  --font-body: var(--font-brand-body), system-ui, sans-serif;
+  /* var() fallbacks: on demo pages the brand fonts aren't loaded (DemoBar, contact dialog) */
+  --font-display: var(--font-brand-display, system-ui), system-ui, sans-serif;
+  --font-body: var(--font-brand-body, system-ui), system-ui, sans-serif;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-1: 160ms;
   --dur-2: 320ms;
