@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último commit:** `17d9b7a` · **Árbol de trabajo:** limpio · **Remoto:** ninguno (aún no publicado)
+**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último commit de código:** `17d9b7a` (después solo este handoff) · **Árbol de trabajo:** limpio · **Remoto:** ninguno (aún no publicado)
 
 ---
 
