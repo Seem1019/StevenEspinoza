@@ -1,0 +1,12 @@
+{
+  "names": { "orch": "Orquestador", "design": "Diseño", "frontend": "Frontend", "copy": "Copy", "qa": "QA" },
+  "status": { "idle": "En espera", "working": "Trabajando", "done": "Entregado", "fixing": "Corrigiendo" },
+  "phases": { "kickoff": "Arranque", "build": "Construcción", "review": "Revisión", "close": "Cierre" },
+  "fixed": "Corregido",
+  "flow": {
+    "label": "Flujo del orquestador",
+    "phase": "Fases de la construcción",
+    "log": "Mensajes entre agentes",
+    "simulation": "Demo · simulación con guion"
+  }
+}

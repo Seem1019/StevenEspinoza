@@ -56,10 +56,11 @@ Landmarks, one `h1`, labelled controls, visible focus, AA contrast (4.5:1 text),
 
 ## Showcase contract ("agentes en vivo")
 - `src/demos/<slug>/BuildPreview.astro` — props `{ lang }`. Static miniature (no JS, no network, scoped styles) of the demo's key sections, designed at **1280 px wide**, ~1400–2200 px tall. 8–14 parts marked `data-build="<id>"`. Outside the showcase it shows its final look and is also the gallery thumbnail (top 1280×800 must look great). Animations for the `motion` state live under `[data-build-state="motion"] …` (CSS only, reduced-motion aware). States are defined in `src/styles/build-states.css` and keep the box size (zero CLS).
-- `src/demos/<slug>/showcase/timeline.ts` — default export `Timeline` (`src/showcase/types.ts`), ~20 000 ms, 24–40 steps, agents `design | frontend | copy | qa`:
-  1. 0–6 s: design + frontend → every part `skeleton` (big blocks first, then nested)
-  2. 6–14 s: copy + frontend → `content`
-  3. 14–18 s: frontend → `motion` for animated parts
-  4. 18–20 s: qa logs checks (contrast, CLS, LCP, keyboard)
-- Logs: short, technical, believable (`grid 4 col · gap 16 · aspect 1/1`, `LCP: h1.hero (text)`). It is a scripted simulation: **never** claim real-time AI generation.
+- `src/demos/<slug>/showcase/timeline.ts` — default export `Scene` (`src/showcase/types.ts`), 30–45 s, agents `design | frontend | copy | qa` + the orchestrator. Phases (`phase` events):
+  1. kickoff: `spawn`, one `assign` per agent (QA with `status: 'idle'`)
+  2. build: `move`/`select`/`reveal` (skeleton → content → motion), `drag`/`resize` from a `place`d offset, `type`, `count`, `grid`, agents talking to each other (`say` with `to`), one waiting for another. 3–5 deliberate `errors` applied with `err` (or a `drag`/`resize` that lands wrong) and left visible
+  3. review: QA `sweep` flags them; for each, `assign` (status `fixing`) → the owner's cursor fixes it (`resize`/`drag`/`type`/`count` with `error`, or `pick` + `fix` for colour) → `deliver`; a quick second `sweep`
+  4. close: QA `say` + `approve`, `deliver`, `park`
+- Messages in the demo namespace: `showcase.say.<key>` (short, spoken, ≤ 45 chars) and `showcase.flags.<key>` (QA's marker label). It is a scripted simulation: **never** claim real-time AI generation.
+- Check it: `npm run screenshots:agents` (edit the slugs in `tests/agents-timeline.spec.ts`) and the "every demo scene reaches the corrected end" test.
 - Register the demo in `src/showcase/registry.ts` (timeline + preview component) — done by whoever integrates.

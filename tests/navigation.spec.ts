@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { installReloadProbe, docState, expectSameDocument, waitForSoftNav } from './helpers';
 
 const DEMOS = ['brinco', 'lumbre', 'isola', 'turnio'];

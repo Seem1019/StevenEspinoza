@@ -1,0 +1,12 @@
+{
+  "names": { "orch": "Orchestrator", "design": "Design", "frontend": "Frontend", "copy": "Copy", "qa": "QA" },
+  "status": { "idle": "Waiting", "working": "Working", "done": "Delivered", "fixing": "Fixing" },
+  "phases": { "kickoff": "Kickoff", "build": "Build", "review": "Review", "close": "Wrap-up" },
+  "fixed": "Fixed",
+  "flow": {
+    "label": "Orchestrator flow",
+    "phase": "Build phases",
+    "log": "Messages between agents",
+    "simulation": "Demo · scripted simulation"
+  }
+}

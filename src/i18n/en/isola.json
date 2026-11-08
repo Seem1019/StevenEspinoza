@@ -4,7 +4,12 @@
     "title": "Isola H1 · Wireless over-ear headphones — demo",
     "tagline": "Premium launch page with a scroll-driven 3D teardown.",
     "description": "Launch page for fictional premium headphones: precise typography, a 3D model that comes apart as you scroll and an in-page reservation. three.js only downloads when needed, so the first view loads as text.",
-    "features": ["Procedural 3D model that turns and explodes with scroll", "three.js loaded on demand: zero weight on first view", "Finish picker that recolours both illustration and model", "Reservation drawer with deep link and Back support"]
+    "features": [
+      "Procedural 3D model that turns and explodes with scroll",
+      "three.js loaded on demand: zero weight on first view",
+      "Finish picker that recolours both illustration and model",
+      "Reservation drawer with deep link and Back support"
+    ]
   },
   "currency": "${n}",
   "nav": {
@@ -36,34 +41,102 @@
     "posterAlt": "Isola H1 headphones assembled",
     "explodedAlt": "Exploded view of the Isola H1 headphones: cushion, driver, board, battery, shell and cap",
     "callouts": [
-      { "id": "cushion", "title": "Memory foam cushions", "body": "Breathable vegan leather. Swap them in ten seconds." },
-      { "id": "driver", "title": "40 mm driver", "body": "Carbon fibre diaphragm, from 4 Hz to 40 kHz." },
-      { "id": "chip", "title": "I1 ANC chip", "body": "Eight microphones, 48,000 noise adjustments a second." },
-      { "id": "battery", "title": "60 h battery", "body": "Ten minutes of charging give six hours of music." },
-      { "id": "band", "title": "Aluminium headband", "body": "Stepless fit and 254 g in total." }
+      {
+        "id": "cushion",
+        "title": "Memory foam cushions",
+        "body": "Breathable vegan leather. Swap them in ten seconds."
+      },
+      {
+        "id": "driver",
+        "title": "40 mm driver",
+        "body": "Carbon fibre diaphragm, from 4 Hz to 40 kHz."
+      },
+      {
+        "id": "chip",
+        "title": "I1 ANC chip",
+        "body": "Eight microphones, 48,000 noise adjustments a second."
+      },
+      {
+        "id": "battery",
+        "title": "60 h battery",
+        "body": "Ten minutes of charging give six hours of music."
+      },
+      {
+        "id": "band",
+        "title": "Aluminium headband",
+        "body": "Stepless fit and 254 g in total."
+      }
     ]
   },
   "features": {
     "title": "Designed to disappear.",
     "items": [
-      { "id": "anc", "title": "Silence that adapts", "body": "The I1 chip listens with eight microphones and tunes cancelling for the plane, the office or the street. No pressure in your ears.", "stat": "−42 dB", "statLabel": "average noise reduction" },
-      { "id": "sound", "title": "Studio sound, uncoloured", "body": "A 40 mm driver with a carbon fibre diaphragm renders every detail with the flat response mixing engineers rely on.", "stat": "4 Hz – 40 kHz", "statLabel": "frequency response" },
-      { "id": "battery", "title": "A whole week of travel", "body": "Up to 60 hours without cancelling and 45 with it. Ten minutes on USB-C give you six more hours.", "stat": "60 h", "statLabel": "of playback" },
-      { "id": "build", "title": "Built to last for years", "body": "Anodised aluminium headband, visible screws and replaceable cushions. Everything is repairable, nothing is thrown away.", "stat": "254 g", "statLabel": "total weight" }
+      {
+        "id": "anc",
+        "title": "Silence that adapts",
+        "body": "The I1 chip listens with eight microphones and tunes cancelling for the plane, the office or the street. No pressure in your ears.",
+        "stat": "−42 dB",
+        "statLabel": "average noise reduction"
+      },
+      {
+        "id": "sound",
+        "title": "Studio sound, uncoloured",
+        "body": "A 40 mm driver with a carbon fibre diaphragm renders every detail with the flat response mixing engineers rely on.",
+        "stat": "4 Hz – 40 kHz",
+        "statLabel": "frequency response"
+      },
+      {
+        "id": "battery",
+        "title": "A whole week of travel",
+        "body": "Up to 60 hours without cancelling and 45 with it. Ten minutes on USB-C give you six more hours.",
+        "stat": "60 h",
+        "statLabel": "of playback"
+      },
+      {
+        "id": "build",
+        "title": "Built to last for years",
+        "body": "Anodised aluminium headband, visible screws and replaceable cushions. Everything is repairable, nothing is thrown away.",
+        "stat": "254 g",
+        "statLabel": "total weight"
+      }
     ]
   },
   "specs": {
     "title": "Specifications",
     "note": "Fictional product: data created for this demo.",
     "rows": [
-      ["Driver", "40 mm dynamic, carbon fibre"],
-      ["Frequency response", "4 Hz – 40 kHz"],
-      ["Noise cancelling", "Adaptive hybrid, 8 microphones, I1 chip"],
-      ["Battery", "60 h (45 h with ANC) · fast charge 10 min = 6 h"],
-      ["Connectivity", "Bluetooth 5.4, multipoint, USB-C audio"],
-      ["Codecs", "LC3, AAC, SBC"],
-      ["Weight", "254 g"],
-      ["In the box", "Hard case, USB-C to USB-C cable, flight adapter"]
+      [
+        "Driver",
+        "40 mm dynamic, carbon fibre"
+      ],
+      [
+        "Frequency response",
+        "4 Hz – 40 kHz"
+      ],
+      [
+        "Noise cancelling",
+        "Adaptive hybrid, 8 microphones, I1 chip"
+      ],
+      [
+        "Battery",
+        "60 h (45 h with ANC) · fast charge 10 min = 6 h"
+      ],
+      [
+        "Connectivity",
+        "Bluetooth 5.4, multipoint, USB-C audio"
+      ],
+      [
+        "Codecs",
+        "LC3, AAC, SBC"
+      ],
+      [
+        "Weight",
+        "254 g"
+      ],
+      [
+        "In the box",
+        "Hard case, USB-C to USB-C cable, flight adapter"
+      ]
     ]
   },
   "finish": {
@@ -107,35 +180,39 @@
     "made": "Demo designed and built by Steven Espinoza."
   },
   "showcase": {
-    "logs": {
-      "tokens": "tokens · bg #FFFFFF · steel #E8ECF0 · sage accent #4C6A5C",
-      "grid": "grid 12 col · max 1240 · gutter 56",
-      "type": "Manrope 200 · 148 px · tracking −0.05em",
-      "nav": "nav: wordmark + 4 anchors + 4 px button",
-      "hero": "hero 2 col · text 5/12 · product 7/12",
-      "product": "inline product SVG · 0 requests",
-      "explode": "exploded strip · 6 parts in a row",
-      "callouts": "callouts: 1 px rule + 500 title",
-      "features": "features 4 col · gap 32",
-      "specs": "specs table · 2 col · hairline rows",
-      "cta": "final band · data-open-contact button",
-      "footer": "footer: fictional brand notice",
-      "heroCopy": "h1 “Isola H1” + one-line promise",
-      "priceCopy": "“from” price via Intl in the page locale",
-      "calloutsCopy": "callouts: 40 mm · 60 h · ANC chip · cushions",
-      "featuresCopy": "4 blocks: silence, sound, battery, materials",
-      "specsCopy": "8 spec rows (fictional product)",
-      "ctaCopy": "CTA: “Want a launch like this?”",
-      "productPaint": "graphite finish: shell, cap, cushion",
-      "motionReveal": "reveal: animation-timeline view() · entry 0–30 %",
-      "motionStage": "three.js via import() after IO + first interaction",
-      "motionExplode": "scroll explode 0.42 → 0.75 · damped",
-      "motionCallouts": "callouts fade by scroll progress",
-      "qaContrast": "secondary text contrast 6.2:1 · AA ok",
-      "qaCls": "CLS 0 · canvas fills the poster box",
-      "qaLcp": "LCP: h1.hero (text in initial HTML)",
-      "qaKeyboard": "keyboard: buy drawer, Esc and Back close it",
-      "qaThree": "no scroll, no three.js download"
+    "say": {
+      "aDesign": "Nav, layout grid and tech notes",
+      "aCopy": "Headline, promise and feature cards",
+      "aFrontend": "Product render and exploded view",
+      "dPalette": "White, steel and sage",
+      "cTone": "Quiet tone, short lines",
+      "fAsk": "How much room does the product get?",
+      "dAnswer": "Seven columns, centred",
+      "fRender": "Render placed",
+      "fExplode": "Exploded view in SVG, no 3D here",
+      "dNotes": "Notes under the exploded view",
+      "cSpecs": "Features and specs ready",
+      "fWait": "Waiting for your copy for the closer",
+      "cHandoff": "Done, sending it over",
+      "cDone": "Copy delivered",
+      "dDone": "Design delivered",
+      "fDone": "Components ready",
+      "rBuy": "\"Buy\" was left in Spanish",
+      "cFixBuy": "Translated",
+      "rRatio": "The image has the wrong proportion",
+      "fFixRatio": "1:1 ratio restored",
+      "rNotes": "The notes cover the exploded view",
+      "dFixNotes": "Notes back in place",
+      "aQa": "Review once they are done",
+      "aReview": "Review the whole page",
+      "qaFound": "Sending you the issues I found",
+      "aRecheck": "One last pass, please",
+      "qaOk": "All green."
+    },
+    "flags": {
+      "productRatio": "Image with the wrong proportion",
+      "buyLang": "Buy button in Spanish",
+      "notesOverlap": "Notes on top of the exploded view"
     }
   }
 }

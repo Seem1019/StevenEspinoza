@@ -10,7 +10,8 @@
     "test:e2e": "playwright test",
     "lighthouse": "node scripts/lighthouse.mjs",
     "screenshots": "playwright test tests/screenshots.spec.ts",
-    "psi": "node scripts/psi.mjs"
+    "psi": "node scripts/psi.mjs",
+    "screenshots:agents": "node -e \"process.env.AGENT_SHOTS=1;require('child_process').execSync('npx playwright test tests/agents-timeline.spec.ts --workers=3',{stdio:'inherit',env:process.env})\""
   },
   "engines": {
     "node": ">=22"

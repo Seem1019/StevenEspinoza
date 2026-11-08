@@ -2,12 +2,13 @@
 import { useT, localePath, type Lang } from '../../i18n';
 import { profile } from '../../data/profile';
 import LangSwitch from './LangSwitch.astro';
-interface Props { lang: Lang; current?: 'home' | 'showcase' }
-const { lang, current } = Astro.props;
+/** `build`: data-build id so the home intro can build the header in place. */
+interface Props { lang: Lang; current?: 'home' | 'showcase'; build?: string }
+const { lang, current, build } = Astro.props;
 const t = useT(lang);
 ---
 
-<header class="site-header">
+<header class="site-header" data-build={build}>
   <div class="site-header__inner">
     <a class="site-header__logo" href={localePath(lang)} aria-label={t('nav.home')}>
       <span class="site-header__mark" aria-hidden="true">{profile.initials}</span>

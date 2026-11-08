@@ -6,6 +6,10 @@ import DemoThumb from '../../components/site/DemoThumb.astro';
 import { useT, langPaths, localePath, type Lang } from '../../i18n';
 import { demos } from '../../data/demos';
 import { profile } from '../../data/profile';
+import AgentFlow from '../../components/site/AgentFlow.astro';
+import homeScene from '../../showcase/scenes/home';
+import { resolveScene, agentLabels } from '../../showcase/resolve';
+import '../../styles/build-states.css';
 
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
@@ -13,6 +17,7 @@ const t = useT(lang, 'home');
 const c = useT(lang, 'common');
 const metrics = t.raw<{ value: string; label: string }[]>('hero.metrics');
 const pillars = t.raw<{ title: string; body: string }[]>('pillars.items');
+const introData = { scene: resolveScene(homeScene, lang), labels: agentLabels(lang) };
 const cards = demos.map((d) => {
   const dt = useT(lang, d.ns);
   return { ...d, name: dt('meta.name'), tagline: dt('meta.tagline'), description: dt('meta.description'), features: dt.raw<string[]>('meta.features') };
@@ -20,14 +25,32 @@ const cards = demos.map((d) => {
 ---
 
 <BaseLayout lang={lang} title={t('meta.title')} description={t('meta.description')}>
-  <SiteHeader lang={lang} current="home" />
+  {/*
+    Intro gate decision BEFORE first paint (classic inline script, no flash). No gate for reduced motion,
+    crawlers, deep links (?demo=, #hash) or a second visit in this session. Watchdog: if the intro module
+    never runs, the plain home appears after 4 s. Content is always in this HTML; the intro only reveals it.
+  */}
+  <script is:inline slot="head">
+    (function () {
+      try {
+        var d = document.documentElement;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (/bot|crawl|spider|slurp|facebookexternalhit|embedly/i.test(navigator.userAgent)) return;
+        if (location.search.indexOf('demo=') > -1 || location.hash) return;
+        try { if (sessionStorage.getItem('se-intro')) return; } catch (e) {}
+        d.setAttribute('data-intro', 'gate');
+        setTimeout(function () { if (!window.__introReady && d.getAttribute('data-intro') === 'gate') d.removeAttribute('data-intro'); }, 4000);
+      } catch (e) {}
+    })();
+  </script>
+  <SiteHeader lang={lang} current="home" build="h-header" />
   <main id="main">
     <section class="hero">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <h1 class="hero__title">{t('hero.title')}</h1>
-          <p class="hero__lead">{t('hero.lead')}</p>
-          <div class="hero__ctas">
+          <h1 class="hero__title" data-build="h-title">{t('hero.title')}</h1>
+          <p class="hero__lead" data-build="h-lead">{t('hero.lead')}</p>
+          <div class="hero__ctas" data-build="h-ctas">
             <a class="btn btn--primary" href="#demos">{t('hero.ctaDemos')}</a>
             <a class="btn btn--ghost" href={localePath(lang, 'showcase/')} data-astro-prefetch="viewport">{t('hero.ctaShowcase')}</a>
           </div>
@@ -35,7 +58,7 @@ const cards = demos.map((d) => {
         <ul class="hero__stack" role="list" aria-label={t('gallery.title')}>
           {
             cards.map((d, i) => (
-              <li style={`--bg:${d.card.bg};--fg:${d.card.fg};--ac:${d.card.accent};--i:${i}`}>
+              <li data-build={`h-card${i + 1}`} style={`--bg:${d.card.bg};--fg:${d.card.fg};--ac:${d.card.accent};--i:${i}`}>
                 <a href={localePath(lang, `demos/${d.slug}/`)} data-astro-prefetch="viewport">
                   <span class="hero__stack-sector">{c(`sectors.${d.sector}`)}</span>
                   <span class="hero__stack-name">{d.name}</span>
@@ -46,13 +69,13 @@ const cards = demos.map((d) => {
         </ul>
       </div>
       <div class="wrap">
-        <dl class="hero__metrics">
+        <dl class="hero__metrics" data-build="h-metrics">
           {metrics.map((m) => (<div><dt>{m.label}</dt><dd>{m.value}</dd></div>))}
         </dl>
       </div>
     </section>
 
-    <section id="demos" class="gallery" aria-labelledby="gallery-title">
+    <section id="demos" class="home-below gallery" aria-labelledby="gallery-title">
       <div class="wrap">
         <div class="section-head">
           <h2 id="gallery-title">{t('gallery.title')}</h2>
@@ -79,7 +102,7 @@ const cards = demos.map((d) => {
       </div>
     </section>
 
-    <section class="pillars" aria-labelledby="pillars-title">
+    <section class="home-below pillars" aria-labelledby="pillars-title">
       <div class="wrap">
         <h2 id="pillars-title" class="pillars__title">{t('pillars.title')}</h2>
         <ul class="pillars__grid" role="list">
@@ -88,7 +111,7 @@ const cards = demos.map((d) => {
       </div>
     </section>
 
-    <section class="teaser" aria-labelledby="teaser-title">
+    <section class="home-below teaser" aria-labelledby="teaser-title">
       <div class="wrap teaser__inner">
         <div>
           <h2 id="teaser-title">{t('showcase.title')}</h2>
@@ -98,7 +121,7 @@ const cards = demos.map((d) => {
       </div>
     </section>
 
-    <section class="final-cta" aria-labelledby="cta-title">
+    <section class="home-below final-cta" aria-labelledby="cta-title">
       <div class="wrap final-cta__inner">
         <h2 id="cta-title">{t('cta.title')}</h2>
         <p>{t('cta.body')}</p>
@@ -110,6 +133,21 @@ const cards = demos.map((d) => {
     </section>
   </main>
   <SiteFooter lang={lang} />
+
+  <div class="ag-gate" data-intro-gate>
+    <div class="ag-gate__inner">
+      <p class="ag-gate__caption">{t('intro.gate.caption')}</p>
+      <button type="button" class="ag-gate__start" data-intro-start><span class="ag-gate__bg" aria-hidden="true"></span><span class="ag-gate__label">{t('intro.gate.start')}</span></button>
+      <button type="button" class="ag-gate__skip" data-intro-skip>{t('intro.gate.skip')}</button>
+    </div>
+  </div>
+  <AgentFlow lang={lang} variant="float" id="intro-flow" hidden>
+    <button type="button" class="ag-flow__btn" data-intro-panel-skip>{t('intro.skip')}</button>
+  </AgentFlow>
+  <button type="button" class="ag-replay" data-intro-replay hidden>
+    <span class="ag-replay__marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>{t('intro.replay')}
+  </button>
+  <script type="application/json" id="intro-data" set:html={JSON.stringify(introData)} />
 
   <dialog id="demo-dialog" class="demo-dialog" aria-label={t('gallery.title')}>
     {
@@ -143,6 +181,9 @@ const cards = demos.map((d) => {
 <script>
   import { onPage } from '../../scripts/lifecycle';
   import { onUrlState, openUi, closeUi, adoptDeepLink } from '../../scripts/url-state';
+  import { mountIntro } from '../../showcase/intro';
+
+  onPage(mountIntro);
 
   onPage(() => {
     const dlg = document.getElementById('demo-dialog') as HTMLDialogElement | null;
@@ -174,6 +215,53 @@ const cards = demos.map((d) => {
     return () => { ac.abort(); off(); };
   });
 </script>
+
+<style is:global>
+  /* Home intro (see src/showcase/intro.ts). Without html[data-intro] nothing here applies. */
+  html[data-intro='gate'] { overflow: hidden; }
+  /* deliberate errors (oversized headline, cards in a pile) must never create a horizontal scroll */
+  html[data-intro] body { overflow-x: clip; }
+  html[data-intro='gate'] :is(.site-header, #main, .site-footer) { visibility: hidden; }
+  html[data-intro] :is(.home-below, .site-footer) { opacity: 0; }
+  .home-below, .site-footer { transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+  html[data-intro] .hero__metrics dd { font-variant-numeric: tabular-nums; }
+  html[data-intro] .hero__stack li { position: relative; }
+  html[data-intro] .hero__stack li:nth-child(4) { z-index: 4; }
+  html[data-intro] .hero__stack li:nth-child(3) { z-index: 3; }
+  html[data-intro] .hero__stack li:nth-child(2) { z-index: 2; }
+
+  .ag-gate { display: none; }
+  html[data-intro='gate'] .ag-gate, .ag-gate.is-morphing { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 24px; }
+  html[data-intro='gate'] .ag-gate:not(.is-morphing) { background: var(--ink); }
+  .ag-gate.is-morphing { pointer-events: none; }
+  .ag-gate[hidden] { display: none !important; }
+  .ag-gate__inner { display: grid; justify-items: center; gap: 22px; max-width: 34ch; text-align: center; }
+  .ag-gate__caption { color: var(--muted); font-size: 1rem; }
+  .ag-gate__start {
+    position: relative; min-width: 220px; min-height: 60px; padding: 0 36px; border: 0; background: none; color: var(--accent-ink);
+    font-family: var(--font-display); font-weight: 800; font-size: 1.375rem; letter-spacing: -0.01em;
+  }
+  .ag-gate__bg { position: absolute; inset: 0; background: var(--accent); border-radius: var(--radius-sm); }
+  .ag-gate__start:hover .ag-gate__bg { background: #ff7442; }
+  .ag-gate__label { position: relative; }
+  .ag-gate__skip { min-height: 44px; padding: 0 12px; background: none; border: 0; color: var(--muted); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .ag-gate__skip:hover { color: var(--text); }
+
+  .ag-replay {
+    position: fixed; right: 16px; bottom: 16px; z-index: 65; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px;
+    background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: var(--radius-sm); font-weight: 700; font-size: 0.875rem;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.4); transition: border-color var(--dur-1), transform var(--dur-1) var(--ease-out);
+  }
+  .ag-replay[hidden] { display: none; }
+  .ag-replay:hover { border-color: var(--muted); }
+  .ag-replay:active { transform: scale(0.97); }
+  .ag-replay__marks { display: grid; grid-template-columns: repeat(2, 6px); gap: 2px; }
+  .ag-replay__marks i { width: 6px; height: 6px; border-radius: 1px; background: #ff7a45; }
+  .ag-replay__marks i:nth-child(2) { background: #4cc9f0; }
+  .ag-replay__marks i:nth-child(3) { background: #ffd166; }
+  .ag-replay__marks i:nth-child(4) { background: #3ddc97; }
+  @media (max-width: 639px) { .ag-replay { right: 12px; bottom: 12px; } }
+</style>
 
 <style>
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }

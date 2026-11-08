@@ -1,0 +1,54 @@
+---
+/**
+ * Orchestrator flow (static markup, updated by src/showcase/flow.ts).
+ * variant "float": compact floating panel of the home intro (a small bar on phones).
+ * variant "side":  column next to the simulated browser in "Agentes en vivo" (below it on phones).
+ * Slot: extra header controls (e.g. the intro's skip button).
+ */
+import { useT, type Lang } from '../../i18n';
+import { AGENTS, AGENT_COLORS, PHASES } from '../../showcase/types';
+import '../../showcase/agents.css';
+
+interface Props { lang: Lang; variant: 'float' | 'side'; id?: string; hidden?: boolean }
+const { lang, variant, id, hidden } = Astro.props;
+const t = useT(lang, 'agents');
+// Geometry in viewBox units (320 × 150): orchestrator left, agents stacked on the right.
+const ys = [20, 56.7, 93.3, 130];
+const wire = (y: number) => `M100 75 C128 75 122 ${y} 150 ${y}`;
+---
+
+<section class={`ag-flow ag-flow--${variant}`} data-flow data-phase="kickoff" data-flow-state="idle" id={id} hidden={hidden} aria-label={t('flow.label')}>
+  <header class="ag-flow__head">
+    <ol class="ag-flow__phases" aria-label={t('flow.phase')}>
+      {PHASES.map((p) => <li data-phase-step={p} data-state="next">{t(`phases.${p}`)}</li>)}
+    </ol>
+    <div class="ag-flow__mini" aria-hidden="true">
+      <b class="ag-mini__phase" data-flow-phase>{t('phases.kickoff')}</b>
+      <span class="ag-mini__dots">{AGENTS.map((a) => <i data-node={a} data-status="idle" style={`--c:${AGENT_COLORS[a]}`} />)}</span>
+      <span class="ag-flow__last" data-flow-last />
+    </div>
+    <slot />
+  </header>
+  <p class="sr-only" aria-live="polite" data-flow-phase></p>
+  <div class="ag-flow__graph" aria-hidden="true">
+    <svg viewBox="0 0 320 150" focusable="false">
+      {AGENTS.map((a, i) => <path class="ag-wire" data-wire={a} d={wire(ys[i])} style={`--c:${AGENT_COLORS[a]}`} />)}
+      <g data-packets />
+    </svg>
+    <div class="ag-node ag-node--orch" data-node="orch" style="--x:16.25%;--y:50%">
+      <span class="ag-node__mark" />
+      <span class="ag-node__txt"><b>{t('names.orch')}</b><small data-node-status>{t('phases.kickoff')}</small></span>
+    </div>
+    {
+      AGENTS.map((a, i) => (
+        <div class="ag-node ag-node--agent" data-node={a} data-status="idle" style={`--x:46.875%;--y:${((ys[i] / 150) * 100).toFixed(2)}%;--c:${AGENT_COLORS[a]}`}>
+          <span class="ag-node__mark" />
+          <b>{t(`names.${a}`)}</b>
+          <small data-node-status>{t('status.idle')}</small>
+        </div>
+      ))
+    }
+  </div>
+  <ol class="ag-flow__log" data-flow-log aria-label={t('flow.log')} />
+  <p class="ag-flow__note">{t('flow.simulation')}</p>
+</section>

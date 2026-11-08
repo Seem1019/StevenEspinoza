@@ -9,9 +9,18 @@
     "ctaDemos": "See the demos",
     "ctaShowcase": "Watch one being built",
     "metrics": [
-      { "value": "≥ 90", "label": "mobile PageSpeed target" },
-      { "value": "0", "label": "page reloads while browsing" },
-      { "value": "ES · EN", "label": "every demo in two languages" }
+      {
+        "value": "≥ 90",
+        "label": "mobile PageSpeed target"
+      },
+      {
+        "value": "0",
+        "label": "page reloads while browsing"
+      },
+      {
+        "value": "ES · EN",
+        "label": "every demo in two languages"
+      }
     ]
   },
   "gallery": {
@@ -26,9 +35,18 @@
   "pillars": {
     "title": "Fast in all three ways",
     "items": [
-      { "title": "Fast to launch", "body": "A first version live in days, not months. We start from proven patterns and shape them to your brand." },
-      { "title": "Fast to load", "body": "Every page is measured with Lighthouse on mobile: LCP under 2.5 s, no layout jumps and instant response to taps." },
-      { "title": "Smooth to use", "body": "No reloads, blank screens or new tabs: cart, filters and bookings open on the same page." }
+      {
+        "title": "Fast to launch",
+        "body": "A first version live in days, not months. We start from proven patterns and shape them to your brand."
+      },
+      {
+        "title": "Fast to load",
+        "body": "Every page is measured with Lighthouse on mobile: LCP under 2.5 s, no layout jumps and instant response to taps."
+      },
+      {
+        "title": "Smooth to use",
+        "body": "No reloads, blank screens or new tabs: cart, filters and bookings open on the same page."
+      }
     ]
   },
   "showcase": {
@@ -41,5 +59,56 @@
     "body": "Tell me what you sell and to whom. I'll reply with a concrete proposal.",
     "contact": "Write to me",
     "whatsapp": "WhatsApp"
+  },
+  "intro": {
+    "gate": {
+      "caption": "A team of agents is about to build this page in front of you. It's a scripted simulation.",
+      "start": "Start",
+      "skip": "Skip to the site"
+    },
+    "skip": "Skip",
+    "replay": "Watch the intro again",
+    "say": {
+      "aDesign": "Header and layout grid",
+      "aCopy": "Headline and paragraph",
+      "aFrontend": "Demo cards, buttons and stats strip",
+      "aQa": "Review once they are done",
+      "qaWait": "I'll wait for the review.",
+      "dHeader": "64 px header, pinned on top",
+      "cAsk": "Does this headline fit on mobile?",
+      "dAnswer": "Go bigger, readable from afar",
+      "fCards": "Four demos, as a staircase",
+      "fStairs": "Staircase in place",
+      "fWait": "Waiting for you to finish the paragraph",
+      "cHandoff": "Done. Here's the button copy",
+      "cDone": "Copy delivered",
+      "fDone": "Cards, buttons and stats ready",
+      "dTokens": "Accents use the logo orange",
+      "dDone": "12-column grid ready",
+      "aReview": "Review the whole home page",
+      "qaFound": "Sending you the issues I found",
+      "rTitle": "Headline overflows: shrink it",
+      "dFixTitle": "Fluid scale: fits at 390 px",
+      "rCard": "Card 3 fell out of the staircase",
+      "fFixCard": "Aligned again",
+      "rCta": "Raise the button contrast",
+      "dPick": "Sampling the logo orange",
+      "dFixCta": "Contrast 6.2:1",
+      "rNav": "There's a link in Spanish",
+      "cFixNav": "Translated",
+      "rMetric": "The strip says 900, it is 90",
+      "fFixMetric": "Now it reads ≥ 90",
+      "dDelivered": "Fixes delivered",
+      "fDelivered": "All fixed",
+      "aRecheck": "One last pass, please",
+      "qaOk": "All green."
+    },
+    "flags": {
+      "navLang": "Spanish link on the English page",
+      "titleSize": "Headline overflows its column",
+      "ctaContrast": "Button contrast too low",
+      "cardOff": "Card out of the staircase",
+      "metricTypo": "Wrong figure: 900"
+    }
   }
 }

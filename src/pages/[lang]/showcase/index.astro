@@ -1,15 +1,17 @@
 ---
 /**
- * "Agentes en vivo" — scripted build simulation. Everything needed is in this HTML (previews in
- * <template>, timelines as JSON), so once loaded it works offline. No fetches.
+ * "Agentes en vivo" — scripted build simulation over the shared agents engine (src/showcase/engine.ts).
+ * Everything needed is in this HTML (previews in <template>, scenes as JSON), so once loaded it works
+ * offline. No fetches. Cursors work inside the simulated browser; the orchestrator flow sits beside it.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteHeader from '../../../components/site/SiteHeader.astro';
 import SiteFooter from '../../../components/site/SiteFooter.astro';
+import AgentFlow from '../../../components/site/AgentFlow.astro';
 import { useT, langPaths, localePath, type Lang } from '../../../i18n';
 import { demos } from '../../../data/demos';
-import { timelines } from '../../../showcase/registry';
-import type { AgentId, ResolvedTimeline } from '../../../showcase/types';
+import { scenes } from '../../../showcase/registry';
+import { resolveScene, agentLabels } from '../../../showcase/resolve';
 import BrincoPreview from '../../../demos/brinco/BuildPreview.astro';
 import LumbrePreview from '../../../demos/lumbre/BuildPreview.astro';
 import IsolaPreview from '../../../demos/isola/BuildPreview.astro';
@@ -23,23 +25,16 @@ const c = useT(lang, 'common');
 
 const previews: Record<string, typeof BrincoPreview> = { brinco: BrincoPreview, lumbre: LumbrePreview, isola: IsolaPreview, turnio: TurnioPreview };
 
-const resolved: ResolvedTimeline[] = timelines.map((tl) => {
-  const dt = useT(lang, tl.slug);
-  return {
-    slug: tl.slug,
-    duration: tl.duration,
-    steps: tl.steps.map(({ log, ...s }) => ({ ...s, text: dt(`showcase.logs.${log}`) })),
-  };
-});
+const resolved = scenes.map((s) => resolveScene(s, lang));
 const choices = demos
-  .filter((d) => resolved.some((r) => r.slug === d.slug))
+  .filter((d) => resolved.some((r) => r.id === d.slug))
   .map((d) => ({ ...d, name: useT(lang, d.ns)('meta.name'), href: localePath(lang, `demos/${d.slug}/`) }));
-const agents: AgentId[] = ['design', 'frontend', 'copy', 'qa'];
 const payload = {
-  timelines: resolved,
+  scenes: resolved,
+  labels: agentLabels(lang),
   links: Object.fromEntries(choices.map((ch) => [ch.slug, ch.href])),
   urls: Object.fromEntries(choices.map((ch) => [ch.slug, `${ch.slug}.demo/${lang}`])),
-  labels: { idle: t('status.idle'), working: t('status.working'), done: t('status.done') },
+  ui: { pause: t('pause'), resume: t('resume'), issues: t('issuesValue') },
 };
 const first = choices[0];
 ---
@@ -77,14 +72,16 @@ const first = choices[0];
         <div class="sc-hud">
           <div class="sc-controls">
             <button type="button" class="sc-btn sc-btn--primary" data-sc-activate>{t('activate')}</button>
+            <button type="button" class="sc-btn" data-sc-pause disabled>{t('pause')}</button>
             <button type="button" class="sc-btn" data-sc-skip disabled>{t('skip')}</button>
             <button type="button" class="sc-btn" data-sc-replay disabled>{t('replay')}</button>
           </div>
           <div class="sc-meter">
-            <div class="sc-progress" data-sc-progress role="progressbar" aria-label={t('progress')} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span /></div>
+            <div class="sc-progress" data-sc-progress role="progressbar" aria-label={t('progress')} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span /><b data-sc-ticks /></div>
             <dl class="sc-stats">
+              <div><dt>{t('phase')}</dt><dd data-sc-phase>-</dd></div>
               <div><dt>{t('time')}</dt><dd data-sc-time>0.0 s</dd></div>
-              <div><dt>{t('layers')}</dt><dd data-sc-layers>0</dd></div>
+              <div><dt>{t('issues')}</dt><dd data-sc-issues>-</dd></div>
             </dl>
           </div>
         </div>
@@ -93,11 +90,14 @@ const first = choices[0];
             <span class="sc-browser__dot" /><span class="sc-browser__dot" /><span class="sc-browser__dot" />
             <span class="sc-browser__url" data-sc-url>{payload.urls[first.slug]}</span>
           </div>
-          <div class="sc-viewport" data-sc-stage-viewport tabindex="0" aria-label={t('stageLabel')}>
-            <div data-sc-stage-sizer class="sc-sizer">
-              <div class="build-stage sc-stage" data-sc-stage></div>
+          <div class="sc-viewport-wrap">
+            <div class="sc-viewport" data-sc-stage-viewport tabindex="0" aria-label={t('stageLabel')}>
+              <div data-sc-stage-sizer class="sc-sizer">
+                <div class="build-stage sc-stage" data-sc-stage></div>
+              </div>
+              <noscript><p class="sc-empty sc-empty--ns">{t('noscript')}</p></noscript>
             </div>
-            <noscript><p class="sc-empty sc-empty--ns">{t('noscript')}</p></noscript>
+            <div class="sc-overlay" data-sc-overlay></div>
           </div>
           <p class="sc-empty">{t('stageEmpty')}</p>
           <div class="sc-done" aria-live="polite">
@@ -106,26 +106,9 @@ const first = choices[0];
             <button type="button" class="sc-btn sc-btn--dark" data-sc-another>{t('done.another')}</button>
           </div>
         </div>
-
       </div>
 
-      <div class="sc-agents">
-        {
-          agents.map((a) => (
-            <article class="sc-agent" data-sc-agent={a} data-status="idle">
-              <header>
-                <span class="sc-agent__mark" aria-hidden="true" />
-                <div>
-                  <h2>{t(`agents.${a}.name`)}</h2>
-                  <p>{t(`agents.${a}.role`)}</p>
-                </div>
-                <span class="sc-agent__status" data-sc-status>{t('status.idle')}</span>
-              </header>
-              <ol class="sc-agent__log" data-sc-log aria-live="off" />
-            </article>
-          ))
-        }
-      </div>
+      <AgentFlow lang={lang} variant="side" id="sc-flow" />
     </section>
 
     {
@@ -147,46 +130,96 @@ const first = choices[0];
 <script>
   import { onPage, prefersReducedMotion } from '../../../scripts/lifecycle';
   import { setParams, getParam } from '../../../scripts/url-state';
-  import { BuildEngine, type EngineStatus } from '../../../showcase/engine';
-  import type { ResolvedTimeline } from '../../../showcase/types';
+  import { AgentEngine, type EngineStatus, type EngineInfo } from '../../../showcase/engine';
+  import { Flow } from '../../../showcase/flow';
+  import type { AgentLabels, ResolvedScene } from '../../../showcase/types';
 
   interface Payload {
-    timelines: ResolvedTimeline[];
+    scenes: ResolvedScene[];
+    labels: AgentLabels;
     links: Record<string, string>;
     urls: Record<string, string>;
-    labels: { idle: string; working: string; done: string };
+    ui: { pause: string; resume: string; issues: string };
   }
 
   onPage(() => {
     const root = document.querySelector<HTMLElement>('[data-sc-root]');
     const dataEl = document.getElementById('sc-data');
-    if (!root || !dataEl) return;
+    const flowEl = document.getElementById('sc-flow');
+    if (!root || !dataEl || !flowEl) return;
     const data = JSON.parse(dataEl.textContent || '{}') as Payload;
+    const reduced = prefersReducedMotion();
     const ac = new AbortController();
     const signal = ac.signal;
     const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
     const activate = $<HTMLButtonElement>('[data-sc-activate]');
+    const pause = $<HTMLButtonElement>('[data-sc-pause]');
     const skip = $<HTMLButtonElement>('[data-sc-skip]');
     const replay = $<HTMLButtonElement>('[data-sc-replay]');
     const open = $<HTMLAnchorElement>('[data-sc-open]');
     const url = $('[data-sc-url]');
     const progress = $('[data-sc-progress]');
+    const ticks = $('[data-sc-ticks]');
+    const phaseEl = $('[data-sc-phase]');
+    const timeEl = $('[data-sc-time]');
+    const issuesEl = $('[data-sc-issues]');
+    const stage = $('[data-sc-stage]');
+    const viewport = $('[data-sc-stage-viewport]');
+    const sizer = $('[data-sc-stage-sizer]');
+    const overlay = $('[data-sc-overlay]');
     const picks = [...root.querySelectorAll<HTMLButtonElement>('[data-sc-pick]')];
+    const flow = new Flow(flowEl, data.labels, reduced);
+    const scenes = new Map(data.scenes.map((s) => [s.id, s]));
+    let engine: AgentEngine | null = null;
+    let current = '';
+
+    // Preview designed at 1280px, scaled to the viewport width (transform only → no layout shift).
+    const fit = () => {
+      const scale = viewport.clientWidth / 1280;
+      stage.style.transform = `scale(${scale})`;
+      sizer.style.height = `${Math.ceil(stage.offsetHeight * scale)}px`;
+    };
+    const ro = new ResizeObserver(fit);
+    ro.observe(viewport);
 
     const onStatus = (s: EngineStatus) => {
-      activate.disabled = s === 'running';
-      skip.disabled = s !== 'running';
+      root.dataset.scStatus = s;
+      activate.disabled = s === 'running' || s === 'paused';
+      pause.disabled = s !== 'running' && s !== 'paused';
+      pause.textContent = s === 'paused' ? data.ui.resume : data.ui.pause;
+      skip.disabled = s !== 'running' && s !== 'paused';
       replay.disabled = s === 'idle';
-      picks.forEach((p) => (p.disabled = s === 'running'));
-      progress.setAttribute('aria-valuenow', s === 'done' ? '100' : s === 'idle' ? '0' : progress.getAttribute('aria-valuenow') ?? '0');
-      if (s === 'done') open.focus({ preventScroll: true });
+      picks.forEach((p) => (p.disabled = s === 'running' || s === 'paused'));
+      if (s === 'done') {
+        viewport.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+        open.focus({ preventScroll: true });
+      }
+    };
+    const onTick = (i: EngineInfo) => {
+      const p = Math.min(1, i.elapsed / i.duration);
+      progress.style.setProperty('--p', String(p));
+      progress.setAttribute('aria-valuenow', String(Math.round(p * 100)));
+      timeEl.textContent = `${(i.elapsed / 1000).toFixed(1)} / ${(i.duration / 1000).toFixed(0)} s`;
+      phaseEl.textContent = data.labels.phases[i.phase];
+      issuesEl.textContent = i.found ? data.ui.issues.replace('{fixed}', String(i.fixed)).replace('{total}', String(i.total)) : '-';
     };
 
-    const engine = new BuildEngine(root, data.timelines, { reduced: prefersReducedMotion(), labels: data.labels, onStatus });
-
     const choose = (slug: string) => {
-      if (!data.links[slug]) return;
-      engine.load(slug);
+      const scene = scenes.get(slug);
+      const tpl = root.querySelector<HTMLTemplateElement>(`template[data-sc-preview="${slug}"]`);
+      if (!scene || !tpl) return;
+      engine?.destroy();
+      current = slug;
+      stage.replaceChildren(tpl.content.cloneNode(true));
+      viewport.scrollTop = 0;
+      fit();
+      // phase boundaries on the progress bar
+      ticks.replaceChildren(...scene.events.filter((e) => e.do === 'phase' && e.at > 0).map((e) => {
+        const i = document.createElement('i');
+        i.style.left = `${((e.at / scene.duration) * 100).toFixed(2)}%`;
+        return i;
+      }));
+      engine = new AgentEngine({ scene, root: stage, frame: viewport, host: overlay, flow, labels: data.labels, reduced, follow: true, onStatus, onTick });
       picks.forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.scPick === slug)));
       open.href = data.links[slug];
       url.textContent = data.urls[slug];
@@ -194,23 +227,29 @@ const first = choices[0];
     };
 
     picks.forEach((p) => p.addEventListener('click', () => choose(p.dataset.scPick!), { signal }));
-    activate.addEventListener('click', () => engine.play(), { signal });
-    skip.addEventListener('click', () => engine.skip(), { signal });
-    replay.addEventListener('click', () => engine.replay(), { signal });
+    const hud = $('.sc-hud');
+    activate.addEventListener('click', () => {
+      engine?.play();
+      // phones: the simulated browser sits below the controls → bring it into view
+      if (window.innerWidth < 1024 && hud.getBoundingClientRect().top > 120) hud.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    }, { signal });
+    pause.addEventListener('click', () => { if (engine?.state === 'paused') engine.resume(); else engine?.pause(); }, { signal });
+    skip.addEventListener('click', () => engine?.skip(), { signal });
+    replay.addEventListener('click', () => { viewport.scrollTop = 0; engine?.reset(); engine?.play(); }, { signal });
     $('[data-sc-another]').addEventListener('click', () => {
-      const i = picks.findIndex((p) => p.dataset.scPick === engine.current);
+      const i = picks.findIndex((p) => p.dataset.scPick === current);
       const next = picks[(i + 1) % picks.length];
       choose(next.dataset.scPick!);
       next.focus();
-      engine.play();
+      engine?.play();
     }, { signal });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && root.dataset.scStatus === 'running') engine.skip();
+      if (e.key === 'Escape' && (root.dataset.scStatus === 'running' || root.dataset.scStatus === 'paused')) engine?.skip();
     }, { signal });
 
     const initial = getParam('demo');
-    choose(initial && data.links[initial] ? initial : picks[0].dataset.scPick!);
-    return () => { ac.abort(); engine.destroy(); };
+    choose(initial && scenes.has(initial) ? initial : picks[0].dataset.scPick!);
+    return () => { ac.abort(); ro.disconnect(); engine?.destroy(); };
   });
 </script>
 
@@ -240,21 +279,24 @@ const first = choices[0];
 
   .sc-grid { display: grid; gap: 20px; }
   @media (min-width: 1024px) { .sc-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; } }
+  .sc-stage-col { min-width: 0; }
 
   .sc-browser { position: relative; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; }
   .sc-browser__bar { height: 36px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
   .sc-browser__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
   .sc-browser__url { margin-left: 10px; flex: 1; min-width: 0; height: 22px; display: flex; align-items: center; padding: 0 10px; border-radius: 4px; background: var(--ink); color: var(--muted); font-size: 0.75rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .sc-viewport { position: relative; height: clamp(300px, 52svh, 640px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; background: #f3f4f6; }
+  .sc-viewport-wrap { position: relative; }
+  .sc-viewport { position: relative; height: clamp(320px, 56svh, 660px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; background: #f3f4f6; }
+  .sc-overlay { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
   .sc-sizer { position: relative; overflow: hidden; }
   .sc-stage { position: absolute; top: 0; left: 0; width: 1280px; transform-origin: 0 0; }
   .sc-empty { position: absolute; inset: auto 12px 12px 12px; margin: 0; padding: 10px 14px; background: var(--ink); color: var(--text); border-radius: var(--radius-sm); font-size: 0.9375rem; transition: opacity var(--dur-2); }
   .sc:not([data-sc-status='idle']) .sc-empty { opacity: 0; pointer-events: none; }
   .sc-empty--ns { position: static; margin: 16px; }
 
-  .sc-hud { margin-bottom: 12px; display: grid; gap: 12px; }
-  .sc-controls { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 8px; }
-  @media (min-width: 640px) { .sc-controls { display: flex; } }
+  .sc-hud { margin-bottom: 12px; display: grid; gap: 12px; scroll-margin-top: 76px; }
+  .sc-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media (min-width: 640px) { .sc-controls { display: flex; flex-wrap: wrap; } }
   .sc-btn {
     min-height: 44px; padding: 4px 14px; display: inline-flex; text-align: center; line-height: 1.2; align-items: center; justify-content: center; border-radius: var(--radius-sm);
     border: 1px solid var(--line); background: transparent; color: var(--text); font-weight: 700; text-decoration: none;
@@ -265,43 +307,28 @@ const first = choices[0];
   .sc-btn:disabled { opacity: 0.45; cursor: not-allowed; }
   .sc-btn--primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .sc-btn--primary:hover:not(:disabled) { border-color: var(--accent); background: #ff7442; }
-  .sc-meter { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; }
-  .sc-progress { height: 8px; background: var(--surface-2); border-radius: 2px; overflow: hidden; --p: 0; }
+  .sc-meter { display: grid; gap: 10px; }
+  .sc-progress { position: relative; height: 8px; background: var(--surface-2); border-radius: 2px; overflow: hidden; --p: 0; }
   .sc-progress span { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p)); }
-  .sc-stats { margin: 0; display: flex; gap: 16px; }
+  .sc-progress b { position: absolute; inset: 0; }
+  .sc-progress :global(i) { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--ink); }
+  .sc-stats { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
   .sc-stats div { display: flex; gap: 6px; font-size: 0.875rem; }
   .sc-stats dt { color: var(--muted); }
-  .sc-stats dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 700; min-width: 7ch; }
+  .sc-stats dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .sc-stats div:nth-child(1) dd { min-width: 9ch; }
+  .sc-stats div:nth-child(2) dd { min-width: 9ch; }
 
   .sc-btn--dark { background: var(--ink); color: var(--text); border-color: var(--ink); }
-  .sc-done { position: absolute; inset: auto 12px 12px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 14px; background: var(--accent); color: var(--accent-ink); border-radius: var(--radius); box-shadow: 0 10px 30px rgb(0 0 0 / 0.35); visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-2), transform var(--dur-2) var(--ease-out); }
+  .sc-done { position: absolute; z-index: 2; inset: auto 12px 12px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 14px; background: var(--accent); color: var(--accent-ink); border-radius: var(--radius); box-shadow: 0 10px 30px rgb(0 0 0 / 0.35); visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-2), transform var(--dur-2) var(--ease-out); }
   .sc[data-sc-status='done'] .sc-done { visibility: visible; opacity: 1; transform: none; }
   .sc-done .sc-btn--primary { background: var(--text); color: var(--ink); border-color: var(--text); }
   .sc-done__title { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; margin-right: auto; }
-
-  .sc-agents { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
-  @media (min-width: 1024px) { .sc-agents { grid-template-columns: 1fr; } }
-  .sc-agent { --c: #ff7a45; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; min-width: 0; transition: border-color var(--dur-2), opacity var(--dur-2), transform var(--dur-2) var(--ease-out); }
-  .sc-agent[data-sc-agent='frontend'] { --c: #4cc9f0; }
-  .sc-agent[data-sc-agent='copy'] { --c: #ffd166; }
-  .sc-agent[data-sc-agent='qa'] { --c: #3ddc97; }
-  .sc[data-sc-status='idle'] .sc-agent { transform: translateY(4px); border-style: dashed; }
-  .sc-agent[data-status='working'] { border-color: var(--c); }
-  .sc-agent header { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: center; }
-  .sc-agent__mark { grid-row: 1 / 3; width: 12px; height: 12px; border-radius: 2px; background: var(--c); }
-  .sc-agent[data-status='working'] .sc-agent__mark { animation: sc-blink 900ms steps(2) infinite; }
-  .sc-agent h2 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
-  .sc-agent header p { grid-column: 2; color: var(--muted); font-size: 0.75rem; line-height: 1.3; }
-  .sc-agent__status { grid-column: 1 / -1; justify-self: start; margin-top: 6px; font-size: 0.75rem; font-weight: 700; color: var(--c); }
-  .sc-agent__log { list-style: none; margin: 10px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); height: 7.6em; overflow-y: auto; font-size: 0.75rem; line-height: 1.5; color: var(--muted); }
-  @media (min-width: 1024px) { .sc-agent__log { height: 6.2em; } }
-  .sc-agent__log :global(li) { overflow-wrap: anywhere; }
-  .sc-agent__log :global(li:last-child) { color: var(--text); }
-  @keyframes sc-blink { 50% { opacity: 0.3; } }
-  @media (prefers-reduced-motion: reduce) { .sc-agent[data-status='working'] .sc-agent__mark { animation: none; } }
 
   .sc-badge {
     position: fixed; left: 12px; bottom: 12px; z-index: 40; padding: 6px 10px; border-radius: var(--radius-sm);
     background: var(--ink); color: var(--muted); border: 1px solid var(--line); font-size: 0.75rem; font-weight: 600; pointer-events: none;
   }
+  /* phones: the flow under the browser already carries the same "simulation" note */
+  @media (max-width: 1023px) { .sc-badge { display: none; } }
 </style>

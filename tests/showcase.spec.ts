@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
-test('showcase builds a demo offline, with skip and replay', async ({ page, context }) => {
+test('showcase builds a demo offline: start, pause, skip to the corrected end, replay', async ({ page, context }) => {
   await page.goto('es/showcase/');
   await page.waitForLoadState('networkidle');
   await context.setOffline(true);
@@ -12,18 +12,44 @@ test('showcase builds a demo offline, with skip and replay', async ({ page, cont
 
   await page.locator('[data-sc-activate]').click();
   await expect(root).toHaveAttribute('data-sc-status', 'running');
+  await expect(page.locator('[data-sc-overlay] .ag-cur.is-on')).toHaveCount(4, { timeout: 3000 });
   await page.waitForTimeout(2500);
-  const logs = await page.locator('[data-sc-log] li').count();
-  expect(logs).toBeGreaterThan(0);
+  expect(await page.locator('#sc-flow [data-flow-log] li').count()).toBeGreaterThan(0);
+
+  // pause freezes the clock
+  await page.locator('[data-sc-pause]').click();
+  await expect(root).toHaveAttribute('data-sc-status', 'paused');
+  const t1 = await page.locator('[data-sc-time]').textContent();
+  await page.waitForTimeout(600);
+  await expect(page.locator('[data-sc-time]')).toHaveText(t1 ?? '');
+  await page.locator('[data-sc-pause]').click();
+  await expect(root).toHaveAttribute('data-sc-status', 'running');
 
   await page.locator('[data-sc-skip]').click();
   await expect(root).toHaveAttribute('data-sc-status', 'done');
-  const hidden = await page.locator('[data-sc-stage] [data-build-state="hidden"]').count();
-  expect(hidden).toBe(0);
+  expect(await page.locator('[data-sc-stage] [data-build-state="hidden"]').count()).toBe(0);
+  await expect(page.locator('[data-sc-issues]')).toHaveText('3/3 corregidos');
+  await expect(page.locator('[data-sc-overlay] .ag-mark')).toHaveCount(0);
+  // the deliberate errors are gone (no inline transforms / swapped text left in the preview)
+  expect(await page.locator('[data-sc-stage] [data-ag-xf]').count()).toBe(0);
+  await expect(page.locator('[data-sc-stage] .bp-tabs span').nth(1)).toHaveText('Del fuego');
 
   await page.locator('[data-sc-replay]').click();
   await expect(root).toHaveAttribute('data-sc-status', 'running');
+  await expect(page.locator('[data-sc-issues]')).toHaveText('-');
   await context.setOffline(false);
+});
+
+test('every demo scene reaches the corrected end', async ({ page }) => {
+  for (const slug of ['brinco', 'lumbre', 'isola', 'turnio']) {
+    await page.goto(`en/showcase/?demo=${slug}`);
+    await page.locator('[data-sc-activate]').click();
+    await page.waitForTimeout(800);
+    await page.locator('[data-sc-skip]').click();
+    await expect(page.locator('[data-sc-root]')).toHaveAttribute('data-sc-status', 'done');
+    await expect(page.locator('[data-sc-issues]')).toHaveText(/^(\d)\/\1 fixed$/);
+    await expect(page.locator('#sc-flow .ag-node[data-node="qa"]')).toHaveAttribute('data-status', 'done');
+  }
 });
 
 test('showcase never claims real-time AI generation', async ({ page }) => {
@@ -37,15 +63,17 @@ test('showcase never claims real-time AI generation', async ({ page }) => {
 
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
-  test('showcase shows logs instantly (no typing effect)', async ({ page }) => {
+  test('showcase shows messages instantly and still finishes', async ({ page }) => {
     await page.goto('es/showcase/?demo=turnio');
     await expect(page.locator('[data-sc-pick="turnio"]')).toHaveAttribute('aria-pressed', 'true');
     await page.locator('[data-sc-activate]').click();
-    await page.waitForTimeout(400);
-    const first = page.locator('[data-sc-log] li').first();
+    await page.waitForTimeout(1500);
+    const first = page.locator('#sc-flow [data-flow-log] li').first();
     await expect(first).not.toHaveText('');
     const full = await first.textContent();
     await page.waitForTimeout(300);
     await expect(first).toHaveText(full ?? '');
+    await page.locator('[data-sc-skip]').click();
+    await expect(page.locator('[data-sc-root]')).toHaveAttribute('data-sc-status', 'done');
   });
 });

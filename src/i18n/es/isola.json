@@ -4,7 +4,12 @@
     "title": "Isola H1 · Auriculares inalámbricos de diadema — demo",
     "tagline": "Lanzamiento premium con despiece 3D guiado por scroll.",
     "description": "Página de lanzamiento de unos auriculares premium de marca ficticia: tipografía precisa, un modelo 3D que se desmonta al hacer scroll y reserva en la misma página. three.js solo se descarga cuando hace falta, así que la portada carga como texto.",
-    "features": ["Modelo 3D procedural que gira y se despieza con el scroll", "three.js cargado bajo demanda: cero peso en la portada", "Selector de acabado que cambia ilustración y modelo", "Reserva en panel lateral con enlace directo y botón Atrás"]
+    "features": [
+      "Modelo 3D procedural que gira y se despieza con el scroll",
+      "three.js cargado bajo demanda: cero peso en la portada",
+      "Selector de acabado que cambia ilustración y modelo",
+      "Reserva en panel lateral con enlace directo y botón Atrás"
+    ]
   },
   "currency": "US$ {n}",
   "nav": {
@@ -36,34 +41,102 @@
     "posterAlt": "Auriculares Isola H1 montados",
     "explodedAlt": "Vista despiezada de los auriculares Isola H1: almohadilla, driver, placa, batería, carcasa y tapa",
     "callouts": [
-      { "id": "cushion", "title": "Almohadillas viscoelásticas", "body": "Piel vegana transpirable. Se cambian en diez segundos." },
-      { "id": "driver", "title": "Driver de 40 mm", "body": "Diafragma de fibra de carbono, de 4 Hz a 40 kHz." },
-      { "id": "chip", "title": "Chip ANC I1", "body": "Ocho micrófonos, 48 000 ajustes de ruido por segundo." },
-      { "id": "battery", "title": "Batería de 60 h", "body": "Diez minutos de carga dan seis horas de música." },
-      { "id": "band", "title": "Diadema de aluminio", "body": "Ajuste continuo y 254 g en total." }
+      {
+        "id": "cushion",
+        "title": "Almohadillas viscoelásticas",
+        "body": "Piel vegana transpirable. Se cambian en diez segundos."
+      },
+      {
+        "id": "driver",
+        "title": "Driver de 40 mm",
+        "body": "Diafragma de fibra de carbono, de 4 Hz a 40 kHz."
+      },
+      {
+        "id": "chip",
+        "title": "Chip ANC I1",
+        "body": "Ocho micrófonos, 48 000 ajustes de ruido por segundo."
+      },
+      {
+        "id": "battery",
+        "title": "Batería de 60 h",
+        "body": "Diez minutos de carga dan seis horas de música."
+      },
+      {
+        "id": "band",
+        "title": "Diadema de aluminio",
+        "body": "Ajuste continuo y 254 g en total."
+      }
     ]
   },
   "features": {
     "title": "Pensados para desaparecer.",
     "items": [
-      { "id": "anc", "title": "Silencio que se adapta", "body": "El chip I1 escucha el entorno con ocho micrófonos y ajusta la cancelación según el avión, la oficina o la calle. Sin presión en los oídos.", "stat": "−42 dB", "statLabel": "reducción media de ruido" },
-      { "id": "sound", "title": "Sonido de estudio, sin color", "body": "Un driver de 40 mm con diafragma de fibra de carbono reproduce cada detalle con la respuesta plana que usan los ingenieros de mezcla.", "stat": "4 Hz – 40 kHz", "statLabel": "respuesta en frecuencia" },
-      { "id": "battery", "title": "Una semana entera de viaje", "body": "Hasta 60 horas sin cancelación y 45 con ella. Diez minutos de USB-C te dan seis horas más.", "stat": "60 h", "statLabel": "de reproducción" },
-      { "id": "build", "title": "Hechos para durar años", "body": "Diadema de aluminio anodizado, tornillería a la vista y almohadillas recambiables. Todo se repara, nada se tira.", "stat": "254 g", "statLabel": "peso total" }
+      {
+        "id": "anc",
+        "title": "Silencio que se adapta",
+        "body": "El chip I1 escucha el entorno con ocho micrófonos y ajusta la cancelación según el avión, la oficina o la calle. Sin presión en los oídos.",
+        "stat": "−42 dB",
+        "statLabel": "reducción media de ruido"
+      },
+      {
+        "id": "sound",
+        "title": "Sonido de estudio, sin color",
+        "body": "Un driver de 40 mm con diafragma de fibra de carbono reproduce cada detalle con la respuesta plana que usan los ingenieros de mezcla.",
+        "stat": "4 Hz – 40 kHz",
+        "statLabel": "respuesta en frecuencia"
+      },
+      {
+        "id": "battery",
+        "title": "Una semana entera de viaje",
+        "body": "Hasta 60 horas sin cancelación y 45 con ella. Diez minutos de USB-C te dan seis horas más.",
+        "stat": "60 h",
+        "statLabel": "de reproducción"
+      },
+      {
+        "id": "build",
+        "title": "Hechos para durar años",
+        "body": "Diadema de aluminio anodizado, tornillería a la vista y almohadillas recambiables. Todo se repara, nada se tira.",
+        "stat": "254 g",
+        "statLabel": "peso total"
+      }
     ]
   },
   "specs": {
     "title": "Especificaciones",
     "note": "Producto ficticio: datos creados para esta demo.",
     "rows": [
-      ["Driver", "Dinámico de 40 mm, fibra de carbono"],
-      ["Respuesta en frecuencia", "4 Hz – 40 kHz"],
-      ["Cancelación de ruido", "Híbrida adaptativa, 8 micrófonos, chip I1"],
-      ["Batería", "60 h (45 h con cancelación) · carga rápida 10 min = 6 h"],
-      ["Conexión", "Bluetooth 5.4, multipunto, audio por USB-C"],
-      ["Códecs", "LC3, AAC, SBC"],
-      ["Peso", "254 g"],
-      ["En la caja", "Funda rígida, cable USB-C a USB-C, adaptador de avión"]
+      [
+        "Driver",
+        "Dinámico de 40 mm, fibra de carbono"
+      ],
+      [
+        "Respuesta en frecuencia",
+        "4 Hz – 40 kHz"
+      ],
+      [
+        "Cancelación de ruido",
+        "Híbrida adaptativa, 8 micrófonos, chip I1"
+      ],
+      [
+        "Batería",
+        "60 h (45 h con cancelación) · carga rápida 10 min = 6 h"
+      ],
+      [
+        "Conexión",
+        "Bluetooth 5.4, multipunto, audio por USB-C"
+      ],
+      [
+        "Códecs",
+        "LC3, AAC, SBC"
+      ],
+      [
+        "Peso",
+        "254 g"
+      ],
+      [
+        "En la caja",
+        "Funda rígida, cable USB-C a USB-C, adaptador de avión"
+      ]
     ]
   },
   "finish": {
@@ -107,35 +180,39 @@
     "made": "Demo diseñada y desarrollada por Steven Espinoza."
   },
   "showcase": {
-    "logs": {
-      "tokens": "tokens · fondo #FFFFFF · acero #E8ECF0 · acento salvia #4C6A5C",
-      "grid": "rejilla 12 col · máx 1240 · gutter 56",
-      "type": "Manrope 200 · 148 px · tracking −0.05em",
-      "nav": "nav: marca + 4 anclas + botón 4 px",
-      "hero": "hero 2 col · texto 5/12 · producto 7/12",
-      "product": "SVG inline del producto · 0 peticiones",
-      "explode": "franja despiezada · 6 piezas en fila",
-      "callouts": "callouts: línea 1 px + título 500",
-      "features": "features 4 col · gap 32",
-      "specs": "tabla de especificaciones · 2 col · filas hairline",
-      "cta": "banda final · botón data-open-contact",
-      "footer": "footer: aviso de marca ficticia",
-      "heroCopy": "h1 «Isola H1» + promesa en una línea",
-      "priceCopy": "precio «desde» con Intl en el idioma de la página",
-      "calloutsCopy": "callouts: 40 mm · 60 h · chip ANC · almohadillas",
-      "featuresCopy": "4 bloques: silencio, sonido, batería, materiales",
-      "specsCopy": "8 filas de especificaciones (producto ficticio)",
-      "ctaCopy": "CTA: «¿Quieres un lanzamiento así?»",
-      "productPaint": "acabado grafito: carcasa, tapa, almohadilla",
-      "motionReveal": "reveal: animation-timeline view() · entry 0–30 %",
-      "motionStage": "three.js con import() tras IO + primera interacción",
-      "motionExplode": "despiece por scroll 0.42 → 0.75 · amortiguado",
-      "motionCallouts": "callouts con opacidad por progreso",
-      "qaContrast": "contraste texto secundario 6,2:1 · AA ok",
-      "qaCls": "CLS 0 · el canvas ocupa la caja del póster",
-      "qaLcp": "LCP: h1.hero (texto en el HTML inicial)",
-      "qaKeyboard": "teclado: panel de compra, Esc y Atrás lo cierran",
-      "qaThree": "sin scroll no se descarga three.js"
+    "say": {
+      "aDesign": "Barra, retícula y notas técnicas",
+      "aCopy": "Titular, promesa y fichas",
+      "aFrontend": "Render del producto y despiece",
+      "dPalette": "Blanco, acero y salvia",
+      "cTone": "Tono sobrio, frases cortas",
+      "fAsk": "¿Cuánto aire le doy al producto?",
+      "dAnswer": "Siete columnas, centrado",
+      "fRender": "Render colocado",
+      "fExplode": "Despiece en SVG, sin 3D aquí",
+      "dNotes": "Notas bajo el despiece",
+      "cSpecs": "Fichas y especificaciones listas",
+      "fWait": "Espero tu copy para el cierre",
+      "cHandoff": "Listo, te lo paso",
+      "cDone": "Textos entregados",
+      "dDone": "Diseño entregado",
+      "fDone": "Componentes listos",
+      "rBuy": "«Comprar» quedó en inglés",
+      "cFixBuy": "Traducido",
+      "rRatio": "La imagen tiene la proporción mal",
+      "fFixRatio": "Proporción 1:1 restaurada",
+      "rNotes": "Las notas tapan el despiece",
+      "dFixNotes": "Notas en su sitio",
+      "aQa": "Revisión cuando terminen",
+      "aReview": "Revisa la página completa",
+      "qaFound": "Te paso los fallos que encontré",
+      "aRecheck": "Última pasada, por favor",
+      "qaOk": "Todo en verde."
+    },
+    "flags": {
+      "productRatio": "Imagen con proporción incorrecta",
+      "buyLang": "Botón de compra en inglés",
+      "notesOverlap": "Notas encima del despiece"
     }
   }
 }

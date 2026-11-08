@@ -82,7 +82,12 @@
     "low": "Only {n} left!",
     "rating": "{r} out of 5"
   },
-  "badges": { "flash": "Flash", "hot": "Best seller", "new": "New", "top": "Lowest price" },
+  "badges": {
+    "flash": "Flash",
+    "hot": "Best seller",
+    "new": "New",
+    "top": "Lowest price"
+  },
   "filters": {
     "title": "Filters",
     "close": "Close filters",
@@ -133,17 +138,34 @@
   },
   "checkout": {
     "back": "Back",
-    "steps": ["Cart", "Shipping", "Payment", "Done"],
+    "steps": [
+      "Cart",
+      "Shipping",
+      "Payment",
+      "Done"
+    ],
     "shippingTitle": "How should we ship it?",
     "standard": "Standard",
     "standardTime": "5 to 8 business days",
     "express": "Express",
     "expressTime": "48 hours",
     "city": "Delivery city",
-    "cities": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Bucaramanga", "Pereira"],
+    "cities": [
+      "Bogotá",
+      "Medellín",
+      "Cali",
+      "Barranquilla",
+      "Bucaramanga",
+      "Pereira"
+    ],
     "next": "Continue to payment",
     "payTitle": "Choose how to pay",
-    "methods": { "card": "Card", "transfer": "Bank transfer", "wallet": "Digital wallet", "cash": "Cash on delivery" },
+    "methods": {
+      "card": "Card",
+      "transfer": "Bank transfer",
+      "wallet": "Digital wallet",
+      "cash": "Cash on delivery"
+    },
     "note": "Demo: nothing is charged and no payment details are asked.",
     "pay": "Pay {amount}",
     "doneTitle": "Order confirmed!",
@@ -160,7 +182,16 @@
     "won": "You won {prize}!",
     "wonText": "Coupon {code} is ready. We apply it to your cart automatically.",
     "use": "Apply to my cart",
-    "segments": ["-5%", "Ship", "-10%", "-3%", "-15%", "-8%", "-12%", "-20%*"],
+    "segments": [
+      "-5%",
+      "Ship",
+      "-10%",
+      "-3%",
+      "-15%",
+      "-8%",
+      "-12%",
+      "-20%*"
+    ],
     "prize": "15% off",
     "terms": "*Demo prizes. The result is predetermined.",
     "applied": "Coupon {code} applied: {pct}% off",
@@ -172,7 +203,16 @@
     "ago": "{n} min ago",
     "sample": "sample data",
     "pause": "Pause notices",
-    "cities": ["Bogotá", "Medellín", "Cali", "Quito", "Lima", "Guadalajara", "Santiago", "Panama City"]
+    "cities": [
+      "Bogotá",
+      "Medellín",
+      "Cali",
+      "Quito",
+      "Lima",
+      "Guadalajara",
+      "Santiago",
+      "Panama City"
+    ]
   },
   "sticky": {
     "remaining": "{amount} away from free shipping",
@@ -187,57 +227,167 @@
   "footer": {
     "label": "Footer",
     "help": "Help",
-    "helpItems": ["Track your order", "Returns", "Payment methods", "FAQ"],
+    "helpItems": [
+      "Track your order",
+      "Returns",
+      "Payment methods",
+      "FAQ"
+    ],
     "about": "Brinco",
-    "aboutItems": ["About us", "Sell on Brinco", "Rewards program", "Careers"],
+    "aboutItems": [
+      "About us",
+      "Sell on Brinco",
+      "Rewards program",
+      "Careers"
+    ],
     "pay": "Accepted payments (illustrative)",
     "note": "Brinco is a fictional store built as a demo by Steven Espinoza. Products, prices, ratings, sales and notices are sample data; nothing is sold or charged.",
     "made": "Portfolio demo · Steven Espinoza"
   },
   "catalogVocab": {
-    "cats": ["Tech", "Home", "Beauty", "Fashion", "Sports", "Toys", "Kitchen", "Pets"],
-    "nouns": [
-      ["Headphones", "Charger", "Speaker", "Smartwatch", "Keyboard", "Mouse", "Power bank", "Phone stand"],
-      ["Lamp", "Organizer", "Cushion", "Curtain", "Mirror", "Wall clock", "Rug", "Diffuser"],
-      ["Brush set", "Serum", "Curler", "Hair dryer", "Nail polish", "Cream", "Vanity mirror", "Face massager"],
-      ["T-shirt", "Cap", "Bag", "Sunglasses", "Jacket", "Socks", "Belt", "Hoodie"],
-      ["Dumbbells", "Resistance band", "Bottle", "Yoga mat", "Jump rope", "Gloves", "Knee brace", "Gym bag"],
-      ["Puzzle cube", "Mini drone", "Plush toy", "Blocks", "RC car", "Jigsaw puzzle", "Slime", "Magic kit"],
-      ["Frying pan", "Blender", "Knife set", "Baking mold", "Thermos", "Grater", "Cutting board", "Spatula"],
-      ["Pet bed", "Chew toy", "Collar", "Food bowl", "Scratcher", "Leash", "Brush", "Water fountain"]
+    "cats": [
+      "Tech",
+      "Home",
+      "Beauty",
+      "Fashion",
+      "Sports",
+      "Toys",
+      "Kitchen",
+      "Pets"
     ],
-    "adjs": ["Pro", "Max", "Turbo", "Neon", "XL", "Mini", "Ultra", "Express", "360", "Plus", "2.0", "Air", "Duo", "Flash", "Lite", "Zen"]
+    "nouns": [
+      [
+        "Headphones",
+        "Charger",
+        "Speaker",
+        "Smartwatch",
+        "Keyboard",
+        "Mouse",
+        "Power bank",
+        "Phone stand"
+      ],
+      [
+        "Lamp",
+        "Organizer",
+        "Cushion",
+        "Curtain",
+        "Mirror",
+        "Wall clock",
+        "Rug",
+        "Diffuser"
+      ],
+      [
+        "Brush set",
+        "Serum",
+        "Curler",
+        "Hair dryer",
+        "Nail polish",
+        "Cream",
+        "Vanity mirror",
+        "Face massager"
+      ],
+      [
+        "T-shirt",
+        "Cap",
+        "Bag",
+        "Sunglasses",
+        "Jacket",
+        "Socks",
+        "Belt",
+        "Hoodie"
+      ],
+      [
+        "Dumbbells",
+        "Resistance band",
+        "Bottle",
+        "Yoga mat",
+        "Jump rope",
+        "Gloves",
+        "Knee brace",
+        "Gym bag"
+      ],
+      [
+        "Puzzle cube",
+        "Mini drone",
+        "Plush toy",
+        "Blocks",
+        "RC car",
+        "Jigsaw puzzle",
+        "Slime",
+        "Magic kit"
+      ],
+      [
+        "Frying pan",
+        "Blender",
+        "Knife set",
+        "Baking mold",
+        "Thermos",
+        "Grater",
+        "Cutting board",
+        "Spatula"
+      ],
+      [
+        "Pet bed",
+        "Chew toy",
+        "Collar",
+        "Food bowl",
+        "Scratcher",
+        "Leash",
+        "Brush",
+        "Water fountain"
+      ]
+    ],
+    "adjs": [
+      "Pro",
+      "Max",
+      "Turbo",
+      "Neon",
+      "XL",
+      "Mini",
+      "Ultra",
+      "Express",
+      "360",
+      "Plus",
+      "2.0",
+      "Air",
+      "Duo",
+      "Flash",
+      "Lite",
+      "Zen"
+    ]
   },
   "showcase": {
-    "logs": {
-      "tokens": "tokens: coral #FF2E4D · yellow #FFE600 · ink #111 · savings #007A3D",
-      "type": "type: Rubik 400–900 · display 900 · -0.03em",
-      "layout": "layout: ticker 34 · sticky header 64 · hero 2 col",
-      "skTicker": "ticker: fixed height 34 px · transform marquee",
-      "skHeader": "header: logo + search + cart with badge",
-      "skHero": "hero: h1 in initial HTML (text LCP)",
-      "skWheel": "wheel: SVG 8 segments · conic-gradient fallback",
-      "skFlash": "flash: yellow band · scroll-snap x",
-      "skGrid": "grid 5 col · gap 12 · aspect 1/1 · content-visibility",
-      "skCards": "cards: reserved height · contain-intrinsic-size 380px",
-      "skFooter": "footer: 3 columns · sample data note",
-      "cTicker": "copy: free shipping over $29 · new-user bonus",
-      "cHeader": "copy: search placeholder with real examples",
-      "cHero": "copy: “Prices that bounce up to 85% off”",
-      "cWheel": "copy: 8 prizes · predetermined result 15% off",
-      "cFlash": "countdown to local midnight · tabular-nums",
-      "cGrid": "240 products · seeded PRNG · i18n vocabulary",
-      "cCards": "Intl prices es-CO/en-US · % derived from real price",
-      "cFooter": "copy: fictional store notice",
-      "mTicker": "motion: marquee translateX 30 s · paused on reduced-motion",
-      "mWheel": "motion: spin via transform transition 4.2 s",
-      "mFlash": "motion: stock bars scaleX",
-      "mCards": "motion: add pulse · badge bump · burst",
-      "batches": "infinite scroll: IO rootMargin 1200px · JSON batches of 24",
-      "qaContrast": "QA contrast: black on coral 6.1:1 · OK",
-      "qaCls": "QA CLS: 0.00 · overlays use position: fixed",
-      "qaLcp": "QA LCP: h1.hero (text) · no initial opacity",
-      "qaKeys": "QA keyboard: focus trapped in dialogs · Esc closes · Back closes"
+    "say": {
+      "aDesign": "Bars, header and layout grid",
+      "aCopy": "Headline, ticker and product cards",
+      "aFrontend": "Wheel, flash sale and grid",
+      "dPalette": "Red, yellow and ink: deal mode",
+      "cAsk": "Does the all-caps headline shout enough?",
+      "dAnswer": "Just enough. Go ahead",
+      "fWheel": "SVG wheel, 8 prizes",
+      "fFlash": "Countdown with fixed-width digits",
+      "cHandoff": "Here are the catalogue names and prices",
+      "fGrid": "Five columns, no jumps",
+      "dDone": "Visual system delivered",
+      "cDone": "Copy delivered",
+      "fDone": "Components ready",
+      "rPrice": "Price out of place on card 2",
+      "fFixPrice": "Price back in line",
+      "rLang": "Cart button not translated",
+      "cFixLang": "Translated",
+      "rCta": "The button text can't be read",
+      "dPick": "Sampling the logo ink",
+      "dFixCta": "Black on yellow: 15:1",
+      "aQa": "Review once they are done",
+      "aReview": "Review the whole page",
+      "qaFound": "Sending you the issues I found",
+      "aRecheck": "One last pass, please",
+      "qaOk": "All green."
+    },
+    "flags": {
+      "ctaContrast": "Button text unreadable",
+      "priceOff": "Price misaligned in the grid",
+      "addLang": "Cart button in Spanish"
     }
   }
 }

@@ -9,9 +9,18 @@
     "ctaDemos": "Ver las demos",
     "ctaShowcase": "Ver cómo se construye una",
     "metrics": [
-      { "value": "≥ 90", "label": "objetivo en PageSpeed móvil" },
-      { "value": "0", "label": "recargas al navegar por el sitio" },
-      { "value": "ES · EN", "label": "todas las demos en dos idiomas" }
+      {
+        "value": "≥ 90",
+        "label": "objetivo en PageSpeed móvil"
+      },
+      {
+        "value": "0",
+        "label": "recargas al navegar por el sitio"
+      },
+      {
+        "value": "ES · EN",
+        "label": "todas las demos en dos idiomas"
+      }
     ]
   },
   "gallery": {
@@ -26,9 +35,18 @@
   "pillars": {
     "title": "Rápido en los tres sentidos",
     "items": [
-      { "title": "Rápido de lanzar", "body": "Una primera versión publicada en días, no en meses. Partimos de patrones probados y los adaptamos a tu marca." },
-      { "title": "Rápido de cargar", "body": "Cada página se mide con Lighthouse en móvil: LCP bajo 2,5 s, sin saltos de diseño y con respuesta inmediata al toque." },
-      { "title": "Fluido de usar", "body": "Sin recargas, sin pantallas en blanco ni pestañas nuevas: carrito, filtros y reservas se abren en la misma página." }
+      {
+        "title": "Rápido de lanzar",
+        "body": "Una primera versión publicada en días, no en meses. Partimos de patrones probados y los adaptamos a tu marca."
+      },
+      {
+        "title": "Rápido de cargar",
+        "body": "Cada página se mide con Lighthouse en móvil: LCP bajo 2,5 s, sin saltos de diseño y con respuesta inmediata al toque."
+      },
+      {
+        "title": "Fluido de usar",
+        "body": "Sin recargas, sin pantallas en blanco ni pestañas nuevas: carrito, filtros y reservas se abren en la misma página."
+      }
     ]
   },
   "showcase": {
@@ -41,5 +59,56 @@
     "body": "Cuéntame qué vendes y a quién. Te respondo con una propuesta concreta.",
     "contact": "Escribirme",
     "whatsapp": "WhatsApp"
+  },
+  "intro": {
+    "gate": {
+      "caption": "Un equipo de agentes va a montar esta página delante de ti. Es una simulación con guion.",
+      "start": "Empezar",
+      "skip": "Saltar y ver el sitio"
+    },
+    "skip": "Saltar",
+    "replay": "Ver la intro otra vez",
+    "say": {
+      "aDesign": "Header y retícula de la home",
+      "aCopy": "Titular y párrafo",
+      "aFrontend": "Tarjetas de demos, botones y franja de datos",
+      "aQa": "Revisión cuando terminen",
+      "qaWait": "Espero a la revisión.",
+      "dHeader": "Header de 64 px, fijo arriba",
+      "cAsk": "¿Este titular cabe en móvil?",
+      "dAnswer": "Súbelo, que se lea de lejos",
+      "fCards": "Cuatro demos, en escalera",
+      "fStairs": "Escalera montada",
+      "fWait": "Espero a que acabes el párrafo",
+      "cHandoff": "Listo. Te paso el copy de los botones",
+      "cDone": "Textos entregados",
+      "fDone": "Tarjetas, botones y datos listos",
+      "dTokens": "Acentos con el naranja del logo",
+      "dDone": "Retícula de 12 columnas lista",
+      "aReview": "Revisa la home completa",
+      "qaFound": "Te paso los fallos que encontré",
+      "rTitle": "El titular desborda: redúcelo",
+      "dFixTitle": "Escala fluida: cabe en 390 px",
+      "rCard": "La tarjeta 3 se salió de la escalera",
+      "fFixCard": "Alineada otra vez",
+      "rCta": "Sube el contraste del botón",
+      "dPick": "Tomo el naranja del logo",
+      "dFixCta": "Contraste 6,2:1",
+      "rNav": "Hay un enlace en inglés",
+      "cFixNav": "Traducido",
+      "rMetric": "La franja dice 900 y es 90",
+      "fFixMetric": "Ahora sí: ≥ 90",
+      "dDelivered": "Correcciones entregadas",
+      "fDelivered": "Todo corregido",
+      "aRecheck": "Última pasada, por favor",
+      "qaOk": "Todo en verde."
+    },
+    "flags": {
+      "navLang": "Enlace en inglés en la versión ES",
+      "titleSize": "El titular desborda la columna",
+      "ctaContrast": "Contraste insuficiente en el botón",
+      "cardOff": "Tarjeta fuera de la escalera",
+      "metricTypo": "Dato erróneo: 900"
+    }
   }
 }

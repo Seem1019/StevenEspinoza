@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { installReloadProbe, docState, expectSameDocument } from './helpers';
 
 const PAGE = 'es/demos/brinco/';

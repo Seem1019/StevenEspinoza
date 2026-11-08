@@ -82,7 +82,12 @@
     "low": "¡Solo quedan {n}!",
     "rating": "{r} de 5"
   },
-  "badges": { "flash": "Relámpago", "hot": "Top ventas", "new": "Nuevo", "top": "Mejor precio" },
+  "badges": {
+    "flash": "Relámpago",
+    "hot": "Top ventas",
+    "new": "Nuevo",
+    "top": "Mejor precio"
+  },
   "filters": {
     "title": "Filtros",
     "close": "Cerrar filtros",
@@ -133,17 +138,34 @@
   },
   "checkout": {
     "back": "Volver",
-    "steps": ["Carrito", "Envío", "Pago", "Listo"],
+    "steps": [
+      "Carrito",
+      "Envío",
+      "Pago",
+      "Listo"
+    ],
     "shippingTitle": "¿Cómo lo enviamos?",
     "standard": "Estándar",
     "standardTime": "5 a 8 días hábiles",
     "express": "Express",
     "expressTime": "48 horas",
     "city": "Ciudad de entrega",
-    "cities": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Bucaramanga", "Pereira"],
+    "cities": [
+      "Bogotá",
+      "Medellín",
+      "Cali",
+      "Barranquilla",
+      "Bucaramanga",
+      "Pereira"
+    ],
     "next": "Continuar al pago",
     "payTitle": "Elige cómo pagar",
-    "methods": { "card": "Tarjeta", "transfer": "Transferencia", "wallet": "Billetera digital", "cash": "Contra entrega" },
+    "methods": {
+      "card": "Tarjeta",
+      "transfer": "Transferencia",
+      "wallet": "Billetera digital",
+      "cash": "Contra entrega"
+    },
     "note": "Demo: no se cobra nada y no pedimos datos de pago.",
     "pay": "Pagar {amount}",
     "doneTitle": "¡Pedido confirmado!",
@@ -160,7 +182,16 @@
     "won": "¡Ganaste {prize}!",
     "wonText": "Cupón {code} listo. Lo aplicamos a tu carrito automáticamente.",
     "use": "Aplicar a mi carrito",
-    "segments": ["-5%", "Envío", "-10%", "-3%", "-15%", "-8%", "-12%", "-20%*"],
+    "segments": [
+      "-5%",
+      "Envío",
+      "-10%",
+      "-3%",
+      "-15%",
+      "-8%",
+      "-12%",
+      "-20%*"
+    ],
     "prize": "15% de descuento",
     "terms": "*Premios de demostración. El resultado está predefinido.",
     "applied": "Cupón {code} aplicado: -{pct}%",
@@ -172,7 +203,16 @@
     "ago": "hace {n} min",
     "sample": "dato de ejemplo",
     "pause": "Pausar avisos",
-    "cities": ["Bogotá", "Medellín", "Cali", "Quito", "Lima", "Guadalajara", "Santiago", "Panamá"]
+    "cities": [
+      "Bogotá",
+      "Medellín",
+      "Cali",
+      "Quito",
+      "Lima",
+      "Guadalajara",
+      "Santiago",
+      "Panamá"
+    ]
   },
   "sticky": {
     "remaining": "Te faltan {amount} para envío gratis",
@@ -187,57 +227,167 @@
   "footer": {
     "label": "Pie de página",
     "help": "Ayuda",
-    "helpItems": ["Seguimiento de pedidos", "Devoluciones", "Métodos de pago", "Preguntas frecuentes"],
+    "helpItems": [
+      "Seguimiento de pedidos",
+      "Devoluciones",
+      "Métodos de pago",
+      "Preguntas frecuentes"
+    ],
     "about": "Brinco",
-    "aboutItems": ["Quiénes somos", "Vende en Brinco", "Programa de puntos", "Trabaja con nosotros"],
+    "aboutItems": [
+      "Quiénes somos",
+      "Vende en Brinco",
+      "Programa de puntos",
+      "Trabaja con nosotros"
+    ],
     "pay": "Pagos aceptados (ilustrativo)",
     "note": "Brinco es una tienda ficticia creada como demostración por Steven Espinoza. Productos, precios, valoraciones, ventas y avisos son datos de ejemplo; no se vende ni se cobra nada.",
     "made": "Demo de portafolio · Steven Espinoza"
   },
   "catalogVocab": {
-    "cats": ["Tecnología", "Hogar", "Belleza", "Moda", "Deporte", "Juguetes", "Cocina", "Mascotas"],
-    "nouns": [
-      ["Audífonos", "Cargador", "Parlante", "Smartwatch", "Teclado", "Mouse", "Power bank", "Soporte de celular"],
-      ["Lámpara", "Organizador", "Cojín", "Cortina", "Espejo", "Reloj de pared", "Tapete", "Difusor"],
-      ["Set de brochas", "Sérum", "Rizador", "Secador", "Esmalte", "Crema", "Espejo de maquillaje", "Masajeador facial"],
-      ["Camiseta", "Gorra", "Bolso", "Gafas de sol", "Chaqueta", "Medias", "Cinturón", "Sudadera"],
-      ["Mancuernas", "Banda elástica", "Botella", "Tapete de yoga", "Cuerda para saltar", "Guantes", "Rodillera", "Maleta deportiva"],
-      ["Cubo mágico", "Dron mini", "Peluche", "Bloques", "Carro a control", "Rompecabezas", "Slime", "Kit de magia"],
-      ["Sartén", "Licuadora", "Set de cuchillos", "Molde", "Termo", "Rallador", "Tabla de picar", "Espátula"],
-      ["Cama para mascota", "Mordedor", "Collar", "Comedero", "Rascador", "Correa", "Cepillo", "Fuente de agua"]
+    "cats": [
+      "Tecnología",
+      "Hogar",
+      "Belleza",
+      "Moda",
+      "Deporte",
+      "Juguetes",
+      "Cocina",
+      "Mascotas"
     ],
-    "adjs": ["Pro", "Max", "Turbo", "Neón", "XL", "Mini", "Ultra", "Express", "360", "Plus", "2.0", "Air", "Duo", "Flash", "Lite", "Zen"]
+    "nouns": [
+      [
+        "Audífonos",
+        "Cargador",
+        "Parlante",
+        "Smartwatch",
+        "Teclado",
+        "Mouse",
+        "Power bank",
+        "Soporte de celular"
+      ],
+      [
+        "Lámpara",
+        "Organizador",
+        "Cojín",
+        "Cortina",
+        "Espejo",
+        "Reloj de pared",
+        "Tapete",
+        "Difusor"
+      ],
+      [
+        "Set de brochas",
+        "Sérum",
+        "Rizador",
+        "Secador",
+        "Esmalte",
+        "Crema",
+        "Espejo de maquillaje",
+        "Masajeador facial"
+      ],
+      [
+        "Camiseta",
+        "Gorra",
+        "Bolso",
+        "Gafas de sol",
+        "Chaqueta",
+        "Medias",
+        "Cinturón",
+        "Sudadera"
+      ],
+      [
+        "Mancuernas",
+        "Banda elástica",
+        "Botella",
+        "Tapete de yoga",
+        "Cuerda para saltar",
+        "Guantes",
+        "Rodillera",
+        "Maleta deportiva"
+      ],
+      [
+        "Cubo mágico",
+        "Dron mini",
+        "Peluche",
+        "Bloques",
+        "Carro a control",
+        "Rompecabezas",
+        "Slime",
+        "Kit de magia"
+      ],
+      [
+        "Sartén",
+        "Licuadora",
+        "Set de cuchillos",
+        "Molde",
+        "Termo",
+        "Rallador",
+        "Tabla de picar",
+        "Espátula"
+      ],
+      [
+        "Cama para mascota",
+        "Mordedor",
+        "Collar",
+        "Comedero",
+        "Rascador",
+        "Correa",
+        "Cepillo",
+        "Fuente de agua"
+      ]
+    ],
+    "adjs": [
+      "Pro",
+      "Max",
+      "Turbo",
+      "Neón",
+      "XL",
+      "Mini",
+      "Ultra",
+      "Express",
+      "360",
+      "Plus",
+      "2.0",
+      "Air",
+      "Duo",
+      "Flash",
+      "Lite",
+      "Zen"
+    ]
   },
   "showcase": {
-    "logs": {
-      "tokens": "tokens: coral #FF2E4D · amarillo #FFE600 · tinta #111 · ahorro #007A3D",
-      "type": "tipografía: Rubik 400–900 · display 900 · -0.03em",
-      "layout": "layout: ticker 34 · header sticky 64 · hero 2 col",
-      "skTicker": "ticker: alto fijo 34 px · marquee transform",
-      "skHeader": "header: logo + búsqueda + carrito con badge",
-      "skHero": "hero: h1 en HTML inicial (LCP texto)",
-      "skWheel": "ruleta: SVG 8 segmentos · conic-gradient fallback",
-      "skFlash": "flash: banda amarilla · scroll-snap x",
-      "skGrid": "grid 5 col · gap 12 · aspect 1/1 · content-visibility",
-      "skCards": "cards: alto reservado · contain-intrinsic-size 380px",
-      "skFooter": "footer: 3 columnas · nota de datos de ejemplo",
-      "cTicker": "copy: envío gratis desde US$29 · bono nuevo usuario",
-      "cHeader": "copy: placeholder de búsqueda con ejemplos reales",
-      "cHero": "copy: “Precios que brincan hasta -85%”",
-      "cWheel": "copy: 8 premios · resultado predefinido -15%",
-      "cFlash": "cuenta regresiva a medianoche local · tabular-nums",
-      "cGrid": "240 productos · PRNG con semilla · vocabulario i18n",
-      "cCards": "precio Intl es-CO/en-US · -% calculado del precio real",
-      "cFooter": "copy: aviso de tienda ficticia",
-      "mTicker": "motion: marquee translateX 30 s · pausa con reduced-motion",
-      "mWheel": "motion: giro con transition transform 4.2 s",
-      "mFlash": "motion: barras de stock scaleX",
-      "mCards": "motion: pulso al agregar · badge bump · burst",
-      "batches": "infinite scroll: IO rootMargin 1200px · lotes JSON de 24",
-      "qaContrast": "QA contraste: negro sobre coral 6.1:1 · OK",
-      "qaCls": "QA CLS: 0.00 · overlays en position: fixed",
-      "qaLcp": "QA LCP: h1.hero (texto) · sin opacity inicial",
-      "qaKeys": "QA teclado: diálogos con foco atrapado · Esc cierra · Back cierra"
+    "say": {
+      "aDesign": "Barras, header y retícula",
+      "aCopy": "Titular, ticker y fichas",
+      "aFrontend": "Ruleta, oferta flash y grid",
+      "dPalette": "Rojo, amarillo y tinta: modo oferta",
+      "cAsk": "¿El titular en mayúsculas grita bastante?",
+      "dAnswer": "Grita lo justo. Adelante",
+      "fWheel": "Ruleta en SVG, 8 premios",
+      "fFlash": "Cuenta atrás con cifras fijas",
+      "cHandoff": "Te paso nombres y precios del catálogo",
+      "fGrid": "Cinco columnas, sin saltos",
+      "dDone": "Sistema visual entregado",
+      "cDone": "Textos entregados",
+      "fDone": "Componentes listos",
+      "rPrice": "Precio descolocado en la tarjeta 2",
+      "fFixPrice": "Precio en su línea",
+      "rLang": "Botón del carrito sin traducir",
+      "cFixLang": "Traducido",
+      "rCta": "El texto del botón no se lee",
+      "dPick": "Tomo la tinta del logo",
+      "dFixCta": "Negro sobre amarillo: 15:1",
+      "aQa": "Revisión cuando terminen",
+      "aReview": "Revisa la página completa",
+      "qaFound": "Te paso los fallos que encontré",
+      "aRecheck": "Última pasada, por favor",
+      "qaOk": "Todo en verde."
+    },
+    "flags": {
+      "ctaContrast": "Texto del botón ilegible",
+      "priceOff": "Precio desalineado en el grid",
+      "addLang": "Botón del carrito en inglés"
     }
   }
 }

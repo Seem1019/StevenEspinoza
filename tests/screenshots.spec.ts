@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from './fixtures';
 
 const PAGES = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/'];
 const SIZES = [

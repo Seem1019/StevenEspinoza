@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último commit de código:** `17d9b7a` (después solo este handoff) · **Árbol de trabajo:** limpio · **Remoto:** ninguno (aún no publicado)
+**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último trabajo:** motor de agentes (intro de la home + showcase), ver commit "Shared agents engine" · **Árbol de trabajo:** limpio · **Remoto:** ninguno (aún no publicado)
 
 ---
 
@@ -25,14 +25,17 @@
 | **Lumbre**: restaurante "scroll-world" (entrada → barra → cocina → mesa), menú, reserva | ✅ | `src/demos/lumbre/` |
 | **Isola**: auriculares premium, three.js procedural que gira y se despieza con el scroll | ✅ | `src/demos/isola/` |
 | **Turnio**: landing SaaS (precios mensual/anual, tour, FAQ, alta) | ✅ | `src/demos/turnio/` |
-| Showcase "agentes en vivo" (simulación con guion, offline, saltar/repetir) | ✅ | `src/pages/[lang]/showcase/`, `src/showcase/` |
+| Motor de agentes compartido: cursores con nombre, flujo del orquestador, errores a propósito + revisión de QA | ✅ | `src/showcase/` (engine, flow, types), `src/components/site/AgentFlow.astro` |
+| Intro de la home: puerta "Empezar" → los agentes construyen la home real (≈39 s), "Ver la intro otra vez" | ✅ | `src/showcase/scenes/home.ts`, `src/showcase/intro.ts`, `src/pages/[lang]/index.astro` |
+| Showcase "agentes en vivo": 4 guiones de ≈37 s con 3 errores cada uno, empezar/pausar/saltar/repetir | ✅ | `src/pages/[lang]/showcase/`, `src/demos/<slug>/showcase/timeline.ts` |
 | Memoria para agentes: CLAUDE.md, DESIGN.md (global + uno por demo), reglas, skills | ✅ | `.claude/rules/`, `.claude/skills/` |
 | Workflow de despliegue en Pages | ✅ (sin ejecutar) | `.github/workflows/deploy.yml` |
 
 **Última verificación (2026-11-08):**
 - `npm run build`: sin errores ni avisos.
-- Playwright: **28/28** tests pasan.
-- Lighthouse móvil sobre 10 páginas (home, showcase y cada demo, es/en): **100/100/100/100**, LCP 0,9–1,1 s, CLS 0, TBT ≤ 30 ms.
+- Playwright: **33/33** pasan (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
+- Lighthouse móvil (home es/en con la puerta de la intro, showcase y cada demo): **100/100/100/100**, LCP 0,9–1,4 s, CLS ≤ 0,012, TBT ≤ 10 ms.
+- Capturas de la intro y de Brinco/Lumbre en 390 y 1440 px, en 15 momentos: `test-results/agents/` (no versionado).
 - Tabla completa en `README.md` y `reports/lighthouse/summary.md`.
 
 ## 3. Pendiente, por prioridad
@@ -53,7 +56,16 @@
    - Isola: su `BuildPreview` mide unos 2.420 px de alto (el contrato pide unos 2.200).
    - Brinco: la ruleta que se abre sola no crea entrada de historial, así que "atrás" no la cierra (Esc y su botón sí). Se arregla con `openUi` en lugar de `showModal` directo en `src/demos/brinco/client/app.ts`.
 
+6. **Detalles conocidos del motor de agentes:**
+   - En móvil el menú del header está oculto, así que el fallo "enlace en inglés" de la home no se ve ni se marca (QA marca 4 de 5). Está previsto: el motor ignora objetivos no renderizados.
+   - A 1440×900 el panel flotante tapa media tarjeta de Turnio durante la construcción; se aparta cuando el foco cae debajo, pero no antes.
+   - El CLS de la home (0,007–0,012) viene de la puerta inicial; no afecta a la nota.
+
 ## 4. Trampas ya descubiertas (no las repitas)
+- **Tests y la intro:** la home muestra la puerta en la primera visita. Los specs importan `test` de `tests/fixtures.ts`, que marca la intro como vista; para probarla usa `test.use({ intro: true })`.
+- **SVG dentro de nodos de tamaño 0:** el reset global pone `svg { max-width: 100% }`; dentro de un cursor (contenedor de 0 px) el SVG desaparece. Por eso `.ag-cur__ptr` lleva `max-width: none`.
+- **Panel del navegador de la app:** con la ventana en segundo plano no corre `requestAnimationFrame` y el motor parece congelado. Para ver la animación usa Playwright (`npm run screenshots:agents`).
+- **Motor y estilos de las previews:** los `data-build` ya no animan `transform` en CSS (lo controla el motor). Si una animación `motion` de una preview usa `transform` en el mismo elemento que arrastra un guion, la animación gana: apunta el guion a un contenedor.
 - **`popstate` y `ClientRouter`:** en `window` los listeners se ejecutan en orden de registro aunque sean de captura. Por eso la intercepción de "atrás" vive en un script inline en `<head>` **antes** de `<ClientRouter />`, que llama a `window.__uiPopHandler` (definido en `url-state.ts`). No lo muevas ni lo quites.
 - **Scripts de página:** siempre con `onPage()` (`src/scripts/lifecycle.ts`), que inicializa en `astro:page-load` y limpia en `astro:before-swap`. Nunca DOM a nivel de módulo.
 - **Disparadores de UI:** siempre `<button>`, nunca `<a href="?x">`, porque el router lo trata como navegación.
