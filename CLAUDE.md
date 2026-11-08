@@ -1,5 +1,9 @@
 # Steven Espinoza — portfolio
 
+## Start here
+Current state, pending work and known pitfalls (update it at the end of every session):
+@docs/HANDOFF.md
+
 Steven's sales portfolio: a site he opens **live in client meetings** (laptop or phone) to show what he can build for online stores, restaurants, premium brands and SaaS/service companies. Every demo must convince in the first 10 seconds. Three kinds of "fast" are non-negotiable: fast to build, fast to load (PageSpeed Insights mobile), and smooth to use (no visible reloads, blank screens, new tabs or classic pagination).
 
 ## Stack
