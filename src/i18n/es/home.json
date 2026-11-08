@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "title": "Steven Espinoza · Webs rápidas que venden",
+    "description": "Tiendas online, webs de restaurante, sitios premium y landings SaaS que cargan al instante y convencen en los primeros 10 segundos. Demos en vivo."
+  },
+  "hero": {
+    "title": "Webs que convencen antes de que termines de presentarlas.",
+    "lead": "Soy Steven Espinoza, ingeniero de software. Diseño y construyo tiendas online, webs de restaurante, sitios premium y landings SaaS que cargan rápido, se sienten como una app y están hechas para vender.",
+    "ctaDemos": "Ver las demos",
+    "ctaShowcase": "Ver cómo se construye una",
+    "metrics": [
+      { "value": "≥ 90", "label": "objetivo en PageSpeed móvil" },
+      { "value": "0", "label": "recargas al navegar por el sitio" },
+      { "value": "ES · EN", "label": "todas las demos en dos idiomas" }
+    ]
+  },
+  "gallery": {
+    "title": "Cuatro demos, cuatro sectores",
+    "lead": "Cada una con su propia identidad. Ábrelas en tu móvil: así las verán tus clientes.",
+    "details": "Ver detalles",
+    "open": "Abrir demo",
+    "watch": "Verla construirse",
+    "includes": "Qué enseña",
+    "close": "Cerrar detalles"
+  },
+  "pillars": {
+    "title": "Rápido en los tres sentidos",
+    "items": [
+      { "title": "Rápido de lanzar", "body": "Una primera versión publicada en días, no en meses. Partimos de patrones probados y los adaptamos a tu marca." },
+      { "title": "Rápido de cargar", "body": "Cada página se mide con Lighthouse en móvil: LCP bajo 2,5 s, sin saltos de diseño y con respuesta inmediata al toque." },
+      { "title": "Fluido de usar", "body": "Sin recargas, sin pantallas en blanco ni pestañas nuevas: carrito, filtros y reservas se abren en la misma página." }
+    ]
+  },
+  "showcase": {
+    "title": "Mira cómo se arma una demo, capa por capa",
+    "body": "Una simulación guionizada del proceso: diseño, frontend, copy y QA montan una de las demos delante de ti, desde el esqueleto hasta las animaciones.",
+    "cta": "Abrir el showcase"
+  },
+  "cta": {
+    "title": "¿Tu negocio necesita una web así?",
+    "body": "Cuéntame qué vendes y a quién. Te respondo con una propuesta concreta.",
+    "contact": "Escribirme",
+    "whatsapp": "WhatsApp"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "a11y": { "skip": "Saltar al contenido" },
+  "lang": { "label": "Idioma", "es": "Ver en español", "en": "View in English" },
+  "nav": {
+    "label": "Principal",
+    "home": "Inicio, Steven Espinoza",
+    "demos": "Demos",
+    "showcase": "Agentes en vivo",
+    "contact": "Contacto"
+  },
+  "contact": {
+    "close": "Cerrar contacto",
+    "email": "Correo",
+    "whatsapp": "WhatsApp",
+    "phone": "Teléfono",
+    "qrAlt": "Código QR con la tarjeta de contacto de Steven Espinoza",
+    "qrHint": "Escanéalo con la cámara para guardar el contacto.",
+    "download": "Descargar vCard"
+  },
+  "demoBar": {
+    "back": "Portafolio de Steven",
+    "note": "Demo con marca y datos ficticios",
+    "contact": "Contactar"
+  },
+  "footer": { "fiction": "Las marcas de las demos son ficticias." },
+  "sectors": {
+    "ecommerce": "Tienda online",
+    "restaurant": "Restaurante",
+    "premium": "Marca premium",
+    "saas": "SaaS y servicios"
+  },
+  "techniques": {
+    "infiniteCatalog": "Catálogo de 240 productos sin paginación",
+    "urlState": "Carrito, filtros y vista rápida con URL propia",
+    "gamification": "Ruleta, cupones y ventas flash",
+    "inp": "Respuesta al toque (INP < 200 ms)",
+    "scrollWorld": "Recorrido por el local con el scroll",
+    "cssScroll": "Animaciones guiadas por scroll en CSS",
+    "reservation": "Reserva en un panel, sin salir",
+    "zeroVideo": "Sin video: escenas ligeras en SVG",
+    "threeD": "Producto en 3D que se despieza",
+    "lazyIslands": "3D cargado solo cuando hace falta",
+    "typography": "Tipografía y aire de marca de lujo",
+    "conversion": "Estructura pensada para convertir",
+    "pricingToggle": "Precios mensual/anual al instante",
+    "faq": "FAQ accesible con datos estructurados",
+    "socialProof": "Prueba social (datos de ejemplo)"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "body": "Este enlace no existe o se movió.",
+    "cta": "Volver al inicio"
+  }
+}

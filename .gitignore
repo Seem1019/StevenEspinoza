@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+test-results/
+playwright-report/
+reports/lighthouse/*.html
+reports/lighthouse/*.json
+.DS_Store
+*.log
+.env
+.env.*

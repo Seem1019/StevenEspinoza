@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Live agents · Steven Espinoza",
+    "description": "A scripted simulation of the build process: design, frontend, copy and QA put a demo together layer by layer, from wireframe to animations."
+  },
+  "title": "Watch a demo come together",
+  "lead": "A scripted simulation of how we work: four roles build a demo layer by layer, from wireframe to content and animation. Pick one and press activate.",
+  "badge": "Demo · scripted simulation",
+  "pick": "Choose what to build",
+  "activate": "Activate agents",
+  "skip": "Skip to the end",
+  "replay": "Replay",
+  "layers": "Layers",
+  "time": "Time",
+  "progress": "Build progress",
+  "stageLabel": "Preview of the demo being built",
+  "stageEmpty": "Press “Activate agents” to start.",
+  "noscript": "Enable JavaScript to watch the simulation. The full demos work the same.",
+  "status": { "idle": "Waiting", "working": "Working", "done": "Done" },
+  "agents": {
+    "design": { "name": "Design", "role": "Visual system and layout" },
+    "frontend": { "name": "Frontend", "role": "Components and performance" },
+    "copy": { "name": "Copy", "role": "Copy, tone and languages" },
+    "qa": { "name": "QA", "role": "Accessibility and Core Web Vitals" }
+  },
+  "done": {
+    "title": "Demo ready.",
+    "open": "Open the full demo",
+    "another": "Build another"
+  }
+}

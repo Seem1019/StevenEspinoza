@@ -1,0 +1,32 @@
+/*
+ * Build states for the agents showcase. Only active inside `.build-stage`.
+ * Outside the stage (gallery thumbnails, no-JS) BuildPreview renders its final static look.
+ * Every state keeps the element's box -> zero layout shift.
+ */
+.build-stage [data-build] {
+  transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1), transform 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms;
+}
+.build-stage [data-build-state='hidden'] { opacity: 0; transform: translateY(10px); }
+
+.build-stage [data-build-state='skeleton'] {
+  color: transparent !important;
+  background: linear-gradient(100deg, #d9dde2 30%, #eceff2 50%, #d9dde2 70%) 0 0 / 300% 100% !important;
+  box-shadow: inset 0 0 0 2px #b9c0c8 !important;
+  border-color: transparent !important;
+  animation: build-shimmer 1.2s linear infinite;
+}
+.build-stage [data-build-state='skeleton'] * { visibility: hidden !important; }
+/* nested parts can still show their own skeleton */
+.build-stage [data-build-state='skeleton'] [data-build-state='skeleton'] { visibility: visible !important; }
+.build-stage [data-build-state='skeleton']::before,
+.build-stage [data-build-state='skeleton']::after { visibility: hidden !important; }
+
+.build-stage [data-build-active] { box-shadow: 0 0 0 3px var(--build-accent, #ff5a1f); }
+
+@keyframes build-shimmer { to { background-position: -300% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .build-stage [data-build] { transition: none; }
+  .build-stage [data-build-state='hidden'] { transform: none; }
+  .build-stage [data-build-state='skeleton'] { animation: none; }
+}

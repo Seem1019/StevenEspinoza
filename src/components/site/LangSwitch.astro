@@ -1,0 +1,59 @@
+---
+/**
+ * Language switch. Soft navigation (ClientRouter) to the same page in the other locale.
+ * A tiny script appends the current ?query and #hash on click so UI state survives the switch.
+ */
+import { locales, switchLangPath, useT, type Lang } from '../../i18n';
+interface Props { lang: Lang; class?: string }
+const { lang, class: cls } = Astro.props;
+const t = useT(lang);
+---
+
+<nav class:list={['lang-switch', cls]} aria-label={t('lang.label')}>
+  {
+    locales.map((l) => (
+      <a
+        href={switchLangPath(Astro.url.pathname, l)}
+        hreflang={l}
+        lang={l}
+        data-lang-switch
+        aria-current={l === lang ? 'true' : undefined}
+        aria-label={t(`lang.${l}`)}
+      >
+        {l.toUpperCase()}
+      </a>
+    ))
+  }
+</nav>
+
+<script>
+  import { onPage } from '../../scripts/lifecycle';
+  onPage(() => {
+    const ac = new AbortController();
+    document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((a) => {
+      // Runs at the link (target phase) before ClientRouter's document-level click handler reads href.
+      a.addEventListener(
+        'click',
+        () => {
+          const url = new URL(a.href);
+          url.search = location.search;
+          url.hash = location.hash;
+          a.href = url.href;
+        },
+        { signal: ac.signal },
+      );
+    });
+    return () => ac.abort();
+  });
+</script>
+
+<style>
+  .lang-switch { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line, currentColor); border-radius: var(--radius-sm, 4px); }
+  .lang-switch a {
+    min-width: 36px; min-height: 32px; display: grid; place-items: center; padding: 0 8px;
+    font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; text-decoration: none; border-radius: 3px;
+    color: var(--muted, inherit);
+  }
+  .lang-switch a:hover { color: var(--text, inherit); }
+  .lang-switch a[aria-current='true'] { background: var(--text, #fff); color: var(--ink, #000); }
+</style>

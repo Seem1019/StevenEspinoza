@@ -1,0 +1,54 @@
+{
+  "a11y": { "skip": "Skip to content" },
+  "lang": { "label": "Language", "es": "Ver en español", "en": "View in English" },
+  "nav": {
+    "label": "Main",
+    "home": "Home, Steven Espinoza",
+    "demos": "Demos",
+    "showcase": "Live agents",
+    "contact": "Contact"
+  },
+  "contact": {
+    "close": "Close contact",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "phone": "Phone",
+    "qrAlt": "QR code with Steven Espinoza's contact card",
+    "qrHint": "Scan it with your camera to save the contact.",
+    "download": "Download vCard"
+  },
+  "demoBar": {
+    "back": "Steven's portfolio",
+    "note": "Demo with fictional brand and data",
+    "contact": "Contact"
+  },
+  "footer": { "fiction": "Demo brands are fictional." },
+  "sectors": {
+    "ecommerce": "Online store",
+    "restaurant": "Restaurant",
+    "premium": "Premium brand",
+    "saas": "SaaS & services"
+  },
+  "techniques": {
+    "infiniteCatalog": "240-product catalog, no pagination",
+    "urlState": "Cart, filters and quick view with their own URL",
+    "gamification": "Prize wheel, coupons and flash sales",
+    "inp": "Instant response to taps (INP < 200 ms)",
+    "scrollWorld": "Walk through the venue as you scroll",
+    "cssScroll": "Scroll-driven animations in pure CSS",
+    "reservation": "Booking in a side panel, no page change",
+    "zeroVideo": "No video: lightweight SVG scenes",
+    "threeD": "3D product that comes apart",
+    "lazyIslands": "3D loaded only when needed",
+    "typography": "Luxury-grade typography and white space",
+    "conversion": "Structure built to convert",
+    "pricingToggle": "Instant monthly/yearly pricing",
+    "faq": "Accessible FAQ with structured data",
+    "socialProof": "Social proof (sample data)"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This link doesn't exist or has moved.",
+    "cta": "Back to home"
+  }
+}

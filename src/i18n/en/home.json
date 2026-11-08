@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "title": "Steven Espinoza · Fast websites that sell",
+    "description": "Online stores, restaurant sites, premium brand sites and SaaS landings that load instantly and win people over in the first 10 seconds. Live demos."
+  },
+  "hero": {
+    "title": "Websites that win the room before you finish the pitch.",
+    "lead": "I'm Steven Espinoza, a software engineer. I design and build online stores, restaurant sites, premium brand sites and SaaS landings that load fast, feel like an app and are made to sell.",
+    "ctaDemos": "See the demos",
+    "ctaShowcase": "Watch one being built",
+    "metrics": [
+      { "value": "≥ 90", "label": "mobile PageSpeed target" },
+      { "value": "0", "label": "page reloads while browsing" },
+      { "value": "ES · EN", "label": "every demo in two languages" }
+    ]
+  },
+  "gallery": {
+    "title": "Four demos, four industries",
+    "lead": "Each with its own identity. Open them on your phone: that's how your customers will see them.",
+    "details": "See details",
+    "open": "Open demo",
+    "watch": "Watch it being built",
+    "includes": "What it shows",
+    "close": "Close details"
+  },
+  "pillars": {
+    "title": "Fast in all three ways",
+    "items": [
+      { "title": "Fast to launch", "body": "A first version live in days, not months. We start from proven patterns and shape them to your brand." },
+      { "title": "Fast to load", "body": "Every page is measured with Lighthouse on mobile: LCP under 2.5 s, no layout jumps and instant response to taps." },
+      { "title": "Smooth to use", "body": "No reloads, blank screens or new tabs: cart, filters and bookings open on the same page." }
+    ]
+  },
+  "showcase": {
+    "title": "Watch a demo come together, layer by layer",
+    "body": "A scripted simulation of the process: design, frontend, copy and QA put one of the demos together in front of you, from wireframe to animations.",
+    "cta": "Open the showcase"
+  },
+  "cta": {
+    "title": "Does your business need a site like this?",
+    "body": "Tell me what you sell and to whom. I'll reply with a concrete proposal.",
+    "contact": "Write to me",
+    "whatsapp": "WhatsApp"
+  }
+}

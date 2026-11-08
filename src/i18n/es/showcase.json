@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Agentes en vivo · Steven Espinoza",
+    "description": "Simulación guionizada del proceso de construcción: diseño, frontend, copy y QA arman una demo por capas, del esqueleto a las animaciones."
+  },
+  "title": "Mira cómo se arma una demo",
+  "lead": "Una simulación con guion de cómo trabajamos: cuatro roles montan una demo por capas, del esqueleto al contenido y las animaciones. Elige cuál y pulsa activar.",
+  "badge": "Demo · simulación con guion",
+  "pick": "Elige qué construir",
+  "activate": "Activar agentes",
+  "skip": "Saltar al final",
+  "replay": "Repetir",
+  "layers": "Capas",
+  "time": "Tiempo",
+  "progress": "Progreso de la construcción",
+  "stageLabel": "Vista previa de la demo en construcción",
+  "stageEmpty": "Pulsa «Activar agentes» para empezar.",
+  "noscript": "Activa JavaScript para ver la simulación. Las demos completas funcionan igual.",
+  "status": { "idle": "En espera", "working": "Trabajando", "done": "Listo" },
+  "agents": {
+    "design": { "name": "Diseño", "role": "Sistema visual y layout" },
+    "frontend": { "name": "Frontend", "role": "Componentes y rendimiento" },
+    "copy": { "name": "Copy", "role": "Textos, tono e idiomas" },
+    "qa": { "name": "QA", "role": "Accesibilidad y Core Web Vitals" }
+  },
+  "done": {
+    "title": "Demo lista.",
+    "open": "Abrir la demo completa",
+    "another": "Construir otra"
+  }
+}

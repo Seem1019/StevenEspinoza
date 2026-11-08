@@ -1,0 +1,155 @@
+---
+/**
+ * Global contact dialog. Opens from any `<button data-open-contact>` on any page (portfolio or demo).
+ * URL state: ?contact=1 (deep-linkable, "back" closes it).
+ * QR encodes the full vCard (works offline, camera offers "Add contact"). Generated at build time.
+ */
+import QRCode from 'qrcode';
+import { profile, isTodo } from '../../data/profile';
+import { buildVCard } from '../../lib/vcard';
+import { useT, baseUrl, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const siteUrl = Astro.site ? new URL(import.meta.env.BASE_URL, Astro.site).href : undefined;
+const vcard = buildVCard(siteUrl);
+const qrSvg = await QRCode.toString(vcard, {
+  type: 'svg',
+  errorCorrectionLevel: 'M',
+  margin: 2,
+  color: { dark: '#0c0d0eff', light: '#ffffffff' },
+});
+const hasPhoto = !isTodo(profile.photo);
+---
+
+<dialog id="contact-dialog" class="contact brand" aria-labelledby="contact-title" data-vcard={vcard}>
+  <div class="contact__panel">
+    <header class="contact__head">
+      <div class="contact__avatar" aria-hidden="true">
+        {hasPhoto ? <img src={baseUrl(profile.photo)} alt="" width="56" height="56" /> : profile.initials}
+      </div>
+      <div>
+        <h2 id="contact-title">{profile.displayName}</h2>
+        <p class="contact__role">{profile.degree[lang]}</p>
+      </div>
+      <button type="button" class="contact__close" data-close aria-label={t('contact.close')}>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      </button>
+    </header>
+
+    <div class="contact__body">
+      <ul class="contact__list" role="list">
+        <li><a href={`mailto:${profile.email}`}><span>{t('contact.email')}</span><strong>{profile.email}</strong></a></li>
+        <li><a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><span>{t('contact.whatsapp')}</span><strong>{profile.phoneDisplay}</strong></a></li>
+        <li><a href={`tel:${profile.phone}`}><span>{t('contact.phone')}</span><strong>{profile.phoneDisplay}</strong></a></li>
+        <li><a href={profile.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><strong>in/seem1010</strong></a></li>
+        <li><a href={profile.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>Seem1019</strong></a></li>
+      </ul>
+
+      <figure class="contact__qr">
+        <div class="contact__qr-code" role="img" aria-label={t('contact.qrAlt')} set:html={qrSvg} />
+        <figcaption>{t('contact.qrHint')}</figcaption>
+        <a class="contact__vcf" href={baseUrl('steven-espinoza.vcf')} download="steven-espinoza.vcf" data-astro-reload>
+          {t('contact.download')}
+        </a>
+      </figure>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import { onPage } from '../../scripts/lifecycle';
+  import { onUrlState, openUi, closeUi, adoptDeepLink } from '../../scripts/url-state';
+
+  onPage(() => {
+    const dlg = document.getElementById('contact-dialog') as HTMLDialogElement | null;
+    if (!dlg) return;
+    const ac = new AbortController();
+    const signal = ac.signal;
+    let opener: HTMLElement | null = null;
+
+    const sync = (url: URL) => {
+      const want = url.searchParams.has('contact');
+      if (want && !dlg.open) dlg.showModal();
+      else if (!want && dlg.open) dlg.close();
+    };
+
+    document.addEventListener(
+      'click',
+      (e) => {
+        const trigger = (e.target as Element | null)?.closest<HTMLElement>('[data-open-contact]');
+        if (!trigger) return;
+        e.preventDefault();
+        opener = trigger;
+        openUi({ contact: '1' });
+        sync(new URL(location.href));
+      },
+      { signal },
+    );
+    dlg.addEventListener(
+      'close',
+      () => {
+        if (new URL(location.href).searchParams.has('contact')) closeUi({ contact: null });
+        opener?.focus();
+      },
+      { signal },
+    );
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }, { signal });
+    dlg.querySelector('[data-close]')?.addEventListener('click', () => dlg.close(), { signal });
+
+    const off = onUrlState(sync);
+    adoptDeepLink(['contact']);
+    sync(new URL(location.href));
+    return () => { ac.abort(); off(); if (dlg.open) dlg.close(); };
+  });
+</script>
+
+<style>
+  .contact {
+    width: min(760px, calc(100vw - 24px));
+    background: var(--surface);
+    color: var(--text);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    font-family: var(--font-body);
+  }
+  .contact[open] { animation: contact-in var(--dur-2) var(--ease-out); }
+  @keyframes contact-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } }
+  @media (prefers-reduced-motion: reduce) { .contact[open] { animation: none; } }
+
+  .contact__panel { padding: clamp(18px, 4vw, 32px); }
+  .contact__head { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .contact__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .contact__role { color: var(--muted); font-size: 0.9375rem; }
+  .contact__avatar {
+    width: 56px; height: 56px; border-radius: var(--radius); background: var(--accent); color: var(--accent-ink);
+    display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; overflow: hidden;
+  }
+  .contact__close { width: 44px; height: 44px; display: grid; place-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius); color: var(--text); }
+  .contact__close:hover { background: var(--surface-2); }
+
+  .contact__body { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .contact__body { grid-template-columns: 1fr 220px; } }
+
+  .contact__list { display: grid; gap: 8px; }
+  .contact__list a {
+    display: flex; justify-content: space-between; gap: 12px; align-items: center; min-height: 52px; padding: 10px 14px;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none;
+    transition: border-color var(--dur-1), transform var(--dur-1);
+  }
+  .contact__list a:hover { border-color: var(--accent); }
+  .contact__list a:active { transform: scale(0.99); }
+  .contact__list span { color: var(--muted); font-size: 0.875rem; }
+  .contact__list strong { font-weight: 600; font-size: 0.9375rem; overflow-wrap: anywhere; text-align: right; }
+
+  .contact__qr { margin: 0; display: grid; gap: 10px; align-content: start; justify-items: center; text-align: center; }
+  .contact__qr-code { width: 100%; max-width: 220px; aspect-ratio: 1; background: #fff; border-radius: var(--radius); padding: 6px; }
+  .contact__qr-code :global(svg) { width: 100%; height: 100%; }
+  .contact__qr figcaption { color: var(--muted); font-size: 0.8125rem; }
+  .contact__vcf {
+    width: 100%; min-height: 44px; display: grid; place-items: center; padding: 0 14px; border-radius: var(--radius);
+    background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none;
+  }
+  .contact__vcf:hover { filter: brightness(1.08); }
+</style>

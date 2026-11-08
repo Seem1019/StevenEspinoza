@@ -1,0 +1,46 @@
+---
+/**
+ * Scaled, inert miniature of a demo (its BuildPreview at 1280px design width).
+ * Scale is set by a ResizeObserver (transform only -> never a layout shift).
+ */
+import type { Lang } from '../../i18n';
+import BrincoPreview from '../../demos/brinco/BuildPreview.astro';
+import LumbrePreview from '../../demos/lumbre/BuildPreview.astro';
+import IsolaPreview from '../../demos/isola/BuildPreview.astro';
+import TurnioPreview from '../../demos/turnio/BuildPreview.astro';
+interface Props { slug: string; lang: Lang; bg: string }
+const { slug, lang, bg } = Astro.props;
+const previews: Record<string, typeof BrincoPreview> = {
+  brinco: BrincoPreview,
+  lumbre: LumbrePreview,
+  isola: IsolaPreview,
+  turnio: TurnioPreview,
+};
+const Preview = previews[slug];
+---
+
+<div class="thumb" style={`--thumb-bg:${bg}`} aria-hidden="true" inert data-thumb>
+  <div class="thumb__inner">{Preview && <Preview lang={lang} />}</div>
+</div>
+
+<style>
+  .thumb {
+    position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--thumb-bg);
+    border-radius: var(--radius) var(--radius) 0 0; --s: 0.28;
+    content-visibility: auto; contain-intrinsic-size: auto 360px;
+  }
+  .thumb__inner { position: absolute; top: 0; left: 0; width: 1280px; transform-origin: 0 0; transform: scale(var(--s)); pointer-events: none; }
+</style>
+
+<script>
+  import { onPage } from '../../scripts/lifecycle';
+  onPage(() => {
+    const thumbs = document.querySelectorAll<HTMLElement>('[data-thumb]');
+    if (!thumbs.length) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const e of entries) (e.target as HTMLElement).style.setProperty('--s', String(e.contentRect.width / 1280));
+    });
+    thumbs.forEach((t) => ro.observe(t));
+    return () => ro.disconnect();
+  });
+</script>

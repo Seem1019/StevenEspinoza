@@ -1,0 +1,39 @@
+---
+/**
+ * Thin, neutral bar at the top of every demo page: back to portfolio, "fictional demo" notice,
+ * language switch and contact. In normal flow (not fixed) so it never covers the demo's own sticky header.
+ * Height is fixed (40px) -> no CLS.
+ */
+import { useT, localePath, type Lang } from '../../i18n';
+import LangSwitch from './LangSwitch.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<div class="demo-bar brand">
+  <a class="demo-bar__back" href={localePath(lang, '#demos')}>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <span>{t('demoBar.back')}</span>
+  </a>
+  <span class="demo-bar__note">{t('demoBar.note')}</span>
+  <div class="demo-bar__right">
+    <LangSwitch lang={lang} class="demo-bar__lang" />
+    <button type="button" class="demo-bar__contact" data-open-contact>{t('demoBar.contact')}</button>
+  </div>
+</div>
+
+<style>
+  .demo-bar {
+    height: 40px; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+    background: #0c0d0e; color: #eef0f2; font-family: var(--font-body); font-size: 0.8125rem;
+    border-bottom: 1px solid #2a2e33; position: relative; z-index: 60;
+  }
+  .demo-bar__back { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; min-height: 32px; }
+  .demo-bar__back:hover { color: #ff5a1f; }
+  .demo-bar__note { color: #a7adb5; display: none; }
+  .demo-bar__right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .demo-bar__right :global(.lang-switch a) { min-height: 26px; min-width: 32px; }
+  .demo-bar__contact { min-height: 28px; padding: 0 10px; border: 0; border-radius: 4px; background: #ff5a1f; color: #0c0d0e; font-weight: 700; font-size: 0.8125rem; }
+  @media (min-width: 720px) { .demo-bar__note { display: inline; } }
+</style>

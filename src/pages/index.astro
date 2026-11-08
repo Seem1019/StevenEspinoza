@@ -1,0 +1,29 @@
+---
+/**
+ * Root "/" -> /es/ or /en/ depending on the browser language. Static-host friendly:
+ * inline script redirect (no flash: replace before paint), meta refresh + links as fallback.
+ */
+import { localePath } from '../i18n';
+const es = localePath('es');
+const en = localePath('en');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Steven Espinoza</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(es, Astro.site).href} />
+    <script is:inline define:vars={{ es, en }}>
+      var l = (navigator.languages && navigator.languages[0]) || navigator.language || 'es';
+      location.replace(/^es\b/i.test(l) ? es : en);
+    </script>
+    <meta http-equiv="refresh" content={`1; url=${es}`} />
+    <style>body{margin:0;background:#0c0d0e;color:#eef0f2;font:16px system-ui,sans-serif;display:grid;place-items:center;min-height:100vh}a{color:#ff5a1f;margin:0 8px}</style>
+  </head>
+  <body>
+    <p><a href={es}>Español</a><a href={en}>English</a></p>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+---
+/**
+ * Root layout for every page (portfolio and demos).
+ * - ClientRouter: soft navigation (no full reloads). Scripts must use onPage() from src/scripts/lifecycle.ts.
+ * - Fonts: pass only the cssVariables this page uses; preload only the LCP font.
+ * - Demos set bodyClass to their own root class and their own fonts/themeColor.
+ */
+import { ClientRouter } from 'astro:transitions';
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import { locales, switchLangPath, useT, baseUrl, type Lang } from '../i18n';
+import ContactDialog from '../components/site/ContactDialog.astro';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Font cssVariables used by this page (configured in astro.config.mjs). */
+  fonts?: string[];
+  /** Subset of `fonts` to preload (only the LCP text font). */
+  preload?: string[];
+  bodyClass?: string;
+  themeColor?: string;
+  /** Render the global contact dialog (default true). */
+  contact?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description,
+  fonts = ['--font-brand-display', '--font-brand-body'],
+  preload = ['--font-brand-display'],
+  bodyClass = 'brand',
+  themeColor = '#0c0d0e',
+  contact = true,
+} = Astro.props;
+
+const t = useT(lang);
+const site = Astro.site ?? new URL('http://localhost');
+const canonical = new URL(Astro.url.pathname, site).href;
+const alternates = locales.map((l) => ({ l, href: new URL(switchLangPath(Astro.url.pathname, l), site).href }));
+type FontVar = Parameters<typeof Font>[0]['cssVariable'];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.l} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+    <meta name="theme-color" content={themeColor} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href={baseUrl('favicon.svg')} type="image/svg+xml" />
+    {fonts.map((v) => <Font cssVariable={v as FontVar} preload={preload.includes(v)} />)}
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">{t('a11y.skip')}</a>
+    <slot />
+    {contact && <ContactDialog lang={lang} />}
+  </body>
+</html>

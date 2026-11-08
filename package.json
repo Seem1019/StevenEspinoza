@@ -1,0 +1,33 @@
+{
+  "name": "steven-espinoza-portfolio",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview --port 4321",
+    "test:e2e": "playwright test",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "screenshots": "playwright test tests/screenshots.spec.ts",
+    "psi": "node scripts/psi.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "astro": "^7.4.7",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.35.5",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/three": "^0.187.0",
+    "jsqr": "^1.4.0",
+    "lighthouse": "^13.6.0",
+    "pngjs": "^7.0.0",
+    "typescript": "^7.0.2"
+  }
+}

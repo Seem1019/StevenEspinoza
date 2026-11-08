@@ -1,0 +1,47 @@
+---
+import { useT, localePath, type Lang } from '../../i18n';
+import { profile, isTodo } from '../../data/profile';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <p class="site-footer__name">{profile.displayName}</p>
+      <p class="site-footer__muted">{profile.degree[lang]}{!isTodo(profile.location) && ` · ${profile.location}`}</p>
+    </div>
+    <ul class="site-footer__links" role="list">
+      <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+      <li><a href={`tel:${profile.phone}`}>{profile.phoneDisplay}</a></li>
+      <li><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <ul class="site-footer__links" role="list">
+      <li><a href={localePath(lang, '#demos')}>{t('nav.demos')}</a></li>
+      <li><a href={localePath(lang, 'showcase/')}>{t('nav.showcase')}</a></li>
+      <li><button type="button" data-open-contact>{t('nav.contact')}</button></li>
+    </ul>
+    <p class="site-footer__muted site-footer__legal">© {year} {profile.displayName}. {t('footer.fiction')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { border-top: 1px solid var(--line); background: var(--ink); }
+  .site-footer__inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 48px var(--gutter);
+    display: grid; gap: 28px; grid-template-columns: 1fr;
+  }
+  @media (min-width: 760px) { .site-footer__inner { grid-template-columns: 2fr 1fr 1fr; } }
+  .site-footer__name { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; }
+  .site-footer__muted { color: var(--muted); font-size: 0.875rem; }
+  .site-footer__links { display: grid; gap: 4px; }
+  .site-footer__links a, .site-footer__links button {
+    display: inline-flex; min-height: 32px; align-items: center; padding: 0; background: none; border: 0;
+    color: var(--text); text-decoration: none; font-size: 0.9375rem; overflow-wrap: anywhere;
+  }
+  .site-footer__links a:hover, .site-footer__links button:hover { color: var(--accent); }
+  .site-footer__legal { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line); }
+</style>

@@ -1,0 +1,48 @@
+---
+import { useT, localePath, type Lang } from '../../i18n';
+import { profile } from '../../data/profile';
+import LangSwitch from './LangSwitch.astro';
+interface Props { lang: Lang; current?: 'home' | 'showcase' }
+const { lang, current } = Astro.props;
+const t = useT(lang);
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__logo" href={localePath(lang)} aria-label={t('nav.home')}>
+      <span class="site-header__mark" aria-hidden="true">{profile.initials}</span>
+      <span class="site-header__name">{profile.displayName}</span>
+    </a>
+    <nav class="site-header__nav" aria-label={t('nav.label')}>
+      <a href={localePath(lang, '#demos')}>{t('nav.demos')}</a>
+      <a href={localePath(lang, 'showcase/')} aria-current={current === 'showcase' ? 'page' : undefined} data-astro-prefetch="viewport">{t('nav.showcase')}</a>
+    </nav>
+    <div class="site-header__actions">
+      <LangSwitch lang={lang} />
+      <button type="button" class="site-header__cta" data-open-contact>{t('nav.contact')}</button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--ink); border-bottom: 1px solid var(--line); }
+  .site-header__inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); min-height: 64px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .site-header__logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+  .site-header__mark { width: 32px; height: 32px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 800; }
+  .site-header__name { font-size: 1.0625rem; }
+  .site-header__nav { display: none; gap: 4px; margin-left: 16px; }
+  .site-header__nav a { padding: 8px 12px; text-decoration: none; color: var(--muted); border-radius: var(--radius-sm); font-weight: 500; }
+  .site-header__nav a:hover, .site-header__nav a[aria-current='page'] { color: var(--text); background: var(--surface); }
+  .site-header__actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .site-header__cta {
+    min-height: 40px; padding: 0 16px; border: 0; border-radius: var(--radius-sm);
+    background: var(--accent); color: var(--accent-ink); font-weight: 700;
+    transition: transform var(--dur-1) var(--ease-out);
+  }
+  .site-header__cta:active { transform: scale(0.97); }
+  @media (min-width: 760px) { .site-header__nav { display: flex; } }
+  @media (max-width: 420px) { .site-header__name { display: none; } }
+</style>
