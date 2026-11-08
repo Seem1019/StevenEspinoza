@@ -44,10 +44,29 @@ npm run lighthouse                  # Lighthouse móvil → reports/lighthouse/s
 
 URL esperada: `https://seem1019.github.io/steven-espinoza/`.
 
+## Publicado
+**https://seem1019.github.io/StevenEspinoza/** (repo `Seem1019/StevenEspinoza`, GitHub Pages con Actions; cada push a `main` despliega).
+
 ## PageSpeed Insights (después de publicar)
 ```bash
-npm run psi            # o: npm run psi -- https://seem1019.github.io/steven-espinoza/es/
+npm run psi            # o: npm run psi -- https://seem1019.github.io/StevenEspinoza/es/
 ```
+Sin `PSI_API_KEY` la API de PageSpeed suele responder 429 (cuota). Mismo motor en local contra la URL pública:
+```bash
+LH_BASE=https://seem1019.github.io/StevenEspinoza/ npm run lighthouse   # → reports/lighthouse-public/summary.md
+```
+
+### Resultados sobre la URL pública (Lighthouse 13.6 móvil, 2026-11-08)
+| Page | Perf | A11y | BP | SEO | LCP | CLS | TBT | FCP | Meets target |
+|---|---|---|---|---|---|---|---|---|---|
+| es/ | 99 | 100 | 100 | 100 | 1.2 s | 0 | 90 ms | 1.2 s | yes |
+| en/ | 100 | 100 | 100 | 100 | 1.1 s | 0.012 | 90 ms | 1.1 s | yes |
+| es/showcase/ | 100 | 100 | 100 | 100 | 1.1 s | 0.001 | 0 ms | 1.1 s | yes |
+| es/demos/brinco/ | 100 | 100 | 100 | 100 | 1.0 s | 0 | 0 ms | 1.0 s | yes |
+| es/demos/lumbre/ | 99 | 100 | 100 | 100 | 0.9 s | 0 | 90 ms | 0.9 s | yes |
+| es/demos/isola/ | 100 | 100 | 100 | 100 | 1.0 s | 0 | 0 ms | 1.0 s | yes |
+| es/demos/turnio/ | 100 | 100 | 100 | 100 | 0.9 s | 0 | 50 ms | 0.9 s | yes |
+
 Resultados en `reports/psi.md`. Un sitio nuevo no tiene datos de campo (CrUX) durante semanas: PageSpeed lo evalúa con los datos de laboratorio, y eso es lo normal.
 
 ### Resultados de laboratorio en local (Lighthouse 13.6 móvil, 2026-11-08)

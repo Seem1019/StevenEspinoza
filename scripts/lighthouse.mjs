@@ -2,6 +2,8 @@
  * Lighthouse (mobile, same lab engine as PageSpeed Insights) over `astro preview`.
  * Usage: npm run build && npm run lighthouse [-- path1 path2 ...]
  * Writes reports/lighthouse/<page>.html|json and reports/lighthouse/summary.md
+ * Public site instead of preview: LH_BASE=https://seem1019.github.io/StevenEspinoza/ npm run lighthouse
+ *   (writes reports/lighthouse-public/; useful when the PageSpeed API is rate-limited)
  */
 import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -9,10 +11,11 @@ import lighthouse from 'lighthouse';
 import * as chromeLauncher from 'chrome-launcher';
 
 const PORT = 4330;
-const BASE = `http://localhost:${PORT}/steven-espinoza/`;
+const PUBLIC = process.env.LH_BASE?.replace(/\/?$/, '/');
+const BASE = PUBLIC ?? `http://localhost:${PORT}/steven-espinoza/`;
 const DEFAULT_PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/'];
 const paths = process.argv.slice(2).length ? process.argv.slice(2) : DEFAULT_PATHS;
-const OUT = 'reports/lighthouse';
+const OUT = PUBLIC ? 'reports/lighthouse-public' : 'reports/lighthouse';
 const TARGET = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 };
 
 async function waitFor(url, ms = 30000) {
@@ -24,7 +27,7 @@ async function waitFor(url, ms = 30000) {
   throw new Error(`preview did not start at ${url}`);
 }
 
-const preview = spawn('npx', ['astro', 'preview', '--port', String(PORT)], { shell: true, stdio: 'ignore' });
+const preview = PUBLIC ? null : spawn('npx', ['astro', 'preview', '--port', String(PORT)], { shell: true, stdio: 'ignore' });
 let chrome;
 try {
   await waitFor(BASE + 'es/');
@@ -51,7 +54,7 @@ try {
     }
   }
   const md = [
-    `# Lighthouse (mobile, lab) — ${new Date().toISOString()}`,
+    `# Lighthouse (mobile, lab) — ${BASE} — ${new Date().toISOString()}`,
     '',
     '| Page | Perf | A11y | BP | SEO | LCP | CLS | TBT | FCP | Meets target |',
     '|---|---|---|---|---|---|---|---|---|---|',
@@ -61,6 +64,6 @@ try {
   console.log(`\n${OUT}/summary.md written`);
 } finally {
   await chrome?.kill();
-  preview.kill();
-  if (process.platform === 'win32' && preview.pid) spawn('taskkill', ['/pid', String(preview.pid), '/T', '/F'], { stdio: 'ignore' });
+  preview?.kill();
+  if (process.platform === 'win32' && preview?.pid) spawn('taskkill', ['/pid', String(preview.pid), '/T', '/F'], { stdio: 'ignore' });
 }

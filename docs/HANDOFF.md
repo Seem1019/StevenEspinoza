@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último trabajo:** motor de agentes (intro de la home + showcase), ver commit "Shared agents engine" · **Árbol de trabajo:** limpio · **Remoto:** ninguno (aún no publicado)
+**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último trabajo:** motor de agentes (intro de la home + showcase), ver commit "Shared agents engine" · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
 
 ---
 
@@ -39,15 +39,8 @@
 - Tabla completa en `README.md` y `reports/lighthouse/summary.md`.
 
 ## 3. Pendiente, por prioridad
-1. **Publicar. Requiere el "sí" explícito de Steven, que aún no ha dado.** `gh` está autenticado como `Seem1019`; el repo no existe todavía. Comandos preparados:
-   ```bash
-   gh repo create Seem1019/steven-espinoza --public --source . --remote origin --push
-   gh api -X POST repos/Seem1019/steven-espinoza/pages -f build_type=workflow
-   ```
-   - Debe ser público: Pages no funciona con repos privados en el plan gratuito.
-   - URL esperada: `https://seem1019.github.io/steven-espinoza/`.
-   - El workflow calcula `SITE_URL` y `BASE_PATH` solo.
-2. **PageSpeed sobre la URL pública** (después del despliegue): `npm run psi` → `reports/psi.md`. Pega la tabla en la sección "Resultados en PageSpeed Insights" del README. Avisa a Steven de que un sitio nuevo no tiene datos de campo (CrUX) durante semanas y se evalúa con laboratorio; no es un fallo.
+1. ✅ **Publicado (2026-11-08)** en https://seem1019.github.io/StevenEspinoza/ desde el repo ya existente `Seem1019/StevenEspinoza` (no `steven-espinoza`). Pages con build_type `workflow`; cada push a `main` despliega solo (el workflow calcula `SITE_URL` y `BASE_PATH`). En local la base sigue siendo `/steven-espinoza/`.
+2. **PageSpeed sobre la URL pública:** la API de PSI devolvió 429 sin clave. Hecho con Lighthouse local contra la URL pública (`LH_BASE=… npm run lighthouse`): 99–100 en rendimiento y 100 en lo demás (tabla en `README.md`). Pendiente: repetir `npm run psi` con `PSI_API_KEY` o más tarde. Sin datos de campo (CrUX) durante semanas: normal en un sitio nuevo.
 3. **Datos que faltan en `src/data/profile.ts`** (nunca inventarlos): `TODO_LOCATION`, `TODO_PHOTO`, `TODO_BOOKING_URL`.
 4. **Decisión de Steven pendiente:** no se instalaron las skills `scroll-world` (usa CLIs de pago, unos 27 USD por cadena de video con IA) ni `img2threejs` (ejecuta tooling de Node y Python). Sus ideas ya están aplicadas sin ese coste.
 5. **Detalles menores conocidos:**

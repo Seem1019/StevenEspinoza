@@ -1,13 +1,13 @@
 /**
  * PageSpeed Insights API (mobile) for PUBLIC URLs, after deploying.
- * Usage: npm run psi -- https://seem1019.github.io/steven-espinoza/es/ [more urls]
- *        (no args → all main pages under SITE, default https://seem1019.github.io/steven-espinoza/)
+ * Usage: npm run psi -- https://seem1019.github.io/StevenEspinoza/es/ [more urls]
+ *        (no args → all main pages under SITE, default https://seem1019.github.io/StevenEspinoza/)
  * Optional: PSI_API_KEY env var (without it the API works but is rate-limited).
  * Writes reports/psi.md. New sites have no CrUX field data for weeks: lab scores are what counts.
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 
-const SITE = (process.env.SITE ?? 'https://seem1019.github.io/steven-espinoza/').replace(/\/?$/, '/');
+const SITE = (process.env.SITE ?? 'https://seem1019.github.io/StevenEspinoza/').replace(/\/?$/, '/');
 const PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/'];
 const urls = process.argv.slice(2).length ? process.argv.slice(2) : PATHS.map((p) => SITE + p);
 const key = process.env.PSI_API_KEY ? `&key=${process.env.PSI_API_KEY}` : '';

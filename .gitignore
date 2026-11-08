@@ -5,6 +5,8 @@ test-results/
 playwright-report/
 reports/lighthouse/*.html
 reports/lighthouse/*.json
+reports/lighthouse-public/*.html
+reports/lighthouse-public/*.json
 .DS_Store
 *.log
 .env
