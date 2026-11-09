@@ -55,25 +55,42 @@ test('tesela: looks complete with reduced motion (no scroll-driven state left ha
   await expect(page.locator('#ts-h1')).toBeVisible();
   expect(await page.locator('.ts-hero__frame').isVisible()).toBe(false);
   // operation cards show their finished state (no queued rows)
-  await expect(page.locator('.ts-step__media').first()).not.toHaveAttribute('data-op', /.*/);
+  expect(await page.locator('.ts-op__check').last().evaluate((e) => getComputedStyle(e).opacity)).toBe('1');
   await expect(page.locator('.ts-op__d').first()).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   expect(overflow).toBe(0);
   await ctx.close();
 });
 
-test('tesela: hero painting loads only after the first scroll; operation cards run in view', async ({ page }) => {
+test('tesela: hero painting loads only after the first scroll', async ({ page }) => {
   await page.goto('es/demos/tesela/');
   const paint = page.locator('.ts-hero__paint');
   expect(await paint.getAttribute('src')).toBeNull();
   await page.mouse.wheel(0, 600);
   await expect.poll(() => paint.getAttribute('src')).not.toBeNull();
   await expect.poll(() => paint.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
-
-  const media = page.locator('.ts-step__media').first();
-  await expect(media).toHaveAttribute('data-op', 'idle');
-  await media.scrollIntoViewIfNeeded();
-  await expect(media).toHaveAttribute('data-op', 'run');
-  // the last row ends as done (green check visible) after the timed sequence
-  await expect.poll(() => media.locator('.ts-op__row').last().locator('.ts-op__check').evaluate((e) => getComputedStyle(e).opacity), { timeout: 8000 }).toBe('1');
 });
+
+for (const vp of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  test(`tesela: operation card rows follow the scroll (${vp.width}px)`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: vp });
+    const page = await ctx.newPage();
+    await page.goto('es/demos/tesela/');
+    const media = page.locator('.ts-step__media').first();
+    const lastCheck = media.locator('.ts-op__row').last().locator('.ts-op__check');
+    const firstQueued = media.locator('.ts-op__row').first().locator('.ts-op__q');
+    const scrollMediaTop = (y: number) => media.evaluate((m, y) => scrollTo({ top: m.getBoundingClientRect().top + scrollY - y, behavior: 'instant' }), y);
+    const op = (l: typeof lastCheck) => l.evaluate((e) => getComputedStyle(e).opacity);
+    // panel just entering: rows queued
+    await scrollMediaTop(vp.height - 120);
+    await expect.poll(() => op(firstQueued)).toBe('1');
+    await expect.poll(() => op(lastCheck)).toBe('0');
+    // panel in place: every row done
+    await scrollMediaTop(110);
+    await expect.poll(() => op(lastCheck)).toBe('1');
+    // scrolling back reverses it
+    await scrollMediaTop(vp.height - 120);
+    await expect.poll(() => op(lastCheck)).toBe('0');
+    await ctx.close();
+  });
+}

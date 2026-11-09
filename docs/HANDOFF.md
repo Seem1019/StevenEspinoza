@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-09 · **Rama:** `claude/beautiful-pascal-o4wsu9` (fusionado en `main`) · **Último trabajo:** quinta demo, **Tesela Studio** (estudio de producto con IA, servicios profesionales), ver `docs/decisions.md` → "Demo Tesela Studio"; arreglo del scroll-driven de Turnio, Isola y Lumbre, que no animaba en producción · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
+**Última actualización:** 2026-11-09 · **Rama:** `main` (push directo, 2026-11-09) · **Último trabajo:** quinta demo, **Tesela Studio** (estudio de producto con IA, servicios profesionales), ver `docs/decisions.md` → "Demo Tesela Studio"; arreglo del scroll-driven de Turnio, Isola y Lumbre; óleos de dominio público, telón en el hero y fichas de operación scroll-driven en Tesela · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
 
 ---
 
@@ -34,7 +34,7 @@
 
 **Última verificación (2026-11-09):**
 - `npm run build`: sin errores ni avisos.
-- Playwright: **42/42** pasan (5 en `tests/tesela.spec.ts`) (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
+- Playwright: **44/44** pasan (7 en `tests/tesela.spec.ts`) (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
 - Lighthouse móvil (home es/en con la puerta de la intro, showcase y cada demo): **100/100/100/100**, LCP 0,9–1,4 s, CLS ≤ 0,012, TBT ≤ 10 ms.
 - 2026-11-09 (contenedor en la nube, CPU más lenta): todas las páginas **100/100/100/100** (Tesela LCP 1,1 s, CLS 0,002). Entre pasadas el rendimiento oscila 97–100. El TBT de 60–190 ms en showcase, Brinco y Lumbre es de esta máquina: `main` medido aquí da lo mismo (showcase 60–100, Brinco 20–90, Lumbre 140–180 ms).
 - Capturas de la intro y de Brinco/Lumbre en 390 y 1440 px, en 15 momentos: `test-results/agents/` (no versionado).
@@ -77,6 +77,8 @@
 - **Fraunces es una sola familia (`--font-fraunces`)** para Lumbre y Tesela. Si añades otra entrada con el mismo archivo, la Fonts API la deduplica y esa página se queda sin precarga.
 - **`animation-timeline` siempre vía `var()`**, o el minificador lo funde en el shorthand y Chrome lo ignora. Comprueba `getComputedStyle(el).animationName` en el navegador.
 - **Red del entorno en la nube:** la política por defecto bloquea `api.fontsource.org` y `cdn.jsdelivr.net`, y el build sale sin fuentes y sin avisos visibles. El entorno `StevenEspinoza` (personal) ya los permite, además de `collectionapi.metmuseum.org` e `images.metmuseum.org` (óleos CC0). La búsqueda de la API del Met es `/public/collection/v1.1/search` (la v1 se retiró); filtra por `isPublicDomain: true` (Monet sale como no libre).
+- **`view()` sobre un elemento sticky:** su línea de tiempo incluye todo el tramo en que está pegado, así que un `animation-range` en % cambia de un panel a otro. Usa longitudes desde `cover 0` (ver las fichas de Tesela).
+- **Tests con scroll en Tesela:** la página tiene `scroll-behavior: smooth`; en Playwright usa `scrollTo({ top, behavior: 'instant' })` o mides a mitad del desplazamiento.
 - **Imagen diferida del hero de Tesela:** el `<picture>` lleva `data-srcset`/`data-src` y el script los aplica al primer scroll. Si cambias la imagen, mantén eso o la descarga compite con la carga inicial.
 - **Tamaño de three.js:** el chunk pesa unos 137 KB gz y por eso se subió `chunkSizeWarningLimit`. Nunca debe cargarse antes del primer scroll; Lighthouse no hace scroll.
 
@@ -88,7 +90,7 @@ npm run screenshots
 npm run lighthouse
 ```
 - **Build:** debe salir sin avisos.
-- **Tests:** deben pasar 42/42 o más.
+- **Tests:** deben pasar 44/44 o más.
 - **Capturas:** se guardan en `test-results/screenshots`; revísalas a 390 y 1440 px.
 - **Lighthouse:** objetivo rendimiento ≥ 90, accesibilidad, buenas prácticas y SEO ≥ 95, LCP < 2,5 s, CLS < 0,1.
 
