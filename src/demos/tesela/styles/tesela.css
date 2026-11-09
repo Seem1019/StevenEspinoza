@@ -426,22 +426,51 @@
 @keyframes ts-flip { from { opacity: 0; transform: perspective(240px) rotateX(-80deg); } }
 @keyframes ts-under { to { transform: scale(0.95); } }
 
-/* Operation cards: queued state + timed sequence. Only with motion allowed and once the script marks the panel
-   (data-op="idle" -> "run" when in view). Without JS or with reduced motion the card shows its finished state. */
-@media (prefers-reduced-motion: no-preference) {
-  [data-op] .ts-op__row::before, [data-op] .ts-op__check, [data-op] .ts-op__d { opacity: 0; }
-  [data-op] .ts-op__ring, [data-op] .ts-op__q { opacity: 1; }
-  [data-op] .ts-op__label { opacity: 0.45; }
-  [data-op='run'] .ts-op__row { --a: calc(0.5s + var(--r) * 1.15s); --b: calc(var(--a) + 1.05s); }
-  [data-op='run'] :is(.ts-op__ring, .ts-op__q) { animation: ts-out 0.18s linear var(--a) forwards; }
-  [data-op='run'] .ts-op__label { animation: ts-in 0.25s var(--e-out) var(--a) forwards; }
-  [data-op='run'] .ts-op__r { animation: ts-blip 1.05s linear var(--a) forwards; }
-  [data-op='run'] .ts-op__spin { animation: ts-blip 1.05s linear var(--a) forwards, ts-spin 0.7s linear infinite; }
-  [data-op='run'] .ts-op__d, [data-op='run'] .ts-op__row::before { animation: ts-in 0.3s var(--e-out) var(--b) forwards; }
-  [data-op='run'] .ts-op__check { animation: ts-pop 0.45s var(--e-expo) var(--b) forwards; }
+/* Operation cards, scroll-driven: each panel's media is a view timeline (--ts-op). As the panel rises into place the
+   rows go queued -> running (spinner) -> done (check), one after another, and reverse when scrolling back up.
+   On desktop the panel sticks ~110 px from the top, so every row is done before that.
+   Default CSS = finished card (no support, reduced motion). The spinner itself keeps turning on a time loop. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tesela { --tl-op: --ts-op; }
+    .ts-step__media { view-timeline: --ts-op block; }
+    /* Ranges are distances scrolled since the panel's top edge entered at the bottom of the viewport (cover 0).
+       Lengths, not percentages: a sticky panel's timeline also spans the time it stays stuck, so percentages
+       would differ per panel. Rows run between --o (card on screen) and --e (panel in place). */
+    .ts-step__media { --o: 45svh; --e: 78svh; }
+    .ts-op__row {
+      --s: calc((var(--e) - var(--o)) / 3);
+      --a: calc(var(--o) + var(--r) * var(--s)); --a2: calc(var(--a) + 24px);
+      --b: calc(var(--a) + var(--s) * 0.75); --b2: calc(var(--b) + 24px);
+    }
+    @media (min-width: 900px) { .ts-step__media { --e: calc(100svh - 130px); } }
+    .ts-op__ring, .ts-op__q {
+      opacity: 1;
+      animation: ts-out linear both; animation-timeline: var(--tl-op); animation-range: cover var(--a) cover var(--a2);
+    }
+    .ts-op__label {
+      animation: ts-lbl linear both; animation-timeline: var(--tl-op); animation-range: cover var(--a) cover var(--a2);
+    }
+    .ts-op__r {
+      animation: ts-on linear both, ts-off linear forwards; animation-timeline: var(--tl-op), var(--tl-op);
+      animation-range: cover var(--a) cover var(--a2), cover var(--b) cover var(--b2);
+    }
+    .ts-op__spin {
+      animation: ts-on linear both, ts-off linear forwards, ts-spin 0.7s linear infinite;
+      animation-timeline: var(--tl-op), var(--tl-op), auto;
+      animation-range: cover var(--a) cover var(--a2), cover var(--b) cover var(--b2), normal;
+    }
+    .ts-op__d, .ts-op__row::before {
+      animation: ts-on linear both; animation-timeline: var(--tl-op); animation-range: cover var(--b) cover var(--b2);
+    }
+    .ts-op__check {
+      animation: ts-pop linear both; animation-timeline: var(--tl-op); animation-range: cover var(--b) cover calc(var(--b2) + 16px);
+    }
+  }
 }
+@keyframes ts-lbl { from { opacity: 0.45; } to { opacity: 1; } }
+@keyframes ts-on { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ts-off { from { opacity: 1; } to { opacity: 0; } }
 @keyframes ts-out { to { opacity: 0; } }
-@keyframes ts-in { to { opacity: 1; } }
-@keyframes ts-blip { 0%, 99% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes ts-spin { to { rotate: 360deg; } }
 @keyframes ts-pop { from { opacity: 0; transform: scale(0.4); } 60% { opacity: 1; transform: scale(1.12); } to { opacity: 1; transform: scale(1); } }

@@ -5,7 +5,7 @@
  * Theme: data-theme on <body> (toggle stored in localStorage; default follows the system).
  * Everything visual (scroll-driven hero, tiles, stacked panels) is CSS; this file only wires UI.
  */
-import { onPage, prefersReducedMotion } from '../../../scripts/lifecycle';
+import { onPage } from '../../../scripts/lifecycle';
 import { onUrlState, openUi, closeUi, setParams, adoptDeepLink } from '../../../scripts/url-state';
 
 const CASES = ['pliego', 'rutero', 'acopio'];
@@ -84,21 +84,6 @@ onPage(() => {
   };
   if (scrollY > 0) loadPainting();
   else addEventListener('scroll', loadPainting, { passive: true, once: true, signal });
-
-  // --- operation cards over the paintings: queued -> running -> done while their panel is on screen ------
-  const medias = [...page.querySelectorAll<HTMLElement>('.ts-step__media')];
-  let opIo: IntersectionObserver | null = null;
-  if (!prefersReducedMotion() && 'IntersectionObserver' in window) {
-    medias.forEach((m) => (m.dataset.op = 'idle'));
-    opIo = new IntersectionObserver((entries) => {
-      for (const en of entries) {
-        const m = en.target as HTMLElement;
-        if (en.isIntersecting && en.intersectionRatio >= 0.5) m.dataset.op = 'run';
-        else if (!en.isIntersecting) m.dataset.op = 'idle'; // replays the next time it comes into view
-      }
-    }, { threshold: [0, 0.5] });
-    medias.forEach((m) => opIo!.observe(m));
-  }
 
   // --- dialogs -------------------------------------------------------------------------------
   const panels = [...caseDlg.querySelectorAll<HTMLElement>('[data-case-panel]')];
@@ -213,7 +198,6 @@ onPage(() => {
     off();
     io.disconnect();
     heroIo.disconnect();
-    opIo?.disconnect();
     if (caseDlg.open) caseDlg.close();
     if (briefDlg.open) briefDlg.close();
   };
