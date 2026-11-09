@@ -25,7 +25,7 @@
 | **Lumbre**: restaurante "scroll-world" (entrada → barra → cocina → mesa), menú, reserva | ✅ | `src/demos/lumbre/` |
 | **Isola**: auriculares premium, three.js procedural que gira y se despieza con el scroll | ✅ | `src/demos/isola/` |
 | **Turnio**: landing SaaS (precios mensual/anual, tour, FAQ, alta) | ✅ | `src/demos/turnio/` |
-| **Tesela Studio**: estudio de producto con IA, editorial y casi monocromo. Hero fijo guiado por el scroll con paisaje isométrico, casos en `<dialog>` (`?case=`), proceso en paneles apilados, formatos, brief (`?brief=`), tema oscuro | ✅ | `src/demos/tesela/` |
+| **Tesela Studio**: estudio de producto con IA, editorial y casi monocromo con óleos de dominio público (Met). Hero fijo guiado por el scroll: cubos isométricos + telón con un Van Gogh; fichas de operación animadas sobre cada pintura; casos en `<dialog>` (`?case=`), proceso en paneles apilados, formatos, brief (`?brief=`), tema oscuro | ✅ | `src/demos/tesela/` |
 | Motor de agentes compartido: cursores con nombre, flujo del orquestador, errores a propósito + revisión de QA | ✅ | `src/showcase/` (engine, flow, types), `src/components/site/AgentFlow.astro` |
 | Intro de la home: puerta "Empezar" → los agentes construyen la home real (≈39 s), "Ver la intro otra vez" | ✅ | `src/showcase/scenes/home.ts`, `src/showcase/intro.ts`, `src/pages/[lang]/index.astro` |
 | Showcase "agentes en vivo": 4 guiones de ≈37 s con 3 errores cada uno, empezar/pausar/saltar/repetir | ✅ | `src/pages/[lang]/showcase/`, `src/demos/<slug>/showcase/timeline.ts` |
@@ -34,7 +34,7 @@
 
 **Última verificación (2026-11-09):**
 - `npm run build`: sin errores ni avisos.
-- Playwright: **41/41** pasan (4 nuevos en `tests/tesela.spec.ts`) (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
+- Playwright: **42/42** pasan (5 en `tests/tesela.spec.ts`) (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
 - Lighthouse móvil (home es/en con la puerta de la intro, showcase y cada demo): **100/100/100/100**, LCP 0,9–1,4 s, CLS ≤ 0,012, TBT ≤ 10 ms.
 - 2026-11-09 (contenedor en la nube, CPU más lenta): todas las páginas **100/100/100/100** (Tesela LCP 1,1 s, CLS 0,002). Entre pasadas el rendimiento oscila 97–100. El TBT de 60–190 ms en showcase, Brinco y Lumbre es de esta máquina: `main` medido aquí da lo mismo (showcase 60–100, Brinco 20–90, Lumbre 140–180 ms).
 - Capturas de la intro y de Brinco/Lumbre en 390 y 1440 px, en 15 momentos: `test-results/agents/` (no versionado).
@@ -76,7 +76,8 @@
 - **Gradientes dentro de `<dialog>` cerrado:** Chrome no pinta un `url(#id)` cuyo `<defs>` está en un subárbol `display:none`. Por eso `Wheel.astro` genera ids únicos por instancia.
 - **Fraunces es una sola familia (`--font-fraunces`)** para Lumbre y Tesela. Si añades otra entrada con el mismo archivo, la Fonts API la deduplica y esa página se queda sin precarga.
 - **`animation-timeline` siempre vía `var()`**, o el minificador lo funde en el shorthand y Chrome lo ignora. Comprueba `getComputedStyle(el).animationName` en el navegador.
-- **Red del entorno en la nube:** la política por defecto bloquea `api.fontsource.org` y `cdn.jsdelivr.net`, y el build sale sin fuentes y sin avisos visibles. El entorno `StevenEspinoza` (personal) ya los permite.
+- **Red del entorno en la nube:** la política por defecto bloquea `api.fontsource.org` y `cdn.jsdelivr.net`, y el build sale sin fuentes y sin avisos visibles. El entorno `StevenEspinoza` (personal) ya los permite, además de `collectionapi.metmuseum.org` e `images.metmuseum.org` (óleos CC0). La búsqueda de la API del Met es `/public/collection/v1.1/search` (la v1 se retiró); filtra por `isPublicDomain: true` (Monet sale como no libre).
+- **Imagen diferida del hero de Tesela:** el `<picture>` lleva `data-srcset`/`data-src` y el script los aplica al primer scroll. Si cambias la imagen, mantén eso o la descarga compite con la carga inicial.
 - **Tamaño de three.js:** el chunk pesa unos 137 KB gz y por eso se subió `chunkSizeWarningLimit`. Nunca debe cargarse antes del primer scroll; Lighthouse no hace scroll.
 
 ## 5. Cómo verificar antes de dar algo por terminado
@@ -87,7 +88,7 @@ npm run screenshots
 npm run lighthouse
 ```
 - **Build:** debe salir sin avisos.
-- **Tests:** deben pasar 41/41 o más.
+- **Tests:** deben pasar 42/42 o más.
 - **Capturas:** se guardan en `test-results/screenshots`; revísalas a 390 y 1440 px.
 - **Lighthouse:** objetivo rendimiento ≥ 90, accesibilidad, buenas prácticas y SEO ≥ 95, LCP < 2,5 s, CLS < 0,1.
 

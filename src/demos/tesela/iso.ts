@@ -108,24 +108,4 @@ export const objects: Record<string, Cube[]> = {
     { x: 0, y: 0, z: 1 }, { x: 1, y: 0, z: 1 }, { x: 0, y: 1, z: 1 }, { x: 1, y: 1, z: 1 },
     { x: 0, y: 0, z: 2, ink: true },
   ],
-  // Process: map (scattered single cubes), prototype (two blocks + bridge), evaluate (bars), launch (tower)
-  discover: [
-    { x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 4, y: 0, z: 0 }, { x: 0, y: 2, z: 0 }, { x: 2, y: 2, z: 0, ink: true }, { x: 4, y: 2, z: 0 },
-    { x: 0, y: 4, z: 0 }, { x: 2, y: 4, z: 0 }, { x: 4, y: 4, z: 0 },
-  ],
-  prototype: [
-    { x: 0, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 0, y: 1, z: 1 },
-    { x: 3, y: 0, z: 0 }, { x: 3, y: 1, z: 0 }, { x: 3, y: 0, z: 1 }, { x: 3, y: 1, z: 1 },
-    { x: 1, y: 0, z: 2 }, { x: 2, y: 0, z: 2, ink: true }, { x: 0, y: 0, z: 2 }, { x: 3, y: 0, z: 2 },
-  ],
-  evaluate: [
-    { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 0, y: 0, z: 2 },
-    { x: 0, y: 2, z: 0 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 2, z: 2 }, { x: 0, y: 2, z: 3, ink: true },
-    { x: 0, y: 4, z: 0 }, { x: 0, y: 4, z: 1 },
-  ],
-  launch: [
-    { x: 0, y: 0, z: 0 }, { x: 1, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 1, z: 0 },
-    { x: 0, y: 0, z: 1 }, { x: 1, y: 0, z: 1 }, { x: 0, y: 1, z: 1 }, { x: 1, y: 1, z: 1 },
-    { x: 0, y: 0, z: 2 }, { x: 0, y: 0, z: 3 }, { x: 0, y: 0, z: 4, ink: true },
-  ],
 };

@@ -7,6 +7,12 @@ import Landscape from '../../../../demos/tesela/components/Landscape.astro';
 import IsoArt from '../../../../demos/tesela/components/IsoArt.astro';
 import CaseDialog from '../../../../demos/tesela/components/CaseDialog.astro';
 import BriefDialog from '../../../../demos/tesela/components/BriefDialog.astro';
+import { Picture, getImage } from 'astro:assets';
+import wheat from '../../../../demos/tesela/assets/paintings/wheat-field.jpg';
+import victoire from '../../../../demos/tesela/assets/paintings/sainte-victoire.jpg';
+import olives from '../../../../demos/tesela/assets/paintings/olive-trees.jpg';
+import fontainebleau from '../../../../demos/tesela/assets/paintings/fontainebleau.jpg';
+import whalers from '../../../../demos/tesela/assets/paintings/whalers.jpg';
 import '../../../../demos/tesela/styles/tesela.css';
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
@@ -14,18 +20,21 @@ const t = useT(lang, 'tesela');
 const c = useT(lang);
 
 type Case = { id: string; name: string; sector: string; duration: string; text: string };
-type Step = { badge: string; title: string; text: string; art: Record<string, unknown> };
+type Step = { badge: string; title: string; text: string; card: { title: string; rows: { l: string; run: string; done: string }[] } };
 const services = t.raw<{ title: string; text: string }[]>('services.items');
 const cases = t.raw<Case[]>('work.items');
 const steps = t.raw<Step[]>('process.steps');
 const formats = t.raw<{ id: string; name: string; duration: string; text: string; cta: string }[]>('formats.items');
 const TILES = 8;
 const tiles = (name: string) => Array.from({ length: TILES }, (_, i) => name.toUpperCase()[i] ?? '');
-const stepArt = ['discover', 'prototype', 'evaluate', 'launch'];
+const stepPaint = [[victoire, 'victoire'], [olives, 'olives'], [fontainebleau, 'fontainebleau'], [whalers, 'whalers']] as const;
+// Hero painting: srcset prepared at build time, applied by the script on the first scroll (Lighthouse never scrolls,
+// and at load the frame is fully clipped anyway).
+const heroWidths = [640, 1000, 1600];
+const heroSizes = '(min-width: 760px) 94vw, 100vw';
+const heroAvif = await getImage({ src: wheat, width: 1600, widths: heroWidths, format: 'avif', quality: 48 });
+const heroWebp = await getImage({ src: wheat, width: 1600, widths: heroWidths, format: 'webp', quality: 66 });
 const links = [['work', 'nav.work'], ['process', 'nav.process'], ['services', 'nav.services'], ['formats', 'nav.formats']] as const;
-type Rows = { title: string; rows: { l: string; v: string | number }[]; note: string };
-type Chat = { q: string; a: string; source: string; tag: string };
-type Roll = { title: string; items: string[]; done: string; next: string };
 ---
 <BaseLayout
   lang={lang}
@@ -76,9 +85,19 @@ type Roll = { title: string; items: string[]; done: string; next: string };
                 <a class="ts-btn ts-btn--secondary" href="#work">{t('hero.ctaSecondary')}</a>
               </div>
             </div>
-            <p class="ts-hero__after" aria-hidden="true">{t('hero.after')}</p>
           </div>
           <div class="ts-hero__land"><Landscape label={t('a11y.landscape')} /></div>
+          <div class="ts-hero__frame" aria-hidden="true" data-ts-frame>
+            <picture>
+              <source type="image/avif" data-srcset={heroAvif.srcSet.attribute} sizes={heroSizes} />
+              <img class="ts-hero__paint" data-src={heroWebp.src} data-srcset={heroWebp.srcSet.attribute} sizes={heroSizes} width={wheat.width} height={wheat.height} alt="" decoding="async" />
+            </picture>
+            <div class="ts-hero__card">
+              <span class="ts-chip">{t('hero.frameKicker')}</span>
+              <p class="ts-hero__statement">{t('hero.after')}</p>
+            </div>
+            <p class="ts-cartela">{t('paintings.wheat')}</p>
+          </div>
         </div>
       </section>
 
@@ -143,34 +162,20 @@ type Roll = { title: string; items: string[]; done: string; next: string };
                     <p>{s.text}</p>
                   </div>
                   <div class="ts-step__media">
-                    <div class="ts-step__art"><IsoArt name={stepArt[i]} width={360} /></div>
-                    <div class="ts-inset">
-                      {i === 0 && (() => { const a = s.art as Rows; return (
-                        <div class="ts-art">
-                          <p class="ts-art__title">{a.title}<span class="ts-mono ts-muted">{a.note}</span></p>
-                          <ul role="list" class="ts-art__rows">{a.rows.map((r, j) => <li><span>{r.l}</span><span class={j === 0 ? 'ts-chip ts-chip--ink' : 'ts-chip'}>{r.v}</span></li>)}</ul>
-                        </div>); })()}
-                      {i === 1 && (() => { const a = s.art as Chat; return (
-                        <div class="ts-art ts-art--chat">
-                          <p class="ts-art__q">{a.q}</p>
-                          <div class="ts-art__a"><p>{a.a}</p><p class="ts-mono ts-muted">{a.source}</p></div>
-                          <span class="ts-chip">{a.tag}</span>
-                        </div>); })()}
-                      {i === 2 && (() => { const a = s.art as Rows; return (
-                        <div class="ts-art">
-                          <p class="ts-art__title">{a.title}<span class="ts-mono ts-muted">{a.note}</span></p>
-                          <ul role="list" class="ts-art__bars">{a.rows.map((r) => (
-                            <li><span>{r.l}</span><span class="ts-mono">{r.v}%</span><i style={`--v:${Number(r.v) / 100}`}></i></li>
-                          ))}</ul>
-                        </div>); })()}
-                      {i === 3 && (() => { const a = s.art as Roll; return (
-                        <div class="ts-art">
-                          <p class="ts-art__title">{a.title}</p>
-                          <ul role="list" class="ts-art__roll">{a.items.map((it, j) => (
-                            <li class={j < 3 ? 'is-done' : ''}><span class="ts-dot" aria-hidden="true"></span><span>{it}</span><span class="ts-mono ts-muted">{j < 3 ? a.done : a.next}</span></li>
-                          ))}</ul>
-                        </div>); })()}
+                    <Picture src={stepPaint[i][0]} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 720px, 100vw" class="ts-step__img" alt="" loading="lazy" decoding="async" />
+                    <div class="ts-op" role="group" aria-label={s.card.title}>
+                      <p class="ts-op__title"><span class="ts-op__icon" aria-hidden="true"></span>{s.card.title}<span class="ts-mono ts-muted">{t('process.sample')}</span></p>
+                      <ul role="list" class="ts-op__rows">
+                        {s.card.rows.map((r, j) => (
+                          <li class="ts-op__row" style={`--r:${j}`}>
+                            <span class="ts-op__state" aria-hidden="true"><i class="ts-op__ring"></i><i class="ts-op__spin"></i><i class="ts-op__check"><svg viewBox="0 0 20 20" width="20" height="20"><circle cx="10" cy="10" r="10" /><path d="M5.8 10.3l2.7 2.7 5.7-5.9" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></i></span>
+                            <span class="ts-op__label">{r.l}</span>
+                            <span class="ts-op__status"><span class="ts-op__q" aria-hidden="true">{t('process.queued')}</span><span class="ts-op__r" aria-hidden="true">{r.run}</span><span class="ts-op__d">{r.done}</span></span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
+                    <p class="ts-cartela" aria-hidden="true">{t(`paintings.${stepPaint[i][1]}`)}</p>
                   </div>
                 </div>
               </li>
@@ -221,6 +226,7 @@ type Roll = { title: string; items: string[]; done: string; next: string };
             <p class="ts-footer__h">{t('footer.colAbout')}</p>
             <ul role="list">
               <li><span>{t('footer.fiction')}</span></li>
+              <li><span>{t('paintings.credit')}</span></li>
               <li><a class="ts-inline" href={localePath(lang, '#demos')}>{c('demoBar.back')}</a></li>
             </ul>
           </div>

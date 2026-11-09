@@ -53,8 +53,27 @@ test('tesela: looks complete with reduced motion (no scroll-driven state left ha
   const page = await ctx.newPage();
   await page.goto('es/demos/tesela/');
   await expect(page.locator('#ts-h1')).toBeVisible();
-  expect(await page.locator('.ts-hero__after').isVisible()).toBe(false);
+  expect(await page.locator('.ts-hero__frame').isVisible()).toBe(false);
+  // operation cards show their finished state (no queued rows)
+  await expect(page.locator('.ts-step__media').first()).not.toHaveAttribute('data-op', /.*/);
+  await expect(page.locator('.ts-op__d').first()).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   expect(overflow).toBe(0);
   await ctx.close();
+});
+
+test('tesela: hero painting loads only after the first scroll; operation cards run in view', async ({ page }) => {
+  await page.goto('es/demos/tesela/');
+  const paint = page.locator('.ts-hero__paint');
+  expect(await paint.getAttribute('src')).toBeNull();
+  await page.mouse.wheel(0, 600);
+  await expect.poll(() => paint.getAttribute('src')).not.toBeNull();
+  await expect.poll(() => paint.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+
+  const media = page.locator('.ts-step__media').first();
+  await expect(media).toHaveAttribute('data-op', 'idle');
+  await media.scrollIntoViewIfNeeded();
+  await expect(media).toHaveAttribute('data-op', 'run');
+  // the last row ends as done (green check visible) after the timed sequence
+  await expect.poll(() => media.locator('.ts-op__row').last().locator('.ts-op__check').evaluate((e) => getComputedStyle(e).opacity), { timeout: 8000 }).toBe('1');
 });

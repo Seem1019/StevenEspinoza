@@ -35,7 +35,8 @@
     "lead": "Un estudio pequeño que convierte un proceso enredado en un agente, un copiloto o una función que tu equipo usa cada día. Estrategia, interfaz y evaluación, en semanas.",
     "cta": "Empezar un proyecto",
     "ctaSecondary": "Ver trabajos",
-    "after": "Cada pieza encaja antes de salir."
+    "after": "Cada pieza encaja antes de salir.",
+    "frameKicker": "Cómo trabajamos"
   },
   "services": {
     "title": "Qué hacemos",
@@ -159,76 +160,105 @@
         "badge": "Semanas 1–2",
         "title": "Encontramos dónde compensa",
         "text": "Entrevistas, acompañar al equipo y tus datos reales. Ordenamos los procesos por horas ahorradas y por lo que cuesta un error.",
-        "art": {
-          "title": "Mapa de oportunidades",
+        "card": {
+          "title": "Descubrimiento en curso…",
           "rows": [
             {
-              "l": "Revisión de contratos",
-              "v": "14 h/sem"
+              "l": "Entrevistas al equipo",
+              "run": "Analizando…",
+              "done": "12 hechas"
             },
             {
-              "l": "Correos a proveedores",
-              "v": "9 h/sem"
+              "l": "Mapa de procesos",
+              "run": "Midiendo…",
+              "done": "14 h/sem detectadas"
             },
             {
-              "l": "Informe mensual",
-              "v": "6 h/sem"
+              "l": "Prioridad acordada",
+              "run": "Ordenando…",
+              "done": "Contratos primero"
             }
-          ],
-          "note": "Datos de ejemplo"
+          ]
         }
       },
       {
         "badge": "Semanas 3–4",
         "title": "Un prototipo que se usa",
         "text": "Nada de diapositivas: una versión que funciona con tus documentos, para que el equipo la rompa y nos diga dónde se queda corta.",
-        "art": {
-          "q": "¿La cláusula 4.2 permite rescindir antes de tiempo?",
-          "a": "Sí, con 60 días de preaviso por escrito y sin penalización tras el primer año.",
-          "source": "Fuente: contrato marco §4.2, p. 7",
-          "tag": "Borrador · pendiente de revisión"
+        "card": {
+          "title": "Prototipo en marcha…",
+          "rows": [
+            {
+              "l": "Documentos cargados",
+              "run": "Indexando…",
+              "done": "340 contratos"
+            },
+            {
+              "l": "Primer borrador",
+              "run": "Redactando…",
+              "done": "Con fuentes"
+            },
+            {
+              "l": "Prueba con el equipo",
+              "run": "Recogiendo notas…",
+              "done": "8 personas"
+            }
+          ]
         }
       },
       {
         "badge": "Semana 5",
         "title": "Medimos antes de lanzar",
         "text": "Cientos de casos reales puntuados uno a uno. Si no llega al listón, no sale. Si duda, pasa el caso a una persona.",
-        "art": {
-          "title": "Evaluación · 400 casos",
+        "card": {
+          "title": "Evaluación en curso…",
           "rows": [
             {
-              "l": "Respuestas correctas",
-              "v": 94
+              "l": "Set de evaluación",
+              "run": "Preparando…",
+              "done": "400 casos"
             },
             {
-              "l": "Cita su fuente",
-              "v": 98
+              "l": "Respuestas correctas",
+              "run": "Puntuando…",
+              "done": "94 %"
             },
             {
               "l": "Deriva cuando duda",
-              "v": 91
+              "run": "Comprobando…",
+              "done": "Activo"
             }
-          ],
-          "note": "Datos de ejemplo"
+          ]
         }
       },
       {
         "badge": "Semana 6 en adelante",
         "title": "Lanzamos por fases",
         "text": "Primero un equipo piloto, después todos. Con monitorización, alertas de calidad y una revisión mensual contigo.",
-        "art": {
-          "title": "Despliegue",
-          "items": [
-            "Equipo piloto · 12 personas",
-            "Monitorización y alertas",
-            "Paso a una persona",
-            "Toda la empresa"
-          ],
-          "done": "Hecho",
-          "next": "Siguiente"
+        "card": {
+          "title": "Despliegue en curso…",
+          "rows": [
+            {
+              "l": "Equipo piloto",
+              "run": "Activando…",
+              "done": "12 personas"
+            },
+            {
+              "l": "Alertas de calidad",
+              "run": "Configurando…",
+              "done": "Activas"
+            },
+            {
+              "l": "Toda la empresa",
+              "run": "Desplegando…",
+              "done": "Publicado"
+            }
+          ]
         }
       }
-    ]
+    ],
+    "queued": "En cola",
+    "sample": "Datos de ejemplo"
   },
   "formats": {
     "title": "Formas de trabajar juntos",
@@ -343,5 +373,13 @@
       "navLang": "Enlace del menú en inglés",
       "tileTypo": "Errata en las letras"
     }
+  },
+  "paintings": {
+    "wheat": "Vincent van Gogh · Campo de trigo con cipreses, 1889",
+    "victoire": "Paul Cézanne · Mont Sainte-Victoire, c. 1902–06",
+    "olives": "Vincent van Gogh · Olivos, 1889",
+    "fontainebleau": "Théodore Rousseau · Mañana de verano en el bosque de Fontainebleau, c. 1861",
+    "whalers": "J. M. W. Turner · Balleneros, c. 1845",
+    "credit": "Pinturas de dominio público · The Met Open Access"
   }
 }

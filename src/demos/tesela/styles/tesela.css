@@ -16,6 +16,8 @@
   --btn-bg: #18181b;
   --btn-fg: #ffffff;
   --danger: #b42318;
+  --ok: #3f9b1d;
+  --ok-tint: #eef5e7;
   --focus-grey: #a1a1a1;
   --focus-cyan: #42b5dc4d;
   --iso-top: #ffffff;
@@ -51,7 +53,7 @@
 @media (prefers-color-scheme: dark) {
   .tesela:not([data-theme='light']) {
     --ink: #ededef; --muted: #98989f; --muted-capsule: #a8a8ae; --surface: #17171a; --raised: #2b2b30; --strong: #38383e; --card: #1f1f23; --hair: #38383e;
-    --link: #86a8e6; --lead: #ededefb3; --tint: #ededef14; --capsule: #2b2b3099; --btn-bg: #ededef; --btn-fg: #17171a; --danger: #fda29b;
+    --link: #86a8e6; --lead: #ededefb3; --tint: #ededef14; --capsule: #2b2b3099; --btn-bg: #ededef; --btn-fg: #17171a; --danger: #fda29b; --ok: #5fcb2b; --ok-tint: #213020;
     --iso-top: #3a3a40; --iso-left: #2b2b30; --iso-right: #222226; --iso-edge: rgb(237 237 239 / 0.2);
     --iso-ink-top: #f4f4f5; --iso-ink-left: #dcdce0; --iso-ink-right: #bdbdc4; --iso-floor: rgb(237 237 239 / 0.08);
     --sh-c: #00000059; color-scheme: dark;
@@ -59,7 +61,7 @@
 }
 .tesela[data-theme='dark'] {
   --ink: #ededef; --muted: #98989f; --muted-capsule: #a8a8ae; --surface: #17171a; --raised: #2b2b30; --strong: #38383e; --card: #1f1f23; --hair: #38383e;
-  --link: #86a8e6; --lead: #ededefb3; --tint: #ededef14; --capsule: #2b2b3099; --btn-bg: #ededef; --btn-fg: #17171a; --danger: #fda29b;
+  --link: #86a8e6; --lead: #ededefb3; --tint: #ededef14; --capsule: #2b2b3099; --btn-bg: #ededef; --btn-fg: #17171a; --danger: #fda29b; --ok: #5fcb2b; --ok-tint: #213020;
   --iso-top: #3a3a40; --iso-left: #2b2b30; --iso-right: #222226; --iso-edge: rgb(237 237 239 / 0.2);
   --iso-ink-top: #f4f4f5; --iso-ink-left: #dcdce0; --iso-ink-right: #bdbdc4; --iso-floor: rgb(237 237 239 / 0.08);
   --sh-c: #00000059; color-scheme: dark;
@@ -172,7 +174,7 @@
 .ts-hero { position: relative; }
 .ts-hero__stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr auto; min-height: max(100svh, 620px); overflow: clip; }
 .ts-hero__copy { display: grid; align-items: center; justify-items: center; padding: 112px 24px 32px; text-align: center; }
-.ts-hero__text, .ts-hero__after { grid-area: 1 / 1; }
+.ts-hero__text { grid-area: 1 / 1; }
 .ts-hero__title {
   max-width: 13em; margin: 0 auto; font-family: var(--f-display); font-weight: 350; font-optical-sizing: auto;
   font-size: 36px; line-height: 1.1; letter-spacing: -1.3px;
@@ -180,13 +182,31 @@
 .ts-hero__title em { font-style: italic; }
 .ts-hero__lead { max-width: 430px; margin: 24px auto 0; color: var(--lead); font-size: 19.2px; line-height: 1.3; letter-spacing: 0.096px; }
 .ts-hero__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
-.ts-hero__after { display: none; max-width: 14em; font-family: var(--f-display); font-weight: 350; font-size: 36px; line-height: 1.1; letter-spacing: -1.3px; }
+.ts-hero__frame { display: none; }
+/* Painting window (only where the scroll-driven hero runs): rises over the cube landscape like a curtain */
+.ts-hero__frame {
+  --fr: 32px; position: absolute; z-index: 15; inset: 88px 12px 12px; overflow: hidden; border-radius: var(--fr); background: var(--raised); box-shadow: var(--sh);
+}
+.ts-hero__frame picture, .ts-hero__paint { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ts-hero__paint { object-fit: cover; object-position: 50% 40%; max-width: none; }
+.ts-hero__card {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: min(520px, calc(100% - 40px));
+  display: grid; justify-items: center; gap: 14px; padding: 28px 28px 30px; border-radius: 24px; background: var(--card); box-shadow: var(--sh); text-align: center;
+}
+.ts-hero__statement { font-family: var(--f-display); font-weight: 350; font-size: 30px; line-height: 1.1; letter-spacing: -0.58px; text-wrap: balance; }
+.ts-cartela {
+  position: absolute; left: 16px; bottom: 16px; max-width: calc(100% - 32px); padding: 6px 10px; border-radius: 12px;
+  background: var(--card); color: var(--muted); font-family: var(--f-mono); font-size: 11.5px; line-height: 1.35; letter-spacing: 0.075px;
+}
 .ts-hero__land { display: flex; justify-content: center; overflow-x: clip; overflow-y: visible; }
 .ts-land { flex: none; width: 900px; max-width: none; height: auto; overflow: visible; }
 .ts-land__floor { fill: none; stroke: var(--iso-floor); stroke-width: 1; vector-effect: non-scaling-stroke; }
 @media (min-width: 760px) {
   .ts-hero__title { font-size: 72px; max-width: 702px; }
-  .ts-hero__after { font-size: 58px; letter-spacing: -0.58px; }
+  .ts-hero__frame { --fr: 64px; inset: 96px max(24px, calc((100% - 1320px) / 2)) 24px; }
+  .ts-hero__statement { font-size: 44px; }
+  .ts-hero__card { padding: 36px 40px 40px; }
+  .ts-cartela { left: 28px; bottom: 24px; font-size: 12px; }
   .ts-land { width: 1350px; }
 }
 
@@ -243,30 +263,40 @@
 .ts-step__text { display: grid; gap: 16px; align-content: center; justify-items: start; }
 .ts-step__text p { color: var(--muted); font-size: 16px; line-height: 22.4px; }
 .ts-step__media {
-  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 16px;
-  min-height: 420px; padding: 32px 20px 20px; border-radius: 32px; background: var(--raised); box-shadow: var(--sh); overflow: hidden;
+  position: relative; display: grid; place-items: center; min-height: 460px; padding: 56px 10px 64px;
+  border-radius: 32px; background: var(--raised); box-shadow: var(--sh); overflow: hidden; isolation: isolate;
 }
-.ts-step__art { display: grid; place-items: center; flex: 1; width: 100%; }
-.ts-step__art .iso { width: min(260px, 70%); height: auto; }
-.ts-inset { width: 100%; max-width: 448px; padding: 12px; border-radius: 24px; background: var(--card); box-shadow: var(--sh); }
-.ts-art { display: grid; gap: 10px; padding: 8px; font-size: 15px; line-height: 1.4; }
-.ts-art__title { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-family: var(--f-display); font-size: 20px; letter-spacing: -0.2px; }
-.ts-art__rows, .ts-art__bars, .ts-art__roll { display: grid; gap: 6px; }
-.ts-art__rows li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 8px 8px 12px; border-radius: 12px; background: var(--surface); }
-.ts-art__bars li { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 4px 0; }
-.ts-art__bars i { grid-column: 1 / -1; position: relative; height: 6px; border-radius: 9999px; background: var(--raised); overflow: hidden; }
-.ts-art__bars i::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform-origin: 0 50%; transform: scaleX(var(--v)); }
-.ts-art__roll li { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 6px 4px; }
-.ts-dot { width: 10px; height: 10px; border-radius: 9999px; box-shadow: inset 0 0 0 1.5px var(--muted); }
-.is-done .ts-dot { background: var(--ink); box-shadow: none; }
-.ts-art--chat { gap: 12px; }
-.ts-art__q { justify-self: end; max-width: 85%; padding: 10px 14px; border-radius: 16px 16px 4px 16px; background: var(--ink); color: var(--surface); }
-.ts-art__a { display: grid; gap: 6px; padding: 12px 14px; border-radius: 16px 16px 16px 4px; background: var(--surface); }
+.ts-step__media picture { position: absolute; inset: 0; z-index: -1; }
+.ts-step__img { width: 100%; height: 100%; max-width: none; object-fit: cover; }
+
+/* Operation card over the painting: rows go queued -> running -> done (time-based, starts when the panel is in view) */
+.ts-op { width: 100%; max-width: 460px; padding: 10px; border-radius: 24px; background: var(--card); box-shadow: 0 10px 40px rgb(10 10 12 / 0.18); }
+.ts-op__title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 8px 10px 12px; font-size: 16px; }
+.ts-op__title .ts-mono { flex-basis: 100%; padding-left: 24px; font-size: 11.5px; }
+@media (min-width: 640px) { .ts-op__title .ts-mono { flex-basis: auto; margin-left: auto; padding-left: 0; } }
+.ts-op__icon { width: 14px; height: 14px; flex: none; background:
+  radial-gradient(circle, var(--ink) 1.3px, transparent 1.6px) 0 0 / 4.67px 4.67px; }
+.ts-op__rows { display: grid; gap: 6px; }
+.ts-op__row {
+  position: relative; isolation: isolate; display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 12px;
+  min-height: 46px; padding: 10px 14px; border-radius: 14px; font-size: 15px; line-height: 1.3;
+}
+.ts-op__row::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--ok-tint); }
+.ts-op__state { position: relative; width: 20px; height: 20px; }
+.ts-op__state i { position: absolute; inset: 0; display: block; }
+.ts-op__ring { border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--strong); opacity: 0; }
+.ts-op__spin { border-radius: 50%; border: 2px solid var(--strong); border-top-color: var(--ink); opacity: 0; }
+.ts-op__check svg { display: block; }
+.ts-op__check circle { fill: var(--ok); }
+.ts-op__check path { stroke: #fff; }
+.ts-op__status { display: grid; justify-items: end; color: var(--muted); font-size: 14px; text-align: right; }
+.ts-op__status > span { grid-area: 1 / 1; }
+.ts-op__q, .ts-op__r { opacity: 0; }
 @media (min-width: 900px) {
   .ts-step { position: sticky; top: calc(96px + var(--i) * 14px); }
   .ts-step__in { grid-template-columns: 280px 1fr; gap: 48px; align-items: center; padding: 12px 0; }
   .ts-step__media { height: min(558px, calc(100svh - 170px)); min-height: 440px; border-radius: 64px; padding: 40px; }
-  .ts-step__art .iso { width: min(340px, 60%); }
+  .ts-cartela { left: 28px; bottom: 24px; }
 }
 
 /* Formats */
@@ -359,16 +389,19 @@
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .tesela { --tl-view: view(); --tl-hero: --ts-hero; --tl-steps: --ts-steps; }
-    .ts-hero { height: 230svh; view-timeline: --ts-hero block; }
+    .ts-hero { height: 330svh; view-timeline: --ts-hero block; }
     .ts-hero__stage { position: sticky; top: 0; height: 100svh; min-height: 620px; }
-    .ts-hero__text { animation: ts-lift linear both; animation-timeline: var(--tl-hero); animation-range: contain 22% contain 55%; }
-    .ts-hero__after { display: block; animation: ts-after linear both; animation-timeline: var(--tl-hero); animation-range: contain 50% contain 80%; }
-    .ts-stack { animation: ts-settle linear both; animation-timeline: var(--tl-hero); animation-range: contain 0% contain 50%; }
-    .ts-keystone { animation: ts-key linear both; animation-timeline: var(--tl-hero); animation-range: contain 15% contain 58%; }
+    .ts-hero__text { animation: ts-lift linear both; animation-timeline: var(--tl-hero); animation-range: contain 10% contain 32%; }
+    .ts-hero__frame { display: block; animation: ts-curtain linear both; animation-timeline: var(--tl-hero); animation-range: contain 28% contain 60%; }
+    .ts-hero__paint { animation: ts-zoom linear both; animation-timeline: var(--tl-hero); animation-range: contain 28% contain 100%; }
+    .ts-hero__card { animation: ts-card linear both; animation-timeline: var(--tl-hero); animation-range: contain 56% contain 74%; }
+    .ts-hero__frame .ts-cartela { animation: ts-fade linear both; animation-timeline: var(--tl-hero); animation-range: contain 60% contain 72%; }
+    .ts-stack { animation: ts-settle linear both; animation-timeline: var(--tl-hero); animation-range: contain 0% contain 26%; }
+    .ts-keystone { animation: ts-key linear both; animation-timeline: var(--tl-hero); animation-range: contain 6% contain 26%; }
 
     .ts-reveal { animation: ts-reveal linear both; animation-timeline: var(--tl-view); animation-range: entry 0% cover 22%; }
     .ts-tile { animation: ts-flip linear both; animation-timeline: var(--tl-view); animation-range: entry calc(var(--i) * 8%) entry calc(60% + var(--i) * 5%); }
-    .ts-art__bars i::after { animation: ts-bar linear both; animation-timeline: var(--tl-view); animation-range: entry 40% cover 45%; }
+    .ts-step__img { animation: ts-settle-img linear both; animation-timeline: var(--tl-view); animation-range: entry 0% cover 45%; }
 
     .ts-steps { view-timeline: --ts-steps block; }
     @media (min-width: 900px) {
@@ -382,10 +415,33 @@
   }
 }
 @keyframes ts-lift { to { opacity: 0; transform: translateY(-56px) scale(0.98); } }
-@keyframes ts-after { from { opacity: 0; transform: translateY(28px); } }
+@keyframes ts-curtain { from { clip-path: inset(100% 0 0 0 round var(--fr)); } to { clip-path: inset(0 0 0 0 round var(--fr)); } }
+@keyframes ts-zoom { from { transform: scale(1.28) translateY(4%); } }
+@keyframes ts-card { from { opacity: 0; transform: translateY(40px) scale(0.96); } }
+@keyframes ts-fade { from { opacity: 0; } }
+@keyframes ts-settle-img { from { transform: scale(1.16); } }
 @keyframes ts-settle { from { transform: translateY(calc(var(--p) * -64px)); } }
 @keyframes ts-key { from { transform: translateY(-120px); } }
 @keyframes ts-reveal { from { opacity: 0; transform: translateY(24px); } }
 @keyframes ts-flip { from { opacity: 0; transform: perspective(240px) rotateX(-80deg); } }
-@keyframes ts-bar { from { transform: scaleX(0); } }
 @keyframes ts-under { to { transform: scale(0.95); } }
+
+/* Operation cards: queued state + timed sequence. Only with motion allowed and once the script marks the panel
+   (data-op="idle" -> "run" when in view). Without JS or with reduced motion the card shows its finished state. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-op] .ts-op__row::before, [data-op] .ts-op__check, [data-op] .ts-op__d { opacity: 0; }
+  [data-op] .ts-op__ring, [data-op] .ts-op__q { opacity: 1; }
+  [data-op] .ts-op__label { opacity: 0.45; }
+  [data-op='run'] .ts-op__row { --a: calc(0.5s + var(--r) * 1.15s); --b: calc(var(--a) + 1.05s); }
+  [data-op='run'] :is(.ts-op__ring, .ts-op__q) { animation: ts-out 0.18s linear var(--a) forwards; }
+  [data-op='run'] .ts-op__label { animation: ts-in 0.25s var(--e-out) var(--a) forwards; }
+  [data-op='run'] .ts-op__r { animation: ts-blip 1.05s linear var(--a) forwards; }
+  [data-op='run'] .ts-op__spin { animation: ts-blip 1.05s linear var(--a) forwards, ts-spin 0.7s linear infinite; }
+  [data-op='run'] .ts-op__d, [data-op='run'] .ts-op__row::before { animation: ts-in 0.3s var(--e-out) var(--b) forwards; }
+  [data-op='run'] .ts-op__check { animation: ts-pop 0.45s var(--e-expo) var(--b) forwards; }
+}
+@keyframes ts-out { to { opacity: 0; } }
+@keyframes ts-in { to { opacity: 1; } }
+@keyframes ts-blip { 0%, 99% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes ts-spin { to { rotate: 360deg; } }
+@keyframes ts-pop { from { opacity: 0; transform: scale(0.4); } 60% { opacity: 1; transform: scale(1.12); } to { opacity: 1; transform: scale(1); } }
