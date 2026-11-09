@@ -33,11 +33,17 @@ export default defineConfig({
     { provider: fontProviders.fontsource(), name: 'Inter', cssVariable: '--font-brinco', weights: [400, 500, 600, 700], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
     { provider: fontProviders.fontsource(), name: 'JetBrains Mono', cssVariable: '--font-brinco-mono', weights: ['400 700'], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['ui-monospace', 'monospace'] },
     // Demo: Lumbre (restaurant)
-    { provider: fontProviders.fontsource(), name: 'Fraunces', cssVariable: '--font-lumbre-display', weights: ['400 700'], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['Georgia', 'serif'] },
     { provider: fontProviders.fontsource(), name: 'Work Sans', cssVariable: '--font-lumbre-body', weights: ['400 600'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
     // Demo: Isola (premium audio)
     { provider: fontProviders.fontsource(), name: 'Manrope', cssVariable: '--font-isola', weights: ['200 700'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
     // Demo: Turnio (SaaS)
     { provider: fontProviders.fontsource(), name: 'Plus Jakarta Sans', cssVariable: '--font-turnio', weights: ['400 800'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
+    // Fraunces (variable, one file per style) is shared by Lumbre (400–700) and Tesela (350, italic for the hero
+    // emphasis). One family on purpose: the Fonts API dedupes files, so a second entry would lose its preload.
+    // Pages preload only the normal face: preload={[{ cssVariable: '--font-fraunces', weight, style: 'normal' }]}.
+    { provider: fontProviders.fontsource(), name: 'Fraunces', cssVariable: '--font-fraunces', weights: ['300 700'], styles: ['normal', 'italic'], subsets: latin, display: 'swap', fallbacks: ['Georgia', 'serif'] },
+    { provider: fontProviders.fontsource(), name: 'Hanken Grotesk', cssVariable: '--font-tesela', weights: [400], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
+    { provider: fontProviders.fontsource(), name: 'Space Grotesk', cssVariable: '--font-tesela-brand', weights: [500], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
+    { provider: fontProviders.fontsource(), name: 'Space Mono', cssVariable: '--font-tesela-mono', weights: [400], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['ui-monospace', 'monospace'] },
   ],
 });

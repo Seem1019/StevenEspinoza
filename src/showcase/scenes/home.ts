@@ -8,7 +8,7 @@ import type { Scene } from '../types';
  * Errors (left visible until the review): oversized headline, card out of the staircase,
  * low-contrast CTA, nav link in the other language, wrong figure in the stats strip.
  */
-const pile = (i: number) => ({ x: 34 - i * 10, y: -82 * i + i * 7, r: [-4, 3, -2, 5][i] });
+const pile = (i: number) => ({ x: 34 - i * 10, y: -82 * i + i * 7, r: [-4, 3, -2, 5, -3][i] });
 
 const scene: Scene = {
   id: 'home',
@@ -59,17 +59,21 @@ const scene: Scene = {
     { at: 7.9, do: 'reveal', target: 'h-title', state: 'content' },
     { at: 7.9, do: 'type', agent: 'copy', target: 'h-title', dur: 2.1 },
 
-    // Frontend piles the four demo cards and drags them into the staircase (card 3 lands off)
+    // Frontend piles the five demo cards and drags them into the staircase (card 3 lands off)
     { at: 3.2, do: 'place', target: 'h-card1', xf: pile(0) },
     { at: 3.2, do: 'place', target: 'h-card2', xf: pile(1) },
     { at: 3.2, do: 'place', target: 'h-card3', xf: pile(2) },
     { at: 3.2, do: 'place', target: 'h-card4', xf: pile(3) },
+    { at: 3.2, do: 'place', target: 'h-card5', xf: pile(4) },
     { at: 3.3, do: 'move', agent: 'frontend', target: 'h-card1', anchor: 'r' },
     { at: 4.0, do: 'reveal', target: 'h-card1' },
     { at: 4.1, do: 'reveal', target: 'h-card2' },
     { at: 4.2, do: 'reveal', target: 'h-card3' },
     { at: 4.3, do: 'reveal', target: 'h-card4' },
+    { at: 4.4, do: 'reveal', target: 'h-card5' },
     { at: 4.6, do: 'say', agent: 'frontend', say: 'fCards' },
+    { at: 5.0, do: 'move', agent: 'frontend', target: 'h-card5', anchor: 'r', dur: 0.4 },
+    { at: 5.45, do: 'drag', agent: 'frontend', target: 'h-card5', dur: 0.5 },
     { at: 6.0, do: 'move', agent: 'frontend', target: 'h-card4', anchor: 'r', dur: 0.5 },
     { at: 6.6, do: 'drag', agent: 'frontend', target: 'h-card4', dur: 0.75 },
     { at: 7.5, do: 'move', agent: 'frontend', target: 'h-card3', anchor: 'r', dur: 0.5 },

@@ -27,6 +27,7 @@ Todo sale de [`src/data/profile.ts`](src/data/profile.ts): web, QR del contacto 
 | Lumbre | Restaurante | Recorrido por el local con el scroll (entrada → barra → cocina → mesa), menú y reserva sin salir |
 | Isola | Marca premium | Auriculares en 3D que giran y se despiezan con el scroll |
 | Turnio | SaaS / servicios | Landing de conversión: propuesta de valor, prueba social de ejemplo, precios, FAQ, CTA |
+| Tesela Studio | Servicios profesionales | Estudio de producto con IA, estilo editorial de galería: hero fijo guiado por el scroll, casos en diálogo, proceso en paneles apilados, tema oscuro y brief en la página |
 
 Marcas, productos y datos de las demos son ficticios.
 
@@ -82,6 +83,7 @@ Resultados en `reports/psi.md`. Un sitio nuevo no tiene datos de campo (CrUX) du
 | es/demos/isola/ | 100 | 100 | 100 | 100 | 0.9 s | 0 | 20 ms | 0.9 s | yes |
 | es/demos/turnio/ | 100 | 100 | 100 | 100 | 1.1 s | 0 | 0 ms | 1.1 s | yes |
 | en/demos/turnio/ | 100 | 100 | 100 | 100 | 0.9 s | 0 | 0 ms | 0.9 s | yes |
+| es/demos/tesela/ | 100 | 100 | 100 | 100 | 1.1 s | 0.003 | 60 ms | 1.1 s | yes | ← 2026-11-09
 
 ### Resultados en PageSpeed Insights (URL pública)
 _Pendiente de la primera publicación: `npm run psi` los guarda en `reports/psi.md`._

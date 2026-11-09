@@ -1,0 +1,10 @@
+---
+/** Tesela mark: one isometric cube (ink top tile). Wordmark text is passed by the caller. */
+interface Props { size?: number }
+const { size = 22 } = Astro.props;
+---
+<svg class="ts-mark" viewBox="-21 -21 42 42" width={size} height={size} aria-hidden="true" focusable="false">
+  <polygon class="ts-mark__t" points="0,-20 17.3,-10 0,0 -17.3,-10" />
+  <polygon class="ts-mark__l" points="-17.3,-10 0,0 0,20 -17.3,10" />
+  <polygon class="ts-mark__r" points="17.3,-10 0,0 0,20 17.3,10" />
+</svg>

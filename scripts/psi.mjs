@@ -8,7 +8,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const SITE = (process.env.SITE ?? 'https://seem1019.github.io/StevenEspinoza/').replace(/\/?$/, '/');
-const PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/'];
+const PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/', 'es/demos/tesela/'];
 const urls = process.argv.slice(2).length ? process.argv.slice(2) : PATHS.map((p) => SITE + p);
 const key = process.env.PSI_API_KEY ? `&key=${process.env.PSI_API_KEY}` : '';
 const cats = ['performance', 'accessibility', 'best-practices', 'seo'];

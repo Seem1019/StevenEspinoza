@@ -16,6 +16,7 @@ Support (Nov 2026): Chrome/Edge 115+, Safari 26+, Firefox 159+. Older Firefox ha
    }
    ```
 3. `animation-timeline` goes **after** the `animation` shorthand (the shorthand resets it). Use `linear` and `both`.
+   **And pass the timeline through a custom property** (`--tl: view(); animation-timeline: var(--tl)`): the build's CSS minifier folds a literal `animation-timeline` into the `animation` shorthand, Chrome rejects that shorthand and drops the whole declaration (nothing animates). Check in the browser: `getComputedStyle(el).animationName` must not be `none`. Examples: `src/demos/tesela/styles/tesela.css`, `src/demos/lumbre/styles/`.
 4. Only `transform` and `opacity` (and `clip-path` sparingly). Never animate layout properties.
 5. Never apply a reveal to the LCP element.
 6. JS only when CSS can't (e.g. driving a WebGL scene from scroll): passive scroll listener → read once per rAF → write a CSS variable or render. Active only while the section is in view (IntersectionObserver).

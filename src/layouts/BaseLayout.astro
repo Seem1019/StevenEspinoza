@@ -19,9 +19,9 @@ interface Props {
   fonts?: string[];
   /**
    * Subset of `fonts` to preload (only the LCP text font). Use `{ cssVariable, weight }` to preload a single
-   * weight of a family configured with static weights (e.g. only the h1 weight).
+   * weight of a family configured with static weights (e.g. only the h1 weight); add `style` to skip the italic face.
    */
-  preload?: (string | { cssVariable: string; weight: number })[];
+  preload?: (string | { cssVariable: string; weight: number; style?: 'normal' | 'italic' })[];
   bodyClass?: string;
   themeColor?: string;
   /** Render the global contact dialog (default true). */
@@ -46,7 +46,7 @@ const alternates = locales.map((l) => ({ l, href: new URL(switchLangPath(Astro.u
 type FontVar = Parameters<typeof Font>[0]['cssVariable'];
 const preloadFor = (v: string) => {
   const hit = preload.find((p) => (typeof p === 'string' ? p : p.cssVariable) === v);
-  return hit === undefined ? false : typeof hit === 'string' ? true : [{ weight: hit.weight }];
+  return hit === undefined ? false : typeof hit === 'string' ? true : [{ weight: hit.weight, style: hit.style }];
 };
 ---
 

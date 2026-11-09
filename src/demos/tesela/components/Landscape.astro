@@ -1,0 +1,30 @@
+---
+/**
+ * Hero landscape: stacks of isometric cubes on a tiled floor. Each stack carries its depth (--p) for the
+ * scroll-driven parallax in tesela.css; the ink keystone gets its own animation. Static by default.
+ */
+import { landscape, faces, sortCubes, bbox, floor } from '../iso';
+interface Props { label: string }
+const { label } = Astro.props;
+const S = 34;
+const { stacks, tiles } = landscape();
+const all = stacks.flatMap((st) => st.cubes);
+const box = bbox(all, S, 4);
+---
+<svg class="ts-land" viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`} role="img" aria-label={label} preserveAspectRatio="xMidYMax meet">
+  <path class="ts-land__floor" d={floor(tiles, S)} />
+  {stacks.map((st) => (
+    <g class={st.key ? 'ts-stack ts-stack--key' : 'ts-stack'} style={`--p:${st.depth.toFixed(2)}`}>
+      {sortCubes(st.cubes).map((c) => {
+        const f = faces(c, S);
+        return (
+          <g class={f.ink ? 'iso-c iso-c--ink ts-keystone' : 'iso-c'}>
+            <polygon class="iso-t" points={f.top} />
+            <polygon class="iso-l" points={f.left} />
+            <polygon class="iso-r" points={f.right} />
+          </g>
+        );
+      })}
+    </g>
+  ))}
+</svg>

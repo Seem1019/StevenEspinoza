@@ -12,7 +12,7 @@
   --lb-text: #f6e7d2;
   --lb-muted: #cdb8a0;
   --lb-dim: #a28c76;
-  --lb-display: var(--font-lumbre-display), Georgia, serif;
+  --lb-display: var(--font-fraunces), Georgia, serif;
   --lb-body: var(--font-lumbre-body), system-ui, sans-serif;
   --lb-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lb-gutter: clamp(16px, 5vw, 64px);
@@ -167,6 +167,8 @@
 /* ---------- world mode: sticky stage + CSS camera ---------- */
 @supports (animation-timeline: view()) and (timeline-scope: none) {
   @media (prefers-reduced-motion: no-preference) {
+    /* timeline via var(): a literal animation-timeline gets folded into the shorthand by the minifier and Chrome drops it */
+    .lb-main { --lb-tl-world: --lb-world; }
     .lb-world { display: grid; timeline-scope: --lb-entrada, --lb-barra, --lb-cocina, --lb-mesa; }
     .lb-stage, .lb-track { grid-area: 1 / 1; }
     .lb-stage { position: sticky; top: 0; height: 100svh; overflow: clip; z-index: 1; }
@@ -232,7 +234,7 @@
     }
     .lb-scene--entrada .lb-hint {
       animation: lb-copy-out linear both;
-      animation-timeline: --lb-entrada;
+      animation-timeline: var(--lb-tl);
       animation-range: contain 0% contain 60%;
     }
     /* rail progress + header solidify */
@@ -241,12 +243,12 @@
     @media (max-width: 899px) { .lb-rail { top: calc(var(--lb-head) + 12px); } }
     .lb-rail__fill {
       animation: lb-fill linear both;
-      animation-timeline: --lb-world;
+      animation-timeline: var(--lb-tl-world);
       animation-range: contain 0% contain 100%;
     }
     .lb-head::before {
       animation: lb-solid linear both;
-      animation-timeline: --lb-world;
+      animation-timeline: var(--lb-tl-world);
       animation-range: exit 0% exit 12%;
     }
     /* ambient loops only while their scene is on screen (scripts/lumbre.ts adds .is-live) */

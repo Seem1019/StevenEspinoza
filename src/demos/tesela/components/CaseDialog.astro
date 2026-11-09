@@ -1,0 +1,43 @@
+---
+/**
+ * Case study panel. Opens via openUi({ case: '<id>' }) (deep link ?case=pliego, Back closes).
+ * One <article> per case; the script shows the one in the URL and points aria-labelledby at its h2.
+ */
+import { useT, type Lang } from '../../../i18n';
+import IsoArt from './IsoArt.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'tesela');
+type Case = { id: string; name: string; sector: string; duration: string; text: string; problem: string; built: string[]; outcome: { v: string; l: string }[]; stack: string };
+const cases = t.raw<Case[]>('work.items');
+---
+<dialog id="ts-case" class="ts-dlg ts-dlg--case" aria-labelledby={`ts-case-${cases[0].id}`}>
+  <div class="ts-dlg__panel">
+    <button type="button" class="ts-ghost ts-dlg__close" data-ts-close aria-label={t('a11y.close')}>
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 3.5l9 9m0-9l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+    </button>
+    {cases.map((c) => (
+      <article class="ts-case" data-case-panel={c.id} hidden>
+        <div class="ts-case__well"><IsoArt name={c.id} width={168} /></div>
+        <div class="ts-case__meta"><span class="ts-chip">{c.sector}</span><span class="ts-mono ts-muted">{c.duration}</span><span class="ts-mono ts-muted">{t('work.sample')}</span></div>
+        <h2 id={`ts-case-${c.id}`} class="ts-title-lg">{c.name}</h2>
+        <p class="ts-case__lead">{c.text}</p>
+        <h3 class="ts-case__h">{t('work.dialog.problem')}</h3>
+        <p>{c.problem}</p>
+        <h3 class="ts-case__h">{t('work.dialog.built')}</h3>
+        <ul class="ts-case__list" role="list">{c.built.map((b) => <li>{b}</li>)}</ul>
+        <h3 class="ts-case__h">{t('work.dialog.outcome')}</h3>
+        <dl class="ts-case__out">
+          {c.outcome.map((o) => <div><dd class="ts-title-lg">{o.v}</dd><dt>{o.l}</dt></div>)}
+        </dl>
+        <p class="ts-mono ts-muted ts-case__note">{t('work.dialog.outcomeNote')}</p>
+        <h3 class="ts-case__h">{t('work.dialog.stack')}</h3>
+        <p class="ts-muted">{c.stack}</p>
+        <div class="ts-case__ctas">
+          <button type="button" class="ts-btn ts-btn--primary" data-ts-brief-from-case>{t('work.dialog.cta')}</button>
+          <button type="button" class="ts-btn ts-btn--secondary" data-ts-close>{t('work.dialog.back')}</button>
+        </div>
+      </article>
+    ))}
+  </div>
+</dialog>

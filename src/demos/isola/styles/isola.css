@@ -71,9 +71,11 @@
 /* Scroll-driven reveal (final state by default) */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    /* timeline via var(): a literal animation-timeline gets folded into the shorthand by the minifier and Chrome drops it */
+    .isola { --isola-tl: view(); }
     .isola .reveal {
       animation: isola-rise linear both;
-      animation-timeline: view();
+      animation-timeline: var(--isola-tl);
       animation-range: entry 0% cover 28%;
     }
   }

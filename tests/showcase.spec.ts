@@ -41,7 +41,7 @@ test('showcase builds a demo offline: start, pause, skip to the corrected end, r
 });
 
 test('every demo scene reaches the corrected end', async ({ page }) => {
-  for (const slug of ['brinco', 'lumbre', 'isola', 'turnio']) {
+  for (const slug of ['brinco', 'lumbre', 'isola', 'turnio', 'tesela']) {
     await page.goto(`en/showcase/?demo=${slug}`);
     await page.locator('[data-sc-activate]').click();
     await page.waitForTimeout(800);

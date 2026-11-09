@@ -1,0 +1,347 @@
+{
+  "meta": {
+    "name": "Tesela Studio",
+    "title": "Tesela Studio · Productos con IA en los que la gente confía",
+    "tagline": "Web editorial para un estudio de producto con IA: sereno, preciso, de galería.",
+    "description": "Tesela Studio es un estudio ficticio que diseña agentes, copilotos y funciones con IA para empresas. Demo de servicios profesionales con hero guiado por el scroll, casos de ejemplo, proceso en paneles apilados, tema oscuro y brief del proyecto sin salir de la página.",
+    "features": [
+      "Hero fijo guiado por el scroll con un paisaje isométrico",
+      "Casos de estudio en un diálogo con su propia URL",
+      "Paneles de proceso apilados y letras que giran, solo con CSS",
+      "Brief del proyecto en un diálogo con validación y su propia URL"
+    ]
+  },
+  "a11y": {
+    "home": "Tesela Studio, volver arriba",
+    "nav": "Secciones",
+    "menuOpen": "Abrir menú",
+    "menuClose": "Cerrar menú",
+    "toDark": "Cambiar a tema oscuro",
+    "toLight": "Cambiar a tema claro",
+    "landscape": "Ilustración: pilas de cubos isométricos que encajan entre sí",
+    "close": "Cerrar",
+    "footer": "Pie de página"
+  },
+  "nav": {
+    "work": "Trabajo",
+    "process": "Proceso",
+    "services": "Servicios",
+    "formats": "Formatos",
+    "cta": "Empezar un proyecto"
+  },
+  "hero": {
+    "titleA": "Diseñamos productos con IA",
+    "titleEm": "en los que la gente confía",
+    "lead": "Un estudio pequeño que convierte un proceso enredado en un agente, un copiloto o una función que tu equipo usa cada día. Estrategia, interfaz y evaluación, en semanas.",
+    "cta": "Empezar un proyecto",
+    "ctaSecondary": "Ver trabajos",
+    "after": "Cada pieza encaja antes de salir."
+  },
+  "services": {
+    "title": "Qué hacemos",
+    "lead": "Cuatro disciplinas, un solo equipo. Llevamos un problema de la pizarra a las personas que lo van a usar.",
+    "items": [
+      {
+        "title": "Estrategia de producto",
+        "text": "Buscamos el proceso donde la IA ahorra más horas y donde un error cuesta menos, y definimos cómo se mide el éxito."
+      },
+      {
+        "title": "Agentes y automatización",
+        "text": "Asistentes que leen tus documentos, rellenan tus sistemas y preguntan a una persona antes de hacer algo irreversible."
+      },
+      {
+        "title": "Interfaces que dan confianza",
+        "text": "Borradores editables, fuentes a la vista y niveles de confianza claros. La gente lo sigue usando porque lo entiende."
+      },
+      {
+        "title": "Evaluación y seguridad",
+        "text": "Cientos de casos reales puntuados antes de lanzar, alertas de calidad después y paso a una persona cuando duda."
+      }
+    ]
+  },
+  "work": {
+    "title": "Trabajos seleccionados",
+    "lead": "Tres proyectos, tres sectores. Cada uno resolvió un proceso que se comía días enteros.",
+    "sample": "Casos de ejemplo",
+    "open": "Abrir el caso {name}",
+    "items": [
+      {
+        "id": "pliego",
+        "name": "Pliego",
+        "sector": "Legal",
+        "duration": "6 semanas",
+        "text": "Asistente de revisión de contratos para un despacho mediano: marca cláusulas de riesgo y redacta la respuesta con sus fuentes.",
+        "problem": "Los asociados pasaban las tardes comparando contratos de proveedores con las condiciones del despacho, cláusula a cláusula.",
+        "built": [
+          "Panel de revisión junto al documento",
+          "Comparación de cláusulas con el manual del despacho",
+          "Borrador de respuesta con una cita por cada cambio",
+          "Cola de revisión para el socio"
+        ],
+        "outcome": [
+          {
+            "v": "−62 %",
+            "l": "tiempo de revisión por contrato"
+          },
+          {
+            "v": "98 %",
+            "l": "sugerencias con fuente"
+          }
+        ],
+        "stack": "Procesado de documentos · búsqueda sobre el manual · set de evaluación de 400 cláusulas"
+      },
+      {
+        "id": "rutero",
+        "name": "Rutero",
+        "sector": "Logística",
+        "duration": "8 semanas",
+        "text": "Copiloto de reparto para un distribuidor de alimentación: propone las rutas de mañana y explica cada cambio al conductor.",
+        "problem": "Dos personas rehacían las rutas a mano cada noche, cuadrando pedidos tardíos, franjas horarias y camiones refrigerados.",
+        "built": [
+          "Propuesta de ruta con motivos en lenguaje claro",
+          "Ajustes arrastrando, con recálculo al instante",
+          "Aviso al conductor por cada cambio",
+          "Informe de cierre para operaciones"
+        ],
+        "outcome": [
+          {
+            "v": "−3 h",
+            "l": "de planificación cada noche"
+          },
+          {
+            "v": "−11 %",
+            "l": "kilómetros recorridos"
+          }
+        ],
+        "stack": "Optimizador de rutas · modelo de lenguaje para las explicaciones · integración con pedidos"
+      },
+      {
+        "id": "acopio",
+        "name": "Acopio",
+        "sector": "Retail",
+        "duration": "10 semanas",
+        "text": "Agente de reposición para una cadena de supermercados: prevé la demanda por tienda y prepara pedidos que aprueba un comprador.",
+        "problem": "Cada encargado pedía de memoria. Unos lineales se vaciaban los viernes y en otros se tiraba producto fresco.",
+        "built": [
+          "Previsión diaria por tienda y producto",
+          "Pedidos en borrador con nivel de confianza",
+          "Aprobación en un toque para compras",
+          "Alertas de merma y de rotura de stock"
+        ],
+        "outcome": [
+          {
+            "v": "−24 %",
+            "l": "merma de fresco"
+          },
+          {
+            "v": "−40 %",
+            "l": "horas de lineal vacío"
+          }
+        ],
+        "stack": "Modelos de previsión · agente de pedidos con aprobación humana · evaluación semanal"
+      }
+    ],
+    "dialog": {
+      "problem": "El problema",
+      "built": "Qué construimos",
+      "outcome": "Resultado a los tres meses",
+      "outcomeNote": "Cifras de ejemplo de un caso ficticio.",
+      "stack": "Por dentro",
+      "cta": "Empezar un proyecto parecido",
+      "back": "Volver a los trabajos"
+    }
+  },
+  "process": {
+    "title": "Cómo avanza un proyecto",
+    "lead": "De la primera conversación a toda la empresa usándolo. Cada semana ves algo funcionando.",
+    "steps": [
+      {
+        "badge": "Semanas 1–2",
+        "title": "Encontramos dónde compensa",
+        "text": "Entrevistas, acompañar al equipo y tus datos reales. Ordenamos los procesos por horas ahorradas y por lo que cuesta un error.",
+        "art": {
+          "title": "Mapa de oportunidades",
+          "rows": [
+            {
+              "l": "Revisión de contratos",
+              "v": "14 h/sem"
+            },
+            {
+              "l": "Correos a proveedores",
+              "v": "9 h/sem"
+            },
+            {
+              "l": "Informe mensual",
+              "v": "6 h/sem"
+            }
+          ],
+          "note": "Datos de ejemplo"
+        }
+      },
+      {
+        "badge": "Semanas 3–4",
+        "title": "Un prototipo que se usa",
+        "text": "Nada de diapositivas: una versión que funciona con tus documentos, para que el equipo la rompa y nos diga dónde se queda corta.",
+        "art": {
+          "q": "¿La cláusula 4.2 permite rescindir antes de tiempo?",
+          "a": "Sí, con 60 días de preaviso por escrito y sin penalización tras el primer año.",
+          "source": "Fuente: contrato marco §4.2, p. 7",
+          "tag": "Borrador · pendiente de revisión"
+        }
+      },
+      {
+        "badge": "Semana 5",
+        "title": "Medimos antes de lanzar",
+        "text": "Cientos de casos reales puntuados uno a uno. Si no llega al listón, no sale. Si duda, pasa el caso a una persona.",
+        "art": {
+          "title": "Evaluación · 400 casos",
+          "rows": [
+            {
+              "l": "Respuestas correctas",
+              "v": 94
+            },
+            {
+              "l": "Cita su fuente",
+              "v": 98
+            },
+            {
+              "l": "Deriva cuando duda",
+              "v": 91
+            }
+          ],
+          "note": "Datos de ejemplo"
+        }
+      },
+      {
+        "badge": "Semana 6 en adelante",
+        "title": "Lanzamos por fases",
+        "text": "Primero un equipo piloto, después todos. Con monitorización, alertas de calidad y una revisión mensual contigo.",
+        "art": {
+          "title": "Despliegue",
+          "items": [
+            "Equipo piloto · 12 personas",
+            "Monitorización y alertas",
+            "Paso a una persona",
+            "Toda la empresa"
+          ],
+          "done": "Hecho",
+          "next": "Siguiente"
+        }
+      }
+    ]
+  },
+  "formats": {
+    "title": "Formas de trabajar juntos",
+    "lead": "Empieza pequeño y crece solo si los números lo piden.",
+    "items": [
+      {
+        "id": "sprint",
+        "name": "Sprint de descubrimiento",
+        "duration": "2 semanas",
+        "text": "Mapa de oportunidades, un prototipo navegable y un sí o no honesto.",
+        "cta": "Elegir el sprint"
+      },
+      {
+        "id": "pilot",
+        "name": "Piloto",
+        "duration": "6 semanas",
+        "text": "Una versión que funciona con tus datos, un set de evaluación y un equipo piloto usándola.",
+        "cta": "Elegir el piloto"
+      },
+      {
+        "id": "team",
+        "name": "Equipo integrado",
+        "duration": "Trimestral",
+        "text": "Diseño, ingeniería y evaluación trabajando con tu equipo, con entregas cada mes.",
+        "cta": "Elegir el equipo"
+      }
+    ]
+  },
+  "brief": {
+    "title": "Cuéntanos tu proyecto",
+    "lead": "Cuatro preguntas. Te respondemos en dos días laborables.",
+    "name": "Tu nombre",
+    "namePh": "Laura Gómez",
+    "email": "Correo de trabajo",
+    "emailPh": "laura@empresa.com",
+    "kind": "¿Qué quieres construir?",
+    "kinds": [
+      {
+        "id": "agent",
+        "label": "Un agente que haga una tarea"
+      },
+      {
+        "id": "copilot",
+        "label": "Un copiloto para mi equipo"
+      },
+      {
+        "id": "feature",
+        "label": "Una función con IA en mi producto"
+      },
+      {
+        "id": "unsure",
+        "label": "Aún no lo sé"
+      }
+    ],
+    "format": "Formato",
+    "formatAny": "Lo decidimos juntos",
+    "message": "El proceso que te gustaría mejorar",
+    "messagePh": "Por ejemplo: cada semana revisamos 200 facturas a mano…",
+    "nameRequired": "Dinos tu nombre.",
+    "emailRequired": "Necesitamos un correo para responderte.",
+    "emailInvalid": "Ese correo no parece correcto.",
+    "submit": "Enviar brief",
+    "demoNote": "Demo: no se envía nada a ningún sitio.",
+    "successTitle": "Gracias, {name}.",
+    "successText": "En un proyecto real te escribiríamos a {email} con tres preguntas y un primer hueco para hablar.",
+    "successCta": "Volver a la web"
+  },
+  "footer": {
+    "statement": "¿Tienes un proceso que debería pensar solo? Hablemos.",
+    "cta": "Empezar un proyecto",
+    "colStudio": "Estudio",
+    "colContact": "Contacto",
+    "colAbout": "Sobre esta demo",
+    "talk": "Hablar con Steven",
+    "fiction": "Tesela Studio es una marca ficticia",
+    "fine": "Tesela Studio · demo ficticia de Steven Espinoza"
+  },
+  "showcase": {
+    "say": {
+      "aDesign": "Nav, tipografía y el panel final",
+      "aCopy": "Titular, servicios y casos",
+      "aFrontend": "Paisaje y rejilla de trabajos",
+      "aQa": "Revisa cuando terminen",
+      "dPalette": "Tinta, tres grises, sin color",
+      "dType": "Fraunces 350, tracking cerrado",
+      "cType": "Y una frase en cursiva",
+      "fLand": "Cubos en paralaje por profundidad",
+      "cServices": "Cuatro servicios, una línea cada uno",
+      "cHandoff": "Te paso los nombres de los casos",
+      "cSample": "Casos marcados como ejemplo",
+      "fGrid": "Tres tarjetas, 16 px de calle",
+      "dPanel": "Panel de proceso con su ficha",
+      "dDone": "Diseño entregado",
+      "cDone": "Textos entregados",
+      "fDone": "Componentes listos",
+      "aReview": "Revisa la página entera",
+      "qaFound": "Te paso los fallos que encontré",
+      "rNav": "Un enlace del menú está en inglés",
+      "cFixNav": "Traducido",
+      "cFixTile": "Pliego, bien escrito",
+      "rCta": "El azul es solo para enlaces",
+      "dPick": "Tomo la tinta del logo",
+      "dFixCta": "De vuelta a tinta",
+      "rCard": "La tercera tarjeta se salió",
+      "fFixCard": "De vuelta en la rejilla",
+      "aRecheck": "Una última pasada, por favor",
+      "qaOk": "Todo en verde."
+    },
+    "flags": {
+      "ctaBlue": "CTA principal en azul de enlace",
+      "cardOff": "Tarjeta fuera de la rejilla",
+      "navLang": "Enlace del menú en inglés",
+      "tileTypo": "Errata en las letras"
+    }
+  }
+}

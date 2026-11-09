@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DemoBar from '../../../../components/site/DemoBar.astro';
+import { useT, langPaths, localePath, type Lang } from '../../../../i18n';
+import Logo from '../../../../demos/tesela/components/Logo.astro';
+import Landscape from '../../../../demos/tesela/components/Landscape.astro';
+import IsoArt from '../../../../demos/tesela/components/IsoArt.astro';
+import CaseDialog from '../../../../demos/tesela/components/CaseDialog.astro';
+import BriefDialog from '../../../../demos/tesela/components/BriefDialog.astro';
+import '../../../../demos/tesela/styles/tesela.css';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const t = useT(lang, 'tesela');
+const c = useT(lang);
+
+type Case = { id: string; name: string; sector: string; duration: string; text: string };
+type Step = { badge: string; title: string; text: string; art: Record<string, unknown> };
+const services = t.raw<{ title: string; text: string }[]>('services.items');
+const cases = t.raw<Case[]>('work.items');
+const steps = t.raw<Step[]>('process.steps');
+const formats = t.raw<{ id: string; name: string; duration: string; text: string; cta: string }[]>('formats.items');
+const TILES = 8;
+const tiles = (name: string) => Array.from({ length: TILES }, (_, i) => name.toUpperCase()[i] ?? '');
+const stepArt = ['discover', 'prototype', 'evaluate', 'launch'];
+const links = [['work', 'nav.work'], ['process', 'nav.process'], ['services', 'nav.services'], ['formats', 'nav.formats']] as const;
+type Rows = { title: string; rows: { l: string; v: string | number }[]; note: string };
+type Chat = { q: string; a: string; source: string; tag: string };
+type Roll = { title: string; items: string[]; done: string; next: string };
+---
+<BaseLayout
+  lang={lang}
+  title={t('meta.title')}
+  description={t('meta.description')}
+  fonts={['--font-fraunces', '--font-tesela', '--font-tesela-brand', '--font-tesela-mono']}
+  preload={[{ cssVariable: '--font-fraunces', weight: 350, style: 'normal' }]}
+  bodyClass="tesela"
+  themeColor="#F8F8F9"
+>
+  {/* Saved theme before first paint (the toggle stores it). Default follows prefers-color-scheme. */}
+  <script is:inline>
+    try { var th = localStorage.getItem('tesela-theme'); if (th === 'dark' || th === 'light') document.body.setAttribute('data-theme', th); } catch (e) {}
+  </script>
+  <DemoBar lang={lang} />
+  <div class="ts-page">
+    <header class="ts-nav" data-ts-nav>
+      <nav class="ts-capsule" aria-label={t('a11y.nav')}>
+        <div class="ts-capsule__row">
+          <a class="ts-logo" href="#main" aria-label={t('a11y.home')}>
+            <Logo />
+            <span class="ts-logo__word" aria-hidden="true">tesela<span> studio</span></span>
+          </a>
+          <div class="ts-links" id="ts-menu">
+            {links.map(([id, key]) => <a class="ts-link" href={`#${id}`} data-ts-link={id}>{t(key)}</a>)}
+            <button type="button" class="ts-btn ts-btn--primary ts-links__cta" data-ts-brief="any">{t('nav.cta')}</button>
+          </div>
+          <button type="button" class="ts-ghost ts-theme" data-ts-theme data-dark={t('a11y.toDark')} data-light={t('a11y.toLight')} aria-label={t('a11y.toDark')}>
+            <svg class="ts-theme__moon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.5 9.6A5.6 5.6 0 0 1 6.4 2.5a5.6 5.6 0 1 0 7.1 7.1z" fill="currentColor" /></svg>
+            <svg class="ts-theme__sun" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor" /><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9L13 13M3 13l1.1-1.1M11.9 4.1L13 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" /></svg>
+          </button>
+          <button type="button" class="ts-ghost ts-burger" aria-expanded="false" aria-controls="ts-menu" data-ts-burger data-open={t('a11y.menuOpen')} data-close={t('a11y.menuClose')} aria-label={t('a11y.menuOpen')}>
+            <span class="ts-burger__bars" aria-hidden="true"><i></i><i></i></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="ts-main">
+      <section class="ts-hero" aria-labelledby="ts-h1">
+        <div class="ts-hero__stage">
+          <div class="ts-hero__copy">
+            <div class="ts-hero__text">
+              <h1 id="ts-h1" class="ts-hero__title">{t('hero.titleA')} <em>{t('hero.titleEm')}</em></h1>
+              <p class="ts-hero__lead">{t('hero.lead')}</p>
+              <div class="ts-hero__ctas">
+                <button type="button" class="ts-btn ts-btn--primary" data-ts-brief="any">{t('hero.cta')}</button>
+                <a class="ts-btn ts-btn--secondary" href="#work">{t('hero.ctaSecondary')}</a>
+              </div>
+            </div>
+            <p class="ts-hero__after" aria-hidden="true">{t('hero.after')}</p>
+          </div>
+          <div class="ts-hero__land"><Landscape label={t('a11y.landscape')} /></div>
+        </div>
+      </section>
+
+      <section class="ts-section" id="services" aria-labelledby="ts-services-title" data-ts-section="services">
+        <div class="ts-wrap">
+          <header class="ts-head ts-reveal">
+            <h2 id="ts-services-title" class="ts-display-md">{t('services.title')}</h2>
+            <p class="ts-lead">{t('services.lead')}</p>
+          </header>
+          <ul class="ts-grid4" role="list">
+            {services.map((s, i) => (
+              <li class="ts-card ts-reveal">
+                <span class={`ts-card__icon ts-card__icon--${i}`} aria-hidden="true"></span>
+                <h3 class="ts-title-md">{s.title}</h3>
+                <p class="ts-card__body">{s.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="ts-section" id="work" aria-labelledby="ts-work-title" data-ts-section="work">
+        <div class="ts-wrap">
+          <header class="ts-head ts-reveal">
+            <span class="ts-chip">{t('work.sample')}</span>
+            <h2 id="ts-work-title" class="ts-display-md">{t('work.title')}</h2>
+            <p class="ts-lead">{t('work.lead')}</p>
+          </header>
+          <ul class="ts-grid3" role="list">
+            {cases.map((w) => (
+              <li class="ts-wcard ts-reveal">
+                <button type="button" class="ts-well" data-ts-case={w.id} aria-label={t('work.open', { name: w.name })}>
+                  <IsoArt name={w.id} width={192} />
+                </button>
+                <div class="ts-wcard__body">
+                  <div class="ts-wcard__meta"><span class="ts-chip">{w.sector}</span><span class="ts-mono ts-muted">{w.duration}</span></div>
+                  <h3 class="ts-wcard__title">
+                    <span class="sr-only">{w.name}</span>
+                    <span class="ts-tiles" aria-hidden="true">{tiles(w.name).map((ch, i) => <span class="ts-tile" style={`--i:${i}`}>{ch}</span>)}</span>
+                  </h3>
+                  <p class="ts-wcard__text">{w.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="ts-section ts-process" id="process" aria-labelledby="ts-process-title" data-ts-section="process">
+        <div class="ts-wrap">
+          <header class="ts-head ts-reveal">
+            <h2 id="ts-process-title" class="ts-display-md">{t('process.title')}</h2>
+            <p class="ts-lead">{t('process.lead')}</p>
+          </header>
+          <ol class="ts-steps" role="list">
+            {steps.map((s, i) => (
+              <li class="ts-step" style={`--i:${i}`}>
+                <div class="ts-step__in">
+                  <div class="ts-step__text">
+                    <span class="ts-chip">{s.badge}</span>
+                    <h3 class="ts-title-lg">{s.title}</h3>
+                    <p>{s.text}</p>
+                  </div>
+                  <div class="ts-step__media">
+                    <div class="ts-step__art"><IsoArt name={stepArt[i]} width={360} /></div>
+                    <div class="ts-inset">
+                      {i === 0 && (() => { const a = s.art as Rows; return (
+                        <div class="ts-art">
+                          <p class="ts-art__title">{a.title}<span class="ts-mono ts-muted">{a.note}</span></p>
+                          <ul role="list" class="ts-art__rows">{a.rows.map((r, j) => <li><span>{r.l}</span><span class={j === 0 ? 'ts-chip ts-chip--ink' : 'ts-chip'}>{r.v}</span></li>)}</ul>
+                        </div>); })()}
+                      {i === 1 && (() => { const a = s.art as Chat; return (
+                        <div class="ts-art ts-art--chat">
+                          <p class="ts-art__q">{a.q}</p>
+                          <div class="ts-art__a"><p>{a.a}</p><p class="ts-mono ts-muted">{a.source}</p></div>
+                          <span class="ts-chip">{a.tag}</span>
+                        </div>); })()}
+                      {i === 2 && (() => { const a = s.art as Rows; return (
+                        <div class="ts-art">
+                          <p class="ts-art__title">{a.title}<span class="ts-mono ts-muted">{a.note}</span></p>
+                          <ul role="list" class="ts-art__bars">{a.rows.map((r) => (
+                            <li><span>{r.l}</span><span class="ts-mono">{r.v}%</span><i style={`--v:${Number(r.v) / 100}`}></i></li>
+                          ))}</ul>
+                        </div>); })()}
+                      {i === 3 && (() => { const a = s.art as Roll; return (
+                        <div class="ts-art">
+                          <p class="ts-art__title">{a.title}</p>
+                          <ul role="list" class="ts-art__roll">{a.items.map((it, j) => (
+                            <li class={j < 3 ? 'is-done' : ''}><span class="ts-dot" aria-hidden="true"></span><span>{it}</span><span class="ts-mono ts-muted">{j < 3 ? a.done : a.next}</span></li>
+                          ))}</ul>
+                        </div>); })()}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="ts-section" id="formats" aria-labelledby="ts-formats-title" data-ts-section="formats">
+        <div class="ts-wrap">
+          <header class="ts-head ts-reveal">
+            <h2 id="ts-formats-title" class="ts-display-md">{t('formats.title')}</h2>
+            <p class="ts-lead">{t('formats.lead')}</p>
+          </header>
+          <ul class="ts-grid3" role="list">
+            {formats.map((f) => (
+              <li class="ts-card ts-format ts-reveal">
+                <span class="ts-chip">{f.duration}</span>
+                <h3 class="ts-title-md">{f.name}</h3>
+                <p class="ts-card__body">{f.text}</p>
+                <button type="button" class="ts-btn ts-btn--secondary" data-ts-brief={f.id}>{f.cta}</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="ts-footer">
+      <div class="ts-footer__cols">
+        <div>
+          <p class="ts-footer__statement">{t('footer.statement')}</p>
+          <button type="button" class="ts-btn ts-btn--primary ts-footer__cta" data-ts-brief="any">{t('footer.cta')}</button>
+        </div>
+        <div class="ts-footer__groups">
+          <div>
+            <p class="ts-footer__h">{t('footer.colStudio')}</p>
+            <ul role="list">{links.map(([id, key]) => <li><a href={`#${id}`}>{t(key)}</a></li>)}</ul>
+          </div>
+          <div>
+            <p class="ts-footer__h">{t('footer.colContact')}</p>
+            <ul role="list">
+              <li><button type="button" data-ts-brief="any">{t('footer.cta')}</button></li>
+              <li><button type="button" data-open-contact>{t('footer.talk')}</button></li>
+            </ul>
+          </div>
+          <div>
+            <p class="ts-footer__h">{t('footer.colAbout')}</p>
+            <ul role="list">
+              <li><span>{t('footer.fiction')}</span></li>
+              <li><a class="ts-inline" href={localePath(lang, '#demos')}>{c('demoBar.back')}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="ts-footer__base">
+        <Logo size={28} />
+        <p class="ts-mono">{t('footer.fine')}</p>
+      </div>
+    </footer>
+
+    <CaseDialog lang={lang} />
+    <BriefDialog lang={lang} />
+  </div>
+</BaseLayout>
+
+<script>
+  import '../../../../demos/tesela/scripts/tesela';
+</script>

@@ -16,8 +16,8 @@ const hours = t.raw<{ d: string; h: string }[]>('info.hours');
   lang={lang}
   title={t('meta.title')}
   description={t('meta.description')}
-  fonts={['--font-lumbre-display', '--font-lumbre-body']}
-  preload={['--font-lumbre-display']}
+  fonts={['--font-fraunces', '--font-lumbre-body']}
+  preload={[{ cssVariable: '--font-fraunces', weight: 400, style: 'normal' }]}
   bodyClass="lumbre"
   themeColor="#120c09"
 >

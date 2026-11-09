@@ -8,6 +8,7 @@ import BrincoPreview from '../../demos/brinco/BuildPreview.astro';
 import LumbrePreview from '../../demos/lumbre/BuildPreview.astro';
 import IsolaPreview from '../../demos/isola/BuildPreview.astro';
 import TurnioPreview from '../../demos/turnio/BuildPreview.astro';
+import TeselaPreview from '../../demos/tesela/BuildPreview.astro';
 interface Props { slug: string; lang: Lang; bg: string }
 const { slug, lang, bg } = Astro.props;
 const previews: Record<string, typeof BrincoPreview> = {
@@ -15,6 +16,7 @@ const previews: Record<string, typeof BrincoPreview> = {
   lumbre: LumbrePreview,
   isola: IsolaPreview,
   turnio: TurnioPreview,
+  tesela: TeselaPreview,
 };
 const Preview = previews[slug];
 ---
