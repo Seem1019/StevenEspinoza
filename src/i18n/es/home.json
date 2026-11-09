@@ -24,7 +24,7 @@
     ]
   },
   "gallery": {
-    "title": "Cuatro demos, cuatro sectores",
+    "title": "Cinco demos, cinco sectores",
     "lead": "Cada una con su propia identidad. Ábrelas en tu móvil: así las verán tus clientes.",
     "details": "Ver detalles",
     "open": "Abrir demo",
@@ -77,7 +77,7 @@
       "dHeader": "Header de 64 px, fijo arriba",
       "cAsk": "¿Este titular cabe en móvil?",
       "dAnswer": "Súbelo, que se lea de lejos",
-      "fCards": "Cuatro demos, en escalera",
+      "fCards": "Cinco demos, en escalera",
       "fStairs": "Escalera montada",
       "fWait": "Espero a que acabes el párrafo",
       "cHandoff": "Listo. Te paso el copy de los botones",

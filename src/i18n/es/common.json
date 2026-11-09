@@ -1,6 +1,12 @@
 {
-  "a11y": { "skip": "Saltar al contenido" },
-  "lang": { "label": "Idioma", "es": "Ver en español", "en": "View in English" },
+  "a11y": {
+    "skip": "Saltar al contenido"
+  },
+  "lang": {
+    "label": "Idioma",
+    "es": "Ver en español",
+    "en": "View in English"
+  },
   "nav": {
     "label": "Principal",
     "home": "Inicio, Steven Espinoza",
@@ -22,12 +28,15 @@
     "note": "Demo con marca y datos ficticios",
     "contact": "Contactar"
   },
-  "footer": { "fiction": "Las marcas de las demos son ficticias." },
+  "footer": {
+    "fiction": "Las marcas de las demos son ficticias."
+  },
   "sectors": {
     "ecommerce": "Tienda online",
     "restaurant": "Restaurante",
     "premium": "Marca premium",
-    "saas": "SaaS y servicios"
+    "saas": "SaaS y servicios",
+    "services": "Servicios profesionales"
   },
   "techniques": {
     "infiniteCatalog": "Catálogo de 240 productos sin paginación",
@@ -44,7 +53,9 @@
     "conversion": "Estructura pensada para convertir",
     "pricingToggle": "Precios mensual/anual al instante",
     "faq": "FAQ accesible con datos estructurados",
-    "socialProof": "Prueba social (datos de ejemplo)"
+    "socialProof": "Prueba social (datos de ejemplo)",
+    "darkTheme": "Tema oscuro real con los mismos tokens",
+    "editorial": "Tipografía editorial y aire generoso"
   },
   "notFound": {
     "title": "Página no encontrada",

@@ -1,7 +1,7 @@
 import { test, expect } from './fixtures';
 import { installReloadProbe, docState, expectSameDocument, waitForSoftNav } from './helpers';
 
-const DEMOS = ['brinco', 'lumbre', 'isola', 'turnio'];
+const DEMOS = ['brinco', 'lumbre', 'isola', 'turnio', 'tesela'];
 
 test('full tour without a single full reload or new tab', async ({ page, context }) => {
   await installReloadProbe(page);

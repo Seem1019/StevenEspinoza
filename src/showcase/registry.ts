@@ -10,5 +10,6 @@ import brinco from '../demos/brinco/showcase/timeline';
 import lumbre from '../demos/lumbre/showcase/timeline';
 import isola from '../demos/isola/showcase/timeline';
 import turnio from '../demos/turnio/showcase/timeline';
+import tesela from '../demos/tesela/showcase/timeline';
 
-export const scenes: Scene[] = [brinco, lumbre, isola, turnio];
+export const scenes: Scene[] = [brinco, lumbre, isola, turnio, tesela];

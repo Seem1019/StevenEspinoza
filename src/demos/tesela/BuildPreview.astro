@@ -1,0 +1,167 @@
+---
+/** Static 1280px miniature of the Tesela Studio page for the showcase / gallery thumbnail. No JS, light theme only. */
+import { useT, type Lang } from '../../i18n';
+import Landscape from './components/Landscape.astro';
+import IsoArt from './components/IsoArt.astro';
+import Logo from './components/Logo.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang, 'tesela');
+const services = t.raw<{ title: string; text: string }[]>('services.items');
+const cases = t.raw<{ id: string; name: string; sector: string; duration: string; text: string }[]>('work.items');
+const step = t.raw<{ badge: string; title: string; text: string; art: { title: string; rows: { l: string; v: number }[]; note: string } }[]>('process.steps')[2];
+const tiles = (n: string) => Array.from({ length: 8 }, (_, i) => n.toUpperCase()[i] ?? '');
+---
+<div class="bp" data-lang={lang}>
+  <div class="bp-navwrap">
+    <nav class="bp-nav" data-build="nav">
+      <span class="bp-logo"><Logo /><span>tesela<em> studio</em></span></span>
+      <span class="bp-link on">{t('nav.work')}</span>
+      <span class="bp-link">{t('nav.process')}</span>
+      <span class="bp-link">{t('nav.services')}</span>
+      <span class="bp-link">{t('nav.formats')}</span>
+      <span class="bp-ghost" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M13.5 9.6A5.6 5.6 0 0 1 6.4 2.5a5.6 5.6 0 1 0 7.1 7.1z" fill="currentColor" /></svg></span>
+    </nav>
+  </div>
+
+  <section class="bp-hero">
+    <h2 class="bp-h" data-build="hero-title">{t('hero.titleA')} <em>{t('hero.titleEm')}</em></h2>
+    <p class="bp-lead" data-build="hero-lead">{t('hero.lead')}</p>
+    <div class="bp-ctas" data-build="hero-cta">
+      <span class="bp-btn bp-btn--primary">{t('hero.cta')}</span>
+      <span class="bp-btn bp-btn--secondary">{t('hero.ctaSecondary')}</span>
+    </div>
+    <div class="bp-land" data-build="land"><Landscape label={t('a11y.landscape')} /></div>
+  </section>
+
+  <section class="bp-sec">
+    <h3 class="bp-h3">{t('services.title')}</h3>
+    <div class="bp-grid4" data-build="services">
+      {services.map((s, i) => (
+        <div class="bp-card"><i class={`bp-ic bp-ic--${i}`}></i><b>{s.title}</b><p>{s.text}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bp-sec">
+    <div class="bp-head"><span class="bp-chip">{t('work.sample')}</span><h3 class="bp-h3">{t('work.title')}</h3></div>
+    <div class="bp-grid3" data-build="work">
+      {cases.map((c) => (
+        <div class="bp-wcard">
+          <div class="bp-well"><IsoArt name={c.id} width={150} /></div>
+          <div class="bp-meta"><span class="bp-chip">{c.sector}</span><span class="bp-mono">{c.duration}</span></div>
+          <div class="bp-tiles">{tiles(c.name).map((ch) => <span class="bp-tile">{ch}</span>)}</div>
+          <p class="bp-text">{c.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bp-sec bp-step" data-build="process">
+    <div class="bp-step__text"><span class="bp-chip">{step.badge}</span><b class="bp-h4">{step.title}</b><p>{step.text}</p></div>
+    <div class="bp-step__media">
+      <IsoArt name="evaluate" width={210} />
+      <div class="bp-inset" data-build="inset">
+        <p class="bp-inset__t">{step.art.title}<span class="bp-mono">{step.art.note}</span></p>
+        {step.art.rows.map((r) => <div class="bp-bar"><span>{r.l}</span><span class="bp-mono">{r.v}%</span><i style={`--v:${r.v / 100}`}></i></div>)}
+      </div>
+    </div>
+  </section>
+
+  <footer class="bp-footer" data-build="footer">
+    <div><p class="bp-statement">{t('footer.statement')}</p><span class="bp-btn bp-btn--primary">{t('footer.cta')}</span></div>
+    <div class="bp-fcols">
+      <div><small>{t('footer.colStudio')}</small><span>{t('nav.work')}</span><span>{t('nav.process')}</span><span>{t('nav.formats')}</span></div>
+      <div><small>{t('footer.colContact')}</small><span>{t('footer.cta')}</span><span>{t('footer.talk')}</span></div>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .bp {
+    --ink: #18181b; --mu: #6b6b70; --s: #f8f8f9; --r: #ededf0; --st: #dcdce0; --sh: 0 4px 20px #0a0a0c0f;
+    --fd: var(--font-fraunces, Georgia), Georgia, serif; --fm: var(--font-tesela-mono, ui-monospace), ui-monospace, monospace;
+    --iso-top: #fff; --iso-left: #ededf0; --iso-right: #dcdce0; --iso-edge: rgb(24 24 27 / 0.3);
+    --iso-ink-top: #3f3f46; --iso-ink-left: #27272a; --iso-ink-right: #18181b; --iso-floor: rgb(24 24 27 / 0.09);
+    width: 1280px; background: var(--s); color: var(--ink); overflow: hidden;
+    font-family: var(--font-tesela, system-ui), system-ui, sans-serif; font-size: 15px; line-height: 1.4;
+  }
+  .bp :global(*) { box-sizing: border-box; margin: 0; }
+  .bp :global(.iso-t) { fill: var(--iso-top); }
+  .bp :global(.iso-l) { fill: var(--iso-left); }
+  .bp :global(.iso-r) { fill: var(--iso-right); }
+  .bp :global(.iso-c--ink .iso-t) { fill: var(--iso-ink-top); }
+  .bp :global(.iso-c--ink .iso-l) { fill: var(--iso-ink-left); }
+  .bp :global(.iso-c--ink .iso-r) { fill: var(--iso-ink-right); }
+  .bp :global(.iso-c polygon) { stroke: var(--iso-edge); stroke-width: 1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .bp :global(.ts-land__floor) { fill: none; stroke: var(--iso-floor); vector-effect: non-scaling-stroke; }
+  .bp :global(.ts-mark__t) { fill: var(--ink); }
+  .bp :global(.ts-mark__l) { fill: var(--mu); }
+  .bp :global(.ts-mark__r) { fill: var(--st); }
+  .bp :global(svg) { max-width: none; }
+
+  .bp-navwrap { display: flex; justify-content: center; padding-top: 18px; }
+  .bp-nav { display: flex; align-items: center; gap: 2px; padding: 8px; border-radius: 22px; background: #dcdce099; box-shadow: var(--sh); }
+  .bp-logo { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-family: var(--font-tesela-brand, system-ui), system-ui, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: -0.4px; }
+  .bp-logo em { font-style: normal; color: var(--mu); }
+  .bp-link { padding: 10px 16px; border-radius: 15px; font-size: 15px; }
+  .bp-link.on { background: #fff; box-shadow: 0 0.98px 11.74px #00000014; }
+  .bp-ghost { display: grid; place-items: center; width: 40px; height: 42px; }
+
+  .bp-hero { display: grid; justify-items: center; padding-top: 72px; text-align: center; }
+  .bp-h { max-width: 700px; font-family: var(--fd); font-weight: 350; font-size: 68px; line-height: 1.1; letter-spacing: -1.3px; }
+  .bp-h em { font-style: italic; }
+  .bp-lead { max-width: 440px; margin-top: 22px; color: #18181bb3; font-size: 18px; line-height: 1.3; }
+  .bp-ctas { display: flex; gap: 12px; margin-top: 28px; }
+  .bp-btn { display: inline-flex; align-items: center; min-height: 46px; padding: 12px 24px; border-radius: 15px; font-size: 15px; white-space: nowrap; }
+  .bp-btn--primary { background: var(--ink); color: #fff; }
+  .bp-btn--secondary { background: #18181b12; }
+  .bp-land { width: 1280px; margin-top: 36px; display: flex; justify-content: center; }
+  .bp-land :global(.ts-land) { width: 1300px; flex: none; height: auto; }
+
+  .bp-sec { padding: 64px 100px 0; }
+  .bp-head { display: grid; justify-items: center; gap: 12px; }
+  .bp-h3 { font-family: var(--fd); font-weight: 350; font-size: 40px; line-height: 1.05; letter-spacing: -0.58px; text-align: center; }
+  .bp-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+  .bp-card { display: grid; align-content: start; gap: 10px; padding: 26px; border-radius: 22px; background: #fff; box-shadow: var(--sh); }
+  .bp-card b { margin-top: 12px; font-family: var(--fd); font-weight: 350; font-size: 22px; line-height: 1.1; letter-spacing: -0.2px; }
+  .bp-card p { color: var(--mu); font-size: 14px; }
+  .bp-ic { display: block; width: 16px; height: 16px; background: var(--ink); transform: perspective(60px) rotateX(24deg) rotateY(-22deg) rotate(-18deg); }
+  .bp-ic--2 { border-radius: 50%; transform: none; }
+  .bp-ic--3 { background: transparent; box-shadow: inset 0 0 0 1.6px var(--ink); }
+  .bp-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+  .bp-wcard { padding: 12px; border-radius: 22px; background: #fff; box-shadow: var(--sh); }
+  .bp-well { display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: 16px; background: var(--r); }
+  .bp-meta { display: flex; justify-content: space-between; align-items: center; padding: 18px 10px 0; }
+  .bp-chip { display: inline-flex; width: fit-content; padding: 4px 12px; border-radius: 15px; background: var(--r); font-family: var(--fm); font-size: 13px; }
+  .bp-mono { font-family: var(--fm); font-size: 13px; color: var(--mu); }
+  .bp-tiles { display: flex; gap: 4px; padding: 14px 10px 0; }
+  .bp-tile { display: grid; place-items: center; width: 28px; height: 38px; border-radius: 7px; background: var(--r); font-family: var(--fm); font-size: 19px; }
+  .bp-text { padding: 12px 10px 10px; color: var(--mu); font-size: 14px; line-height: 1.5; }
+
+  .bp-step { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: center; }
+  .bp-step__text { display: grid; gap: 14px; justify-items: start; }
+  .bp-h4 { font-family: var(--fd); font-weight: 350; font-size: 32px; line-height: 1.1; letter-spacing: -0.33px; }
+  .bp-step__text p { color: var(--mu); }
+  .bp-step__media { display: flex; flex-direction: column; align-items: center; gap: 24px; height: 420px; padding: 36px; border-radius: 64px; background: var(--r); box-shadow: var(--sh); }
+  .bp-inset { width: 420px; display: grid; gap: 8px; padding: 18px; border-radius: 24px; background: #fff; box-shadow: var(--sh); }
+  .bp-inset__t { display: flex; justify-content: space-between; font-family: var(--fd); font-size: 19px; }
+  .bp-bar { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
+  .bp-bar i { grid-column: 1 / -1; height: 6px; border-radius: 9999px; background: var(--r); position: relative; overflow: hidden; }
+  .bp-bar i::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform-origin: 0 50%; transform: scaleX(var(--v)); }
+
+  .bp-footer { display: grid; grid-template-columns: 1fr auto; gap: 80px; padding: 72px 100px 64px; }
+  .bp-statement { max-width: 420px; margin-bottom: 28px; font-family: var(--fd); font-weight: 350; font-size: 40px; line-height: 1.1; letter-spacing: -0.58px; }
+  .bp-fcols { display: flex; gap: 56px; }
+  .bp-fcols div { display: grid; align-content: start; gap: 10px; }
+  .bp-fcols small { color: var(--mu); font-size: 14px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-build-state='motion'] :global(.ts-keystone) { animation: bp-key 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
+    [data-build-state='motion'] .bp-bar i::after { animation: bp-bar 1.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    [data-build-state='motion'] .bp-tile { animation: bp-flip 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  }
+  @keyframes bp-key { from { transform: translateY(-26px); } }
+  @keyframes bp-bar { from { transform: scaleX(0); } }
+  @keyframes bp-flip { from { opacity: 0; transform: perspective(240px) rotateX(-80deg); } }
+</style>

@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último trabajo:** rediseño visual de Brinco ("obsidiana y alabastro de precisión"), ver `docs/decisions.md` → "Rediseño de Brinco" · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
+**Última actualización:** 2026-11-09 · **Rama:** `claude/beautiful-pascal-o4wsu9` (commit local, sin push ni fusionar en `main`) · **Último trabajo:** quinta demo, **Tesela Studio** (estudio de producto con IA, servicios profesionales), ver `docs/decisions.md` → "Demo Tesela Studio" · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
 
 ---
 
@@ -25,16 +25,18 @@
 | **Lumbre**: restaurante "scroll-world" (entrada → barra → cocina → mesa), menú, reserva | ✅ | `src/demos/lumbre/` |
 | **Isola**: auriculares premium, three.js procedural que gira y se despieza con el scroll | ✅ | `src/demos/isola/` |
 | **Turnio**: landing SaaS (precios mensual/anual, tour, FAQ, alta) | ✅ | `src/demos/turnio/` |
+| **Tesela Studio**: estudio de producto con IA, editorial y casi monocromo. Hero fijo guiado por el scroll con paisaje isométrico, casos en `<dialog>` (`?case=`), proceso en paneles apilados, formatos, brief (`?brief=`), tema oscuro | ✅ | `src/demos/tesela/` |
 | Motor de agentes compartido: cursores con nombre, flujo del orquestador, errores a propósito + revisión de QA | ✅ | `src/showcase/` (engine, flow, types), `src/components/site/AgentFlow.astro` |
 | Intro de la home: puerta "Empezar" → los agentes construyen la home real (≈39 s), "Ver la intro otra vez" | ✅ | `src/showcase/scenes/home.ts`, `src/showcase/intro.ts`, `src/pages/[lang]/index.astro` |
 | Showcase "agentes en vivo": 4 guiones de ≈37 s con 3 errores cada uno, empezar/pausar/saltar/repetir | ✅ | `src/pages/[lang]/showcase/`, `src/demos/<slug>/showcase/timeline.ts` |
 | Memoria para agentes: CLAUDE.md, DESIGN.md (global + uno por demo), reglas, skills | ✅ | `.claude/rules/`, `.claude/skills/` |
 | Workflow de despliegue en Pages | ✅ (sin ejecutar) | `.github/workflows/deploy.yml` |
 
-**Última verificación (2026-11-08):**
+**Última verificación (2026-11-09):**
 - `npm run build`: sin errores ni avisos.
-- Playwright: **33/33** pasan (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
+- Playwright: **41/41** pasan (4 nuevos en `tests/tesela.spec.ts`) (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
 - Lighthouse móvil (home es/en con la puerta de la intro, showcase y cada demo): **100/100/100/100**, LCP 0,9–1,4 s, CLS ≤ 0,012, TBT ≤ 10 ms.
+- 2026-11-09 (contenedor en la nube, CPU más lenta): Tesela **100/100/100/100**, LCP 1,1 s, CLS 0,003. El resto pasa (rendimiento 97–100); el TBT sube a 80–190 ms en showcase, Brinco y Lumbre en esta máquina, y no lo he comparado con `main` aquí.
 - Capturas de la intro y de Brinco/Lumbre en 390 y 1440 px, en 15 momentos: `test-results/agents/` (no versionado).
 - Tabla completa en `README.md` y `reports/lighthouse/summary.md`.
 
@@ -49,7 +51,8 @@
    - Isola: su `BuildPreview` mide unos 2.420 px de alto (el contrato pide unos 2.200).
    - Brinco: la ruleta que se abre sola no crea entrada de historial, así que "atrás" no la cierra (Esc y su botón sí). Se arregla con `openUi` en lugar de `showModal` directo en `src/demos/brinco/client/app.ts`.
 
-6. **Detalles conocidos del motor de agentes:**
+6. **Scroll-driven roto en Turnio e Isola:** el minificador mete `animation-timeline` en el shorthand `animation` y Chrome descarta la declaración, así que sus reveals no animan (el contenido se ve completo). Arreglo: pasar el timeline por `var()` como en Tesela y Lumbre (ver la skill `scroll-animation-patterns`, regla 3).
+7. **Detalles conocidos del motor de agentes:**
    - En móvil el menú del header está oculto, así que el fallo "enlace en inglés" de la home no se ve ni se marca (QA marca 4 de 5). Está previsto: el motor ignora objetivos no renderizados.
    - A 1440×900 el panel flotante tapa media tarjeta de Turnio durante la construcción; se aparta cuando el foco cae debajo, pero no antes.
    - El CLS de la home (0,007–0,012) viene de la puerta inicial; no afecta a la nota.
@@ -72,6 +75,9 @@
 - **Textos (i18n):** si es y en no tienen las mismas claves, el build falla a propósito. Todo texto visible va en `src/i18n/<lang>/<ns>.json`.
 - **Brinco y su acento:** texto sobre `#FF3B1D` siempre en obsidiana (blanco no llega a 4,5:1); precios sobre blanco en `#D42A0E`. Los hovers animan la opacidad de un `::after`, nunca `box-shadow` ni `background-color`.
 - **Gradientes dentro de `<dialog>` cerrado:** Chrome no pinta un `url(#id)` cuyo `<defs>` está en un subárbol `display:none`. Por eso `Wheel.astro` genera ids únicos por instancia.
+- **Fraunces es una sola familia (`--font-fraunces`)** para Lumbre y Tesela. Si añades otra entrada con el mismo archivo, la Fonts API la deduplica y esa página se queda sin precarga.
+- **`animation-timeline` siempre vía `var()`**, o el minificador lo funde en el shorthand y Chrome lo ignora. Comprueba `getComputedStyle(el).animationName` en el navegador.
+- **Red del entorno en la nube:** la política por defecto bloquea `api.fontsource.org` y `cdn.jsdelivr.net`, y el build sale sin fuentes y sin avisos visibles. El entorno `StevenEspinoza` (personal) ya los permite.
 - **Tamaño de three.js:** el chunk pesa unos 137 KB gz y por eso se subió `chunkSizeWarningLimit`. Nunca debe cargarse antes del primer scroll; Lighthouse no hace scroll.
 
 ## 5. Cómo verificar antes de dar algo por terminado
@@ -82,7 +88,7 @@ npm run screenshots
 npm run lighthouse
 ```
 - **Build:** debe salir sin avisos.
-- **Tests:** deben pasar 28/28 o más.
+- **Tests:** deben pasar 41/41 o más.
 - **Capturas:** se guardan en `test-results/screenshots`; revísalas a 390 y 1440 px.
 - **Lighthouse:** objetivo rendimiento ≥ 90, accesibilidad, buenas prácticas y SEO ≥ 95, LCP < 2,5 s, CLS < 0,1.
 

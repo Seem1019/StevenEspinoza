@@ -6,7 +6,7 @@ export interface DemoEntry {
   slug: string;
   /** i18n namespace (= slug). */
   ns: string;
-  sector: 'ecommerce' | 'restaurant' | 'premium' | 'saas';
+  sector: 'ecommerce' | 'restaurant' | 'premium' | 'saas' | 'services';
   /** Colors used only by the portfolio card frame (the demo itself owns its palette). */
   card: { bg: string; fg: string; accent: string };
   /** Techniques shown in the gallery dialog (keys in common.techniques.*). */
@@ -41,6 +41,13 @@ export const demos: DemoEntry[] = [
     sector: 'saas',
     card: { bg: '#0B3D2E', fg: '#E8FFF4', accent: '#7CF3B6' },
     techniques: ['conversion', 'pricingToggle', 'faq', 'socialProof'],
+  },
+  {
+    slug: 'tesela',
+    ns: 'tesela',
+    sector: 'services',
+    card: { bg: '#F8F8F9', fg: '#18181B', accent: '#18181B' },
+    techniques: ['cssScroll', 'darkTheme', 'editorial', 'inp'],
   },
 ];
 

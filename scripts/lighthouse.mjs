@@ -13,7 +13,7 @@ import * as chromeLauncher from 'chrome-launcher';
 const PORT = 4330;
 const PUBLIC = process.env.LH_BASE?.replace(/\/?$/, '/');
 const BASE = PUBLIC ?? `http://localhost:${PORT}/steven-espinoza/`;
-const DEFAULT_PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/'];
+const DEFAULT_PATHS = ['es/', 'en/', 'es/showcase/', 'es/demos/brinco/', 'es/demos/lumbre/', 'es/demos/isola/', 'es/demos/turnio/', 'es/demos/tesela/'];
 const paths = process.argv.slice(2).length ? process.argv.slice(2) : DEFAULT_PATHS;
 const OUT = PUBLIC ? 'reports/lighthouse-public' : 'reports/lighthouse';
 const TARGET = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 };

@@ -1,0 +1,347 @@
+{
+  "meta": {
+    "name": "Tesela Studio",
+    "title": "Tesela Studio · AI products people actually trust",
+    "tagline": "An editorial site for an AI product studio: calm, precise, gallery-like.",
+    "description": "Tesela Studio is a fictional AI product studio that designs agents, copilots and AI features for companies. A business-services demo with a scroll-driven hero, sample case studies, sticky process panels, a dark theme and an in-page project brief.",
+    "features": [
+      "Sticky scroll-driven hero with an isometric landscape",
+      "Case studies in a dialog with their own URL",
+      "Stacked process panels and flipping letter tiles in pure CSS",
+      "Project brief in a dialog with validation and its own URL"
+    ]
+  },
+  "a11y": {
+    "home": "Tesela Studio, back to top",
+    "nav": "Sections",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme",
+    "landscape": "Illustration: stacks of isometric cubes that fit together",
+    "close": "Close",
+    "footer": "Footer"
+  },
+  "nav": {
+    "work": "Work",
+    "process": "Process",
+    "services": "Services",
+    "formats": "Formats",
+    "cta": "Start a project"
+  },
+  "hero": {
+    "titleA": "We design AI products",
+    "titleEm": "people actually trust",
+    "lead": "A small studio that turns a messy process into an agent, a copilot or a feature your team uses every day. Strategy, interface and evaluation, in weeks.",
+    "cta": "Start a project",
+    "ctaSecondary": "See selected work",
+    "after": "Every piece fits before it ships."
+  },
+  "services": {
+    "title": "What we do",
+    "lead": "Four disciplines, one team. We take a problem from the whiteboard to the people who'll use it.",
+    "items": [
+      {
+        "title": "Product strategy",
+        "text": "We find the process where AI saves the most hours and where a mistake costs the least, then define what success looks like."
+      },
+      {
+        "title": "Agents and automation",
+        "text": "Assistants that read your documents, fill in your systems and ask a person before they do anything that can't be undone."
+      },
+      {
+        "title": "Interfaces people trust",
+        "text": "Drafts you can edit, visible sources, clear confidence levels. People keep using it because they understand it."
+      },
+      {
+        "title": "Evaluation and safety",
+        "text": "Hundreds of real cases scored before launch, quality alerts afterwards and a human handoff when it isn't sure."
+      }
+    ]
+  },
+  "work": {
+    "title": "Selected work",
+    "lead": "Three projects, three industries. Each one solved a process that used to eat whole days.",
+    "sample": "Sample cases",
+    "open": "Open the {name} case",
+    "items": [
+      {
+        "id": "pliego",
+        "name": "Pliego",
+        "sector": "Legal",
+        "duration": "6 weeks",
+        "text": "A contract review assistant for a mid-sized law firm: it flags risky clauses and drafts the reply with its sources.",
+        "problem": "Associates spent their afternoons comparing supplier contracts against the firm's standard terms, clause by clause.",
+        "built": [
+          "Review panel that sits next to the document",
+          "Clause comparison against the firm's playbook",
+          "Reply draft with a citation for every change",
+          "Review queue for the partner"
+        ],
+        "outcome": [
+          {
+            "v": "−62%",
+            "l": "review time per contract"
+          },
+          {
+            "v": "98%",
+            "l": "suggestions with a source"
+          }
+        ],
+        "stack": "Document pipeline · retrieval over the playbook · evaluation set of 400 clauses"
+      },
+      {
+        "id": "rutero",
+        "name": "Rutero",
+        "sector": "Logistics",
+        "duration": "8 weeks",
+        "text": "A dispatch copilot for a food distributor: it proposes tomorrow's routes and explains every change to the driver.",
+        "problem": "Two dispatchers rebuilt routes by hand every night, juggling late orders, time windows and refrigerated trucks.",
+        "built": [
+          "Route proposal with reasons in plain words",
+          "Drag-and-drop adjustments with instant recalculation",
+          "Driver messages for every change",
+          "End-of-day report for operations"
+        ],
+        "outcome": [
+          {
+            "v": "−3 h",
+            "l": "of nightly planning"
+          },
+          {
+            "v": "−11%",
+            "l": "kilometres driven"
+          }
+        ],
+        "stack": "Route optimiser · language model for explanations · integration with the order system"
+      },
+      {
+        "id": "acopio",
+        "name": "Acopio",
+        "sector": "Retail",
+        "duration": "10 weeks",
+        "text": "A reorder agent for a grocery chain: it forecasts demand per store and prepares orders that a buyer approves.",
+        "problem": "Each store manager ordered from memory. Some shelves ran empty on Fridays while others threw away fresh produce.",
+        "built": [
+          "Daily forecast per store and product",
+          "Draft orders with a confidence level",
+          "One-tap approval for buyers",
+          "Waste and stock-out alerts"
+        ],
+        "outcome": [
+          {
+            "v": "−24%",
+            "l": "fresh produce waste"
+          },
+          {
+            "v": "−40%",
+            "l": "empty-shelf hours"
+          }
+        ],
+        "stack": "Forecasting models · ordering agent with human approval · weekly evaluation"
+      }
+    ],
+    "dialog": {
+      "problem": "The problem",
+      "built": "What we built",
+      "outcome": "Outcome after three months",
+      "outcomeNote": "Sample figures for a fictional case.",
+      "stack": "Under the hood",
+      "cta": "Start a similar project",
+      "back": "Back to the work"
+    }
+  },
+  "process": {
+    "title": "How a project moves",
+    "lead": "From the first conversation to the whole company using it. You see something working every week.",
+    "steps": [
+      {
+        "badge": "Weeks 1–2",
+        "title": "We find where it pays off",
+        "text": "Interviews, shadowing and your real data. We rank processes by hours saved and by the cost of a mistake.",
+        "art": {
+          "title": "Opportunity map",
+          "rows": [
+            {
+              "l": "Contract review",
+              "v": "14 h/wk"
+            },
+            {
+              "l": "Supplier emails",
+              "v": "9 h/wk"
+            },
+            {
+              "l": "Monthly report",
+              "v": "6 h/wk"
+            }
+          ],
+          "note": "Sample data"
+        }
+      },
+      {
+        "badge": "Weeks 3–4",
+        "title": "A prototype you can use",
+        "text": "Not slides: a working version with your documents, so the team can break it and tell us where it falls short.",
+        "art": {
+          "q": "Does clause 4.2 allow early termination?",
+          "a": "Yes, with 60 days' written notice and no penalty after the first year.",
+          "source": "Source: master agreement §4.2, p. 7",
+          "tag": "Draft · pending review"
+        }
+      },
+      {
+        "badge": "Week 5",
+        "title": "We measure before we launch",
+        "text": "Hundreds of real cases scored one by one. If it doesn't hit the bar, it doesn't ship. If it hesitates, it hands over to a person.",
+        "art": {
+          "title": "Evaluation · 400 cases",
+          "rows": [
+            {
+              "l": "Correct answers",
+              "v": 94
+            },
+            {
+              "l": "Cites its source",
+              "v": 98
+            },
+            {
+              "l": "Escalates when unsure",
+              "v": 91
+            }
+          ],
+          "note": "Sample data"
+        }
+      },
+      {
+        "badge": "Week 6 onwards",
+        "title": "Launch in steps",
+        "text": "One pilot team first, then everyone. With monitoring, quality alerts and a monthly review with you.",
+        "art": {
+          "title": "Rollout",
+          "items": [
+            "Pilot team · 12 people",
+            "Monitoring and alerts",
+            "Human handoff",
+            "Whole company"
+          ],
+          "done": "Done",
+          "next": "Next"
+        }
+      }
+    ]
+  },
+  "formats": {
+    "title": "Ways to work together",
+    "lead": "Start small and grow only if the numbers say so.",
+    "items": [
+      {
+        "id": "sprint",
+        "name": "Discovery sprint",
+        "duration": "2 weeks",
+        "text": "Opportunity map, one clickable prototype and an honest go or no-go.",
+        "cta": "Choose the sprint"
+      },
+      {
+        "id": "pilot",
+        "name": "Pilot",
+        "duration": "6 weeks",
+        "text": "A working version with your data, an evaluation set and a pilot team using it.",
+        "cta": "Choose the pilot"
+      },
+      {
+        "id": "team",
+        "name": "Embedded team",
+        "duration": "Quarterly",
+        "text": "Design, engineering and evaluation working with your team, with releases every month.",
+        "cta": "Choose the team"
+      }
+    ]
+  },
+  "brief": {
+    "title": "Tell us about your project",
+    "lead": "Four questions. You'll get an answer within two business days.",
+    "name": "Your name",
+    "namePh": "Jane Smith",
+    "email": "Work email",
+    "emailPh": "jane@company.com",
+    "kind": "What do you want to build?",
+    "kinds": [
+      {
+        "id": "agent",
+        "label": "An agent that does a task"
+      },
+      {
+        "id": "copilot",
+        "label": "A copilot for my team"
+      },
+      {
+        "id": "feature",
+        "label": "An AI feature in my product"
+      },
+      {
+        "id": "unsure",
+        "label": "Not sure yet"
+      }
+    ],
+    "format": "Format",
+    "formatAny": "Let's decide together",
+    "message": "The process you'd like to improve",
+    "messagePh": "For example: every week we review 200 invoices by hand…",
+    "nameRequired": "Tell us your name.",
+    "emailRequired": "We need an email to reply.",
+    "emailInvalid": "That email doesn't look right.",
+    "submit": "Send brief",
+    "demoNote": "Demo: nothing is sent anywhere.",
+    "successTitle": "Thanks, {name}.",
+    "successText": "In a real project you'd hear from us at {email} with three questions and a first slot to talk.",
+    "successCta": "Back to the site"
+  },
+  "footer": {
+    "statement": "Have a process that should think for itself? Let's talk.",
+    "cta": "Start a project",
+    "colStudio": "Studio",
+    "colContact": "Contact",
+    "colAbout": "About this demo",
+    "talk": "Talk to Steven",
+    "fiction": "Tesela Studio is a fictional brand",
+    "fine": "Tesela Studio · fictional demo by Steven Espinoza"
+  },
+  "showcase": {
+    "say": {
+      "aDesign": "Nav, type and the closing panel",
+      "aCopy": "Headline, services and cases",
+      "aFrontend": "Landscape and the work grid",
+      "aQa": "Review once they are done",
+      "dPalette": "Ink, three greys, no colour",
+      "dType": "Fraunces 350, tracked tight",
+      "cType": "And one phrase in italic",
+      "fLand": "Cubes in parallax by depth",
+      "cServices": "Four services, one line each",
+      "cHandoff": "Here are the case names",
+      "cSample": "Cases labelled as sample",
+      "fGrid": "Three cards, 16 px gutter",
+      "dPanel": "Process panel with its inset",
+      "dDone": "Design delivered",
+      "cDone": "Copy delivered",
+      "fDone": "Components ready",
+      "aReview": "Review the whole page",
+      "qaFound": "Sending you the issues I found",
+      "rNav": "A menu link is in Spanish",
+      "cFixNav": "Translated",
+      "cFixTile": "Pliego, spelled right",
+      "rCta": "Blue is only for links",
+      "dPick": "Sampling the ink from the logo",
+      "dFixCta": "Back to ink",
+      "rCard": "The third card left the grid",
+      "fFixCard": "Back on the grid",
+      "aRecheck": "One last pass, please",
+      "qaOk": "All green."
+    },
+    "flags": {
+      "ctaBlue": "Primary CTA in link blue",
+      "cardOff": "Card off the grid",
+      "navLang": "Menu link in Spanish",
+      "tileTypo": "Typo in the tiles"
+    }
+  }
+}

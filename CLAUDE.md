@@ -47,7 +47,7 @@ src/
 docs/ research.md, decisions.md, demo-contract.md, credits.md
 tests/ Playwright specs · scripts/ lighthouse.mjs, psi.mjs
 ```
-Demos: `brinco` (discount e-commerce), `lumbre` (restaurant scroll-world), `isola` (premium 3D headphones), `turnio` (SaaS landing).
+Demos: `brinco` (discount e-commerce), `lumbre` (restaurant scroll-world), `isola` (premium 3D headphones), `turnio` (SaaS landing), `tesela` (AI product studio, editorial; business services).
 
 ## Conventions
 - **Text**: never hard-code visible text in components. `const t = useT(lang, 'ns')`; arrays/objects with `t.raw<T>()`. es and en must have identical keys (build throws).

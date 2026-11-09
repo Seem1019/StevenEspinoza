@@ -24,7 +24,7 @@
     ]
   },
   "gallery": {
-    "title": "Four demos, four industries",
+    "title": "Five demos, five industries",
     "lead": "Each with its own identity. Open them on your phone: that's how your customers will see them.",
     "details": "See details",
     "open": "Open demo",
@@ -77,7 +77,7 @@
       "dHeader": "64 px header, pinned on top",
       "cAsk": "Does this headline fit on mobile?",
       "dAnswer": "Go bigger, readable from afar",
-      "fCards": "Four demos, as a staircase",
+      "fCards": "Five demos, as a staircase",
       "fStairs": "Staircase in place",
       "fWait": "Waiting for you to finish the paragraph",
       "cHandoff": "Done. Here's the button copy",

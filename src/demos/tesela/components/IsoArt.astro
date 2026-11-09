@@ -1,0 +1,22 @@
+---
+/** Isometric cube object (static SVG, faces coloured by CSS tokens). Decorative. */
+import { objects, faces, sortCubes, bbox, type Cube } from '../iso';
+interface Props { name?: string; cubes?: Cube[]; s?: number; class?: string; width?: number }
+const { name, cubes: given, s = 40, class: cls = '', width } = Astro.props;
+const cubes = sortCubes(given ?? objects[name ?? ''] ?? []);
+const box = bbox(cubes, s);
+const w = width ?? Math.round(box.w);
+const h = Math.round((box.h / box.w) * w);
+---
+<svg class={`iso ${cls}`} viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`} width={w} height={h} aria-hidden="true" focusable="false">
+  {cubes.map((c) => {
+    const f = faces(c, s);
+    return (
+      <g class={f.ink ? 'iso-c iso-c--ink' : 'iso-c'}>
+        <polygon class="iso-t" points={f.top} />
+        <polygon class="iso-l" points={f.left} />
+        <polygon class="iso-r" points={f.right} />
+      </g>
+    );
+  })}
+</svg>

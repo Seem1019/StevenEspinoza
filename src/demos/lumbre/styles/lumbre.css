@@ -12,7 +12,7 @@
   --lb-text: #f6e7d2;
   --lb-muted: #cdb8a0;
   --lb-dim: #a28c76;
-  --lb-display: var(--font-lumbre-display), Georgia, serif;
+  --lb-display: var(--font-fraunces), Georgia, serif;
   --lb-body: var(--font-lumbre-body), system-ui, sans-serif;
   --lb-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lb-gutter: clamp(16px, 5vw, 64px);

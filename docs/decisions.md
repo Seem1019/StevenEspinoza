@@ -50,8 +50,18 @@ Decisiones tomadas con valores por defecto razonables para no frenar. Cámbialas
 - **Inter en pesos estáticos (400/500/600/700), no variable:** la página precarga solo el 700 del h1 (24 KB) en lugar del archivo variable (72 KB). Con el variable más la itálica precargada por error, el LCP simulado en 4G subía a 2,6 s.
 - Medido: Lighthouse móvil 100/100/100/100, LCP 1,1 s, CLS 0.
 
+## Demo Tesela Studio (2026-11-09)
+- **Encargo de Steven:** un estudio de producto con IA (sector "servicios profesionales") con el estilo editorial de un estudio real que le gustó. Se toma el **tipo de producto y el sistema de diseño** (paleta casi monocroma, Fraunces 350, Hanken Grotesk, Space Grotesk, Space Mono, cápsula de cristal, sombra ambiental única, radios 15/22/64, tema oscuro, scroll-driven), nunca el nombre, el logo ni los textos: marca, casos, ilustraciones y copy son nuestros (regla `no-real-brands`). Nombre inventado **Tesela Studio** (una tesela es la pieza de un mosaico: encaja con los cubos isométricos).
+- **Excepciones a los antipatrones globales, solo en esta demo y por petición expresa:** fondo gris frío casi blanco `#F8F8F9` (no crema), una frase en cursiva en el h1, etiquetas Space Mono en chips y la cápsula de navegación con `backdrop-filter`. Siguen prohibidos: píldoras (botones de 15 px), negrita, degradados, colores nuevos y más de una sombra.
+- **Ilustraciones isométricas generadas en build** (`src/demos/tesela/iso.ts`): cubos en SVG con las caras rellenas por variables CSS, así el tema oscuro las recolorea sin otro archivo. Cero imágenes y cero JS para dibujarlas.
+- **Fraunces compartida:** Lumbre y Tesela usan el mismo archivo variable. Con dos entradas en `astro.config.mjs` la Fonts API deduplica el archivo y la segunda familia pierde su precarga, así que hay una sola familia `--font-fraunces` (normal + itálica) y cada página precarga solo la normal (`preload={[{ cssVariable, weight, style: 'normal' }]}`; `BaseLayout` acepta ahora `style`).
+- **`animation-timeline` a través de `var()`:** el minificador de CSS mete `animation-timeline` dentro del shorthand `animation` y Chrome descarta la declaración entera. Tesela (como Lumbre) usa `--tl-*` con `var()`. Turnio e Isola tienen el problema sin resolver: sus reveals no animan (el contenido se ve igual).
+- **Proceso en paneles apilados** solo desde 900 px: en móvil un panel puede medir más que la pantalla y quedaría tapado, así que allí es una lista normal.
+- **Tema:** sigue a `prefers-color-scheme`; el botón guarda la elección en `localStorage` (con try/catch, conveniencia por visitante).
+- Medido: Lighthouse móvil 100/100/100/100, LCP 1,1 s, CLS ≤ 0,003.
+
 ## Marcas inventadas
-- E-commerce **Brinco**, restaurante **Lumbre**, tienda premium (audio) **Isola**, SaaS de agendas **Turnio**. Nombres de ficción; si alguno coincide con una empresa real, cámbialo en `src/data/demos.ts` y en los JSON de i18n.
+- E-commerce **Brinco**, restaurante **Lumbre**, tienda premium (audio) **Isola**, SaaS de agendas **Turnio**, estudio de producto con IA **Tesela Studio**. Nombres de ficción; si alguno coincide con una empresa real, cámbialo en `src/data/demos.ts` y en los JSON de i18n.
 
 ## Skills de terceros
 - `landing-page-design` instalada (solo markdown). `scroll-world` e `img2threejs` **no** instaladas porque ejecutan herramientas externas / de pago. Pendiente de Steven.

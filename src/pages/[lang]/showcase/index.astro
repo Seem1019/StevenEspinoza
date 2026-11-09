@@ -16,6 +16,7 @@ import BrincoPreview from '../../../demos/brinco/BuildPreview.astro';
 import LumbrePreview from '../../../demos/lumbre/BuildPreview.astro';
 import IsolaPreview from '../../../demos/isola/BuildPreview.astro';
 import TurnioPreview from '../../../demos/turnio/BuildPreview.astro';
+import TeselaPreview from '../../../demos/tesela/BuildPreview.astro';
 import '../../../styles/build-states.css';
 
 export const getStaticPaths = langPaths;
@@ -23,7 +24,7 @@ const lang = Astro.params.lang as Lang;
 const t = useT(lang, 'showcase');
 const c = useT(lang, 'common');
 
-const previews: Record<string, typeof BrincoPreview> = { brinco: BrincoPreview, lumbre: LumbrePreview, isola: IsolaPreview, turnio: TurnioPreview };
+const previews: Record<string, typeof BrincoPreview> = { brinco: BrincoPreview, lumbre: LumbrePreview, isola: IsolaPreview, turnio: TurnioPreview, tesela: TeselaPreview };
 
 const resolved = scenes.map((s) => resolveScene(s, lang));
 const choices = demos
@@ -43,7 +44,7 @@ const first = choices[0];
   lang={lang}
   title={t('meta.title')}
   description={t('meta.description')}
-  fonts={['--font-brand-display', '--font-brand-body', '--font-brinco', '--font-brinco-mono', '--font-lumbre-display', '--font-lumbre-body', '--font-isola', '--font-turnio']}
+  fonts={['--font-brand-display', '--font-brand-body', '--font-brinco', '--font-brinco-mono', '--font-fraunces', '--font-lumbre-body', '--font-isola', '--font-turnio']}
   preload={['--font-brand-display']}
 >
   <SiteHeader lang={lang} current="showcase" />
