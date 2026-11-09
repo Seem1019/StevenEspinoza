@@ -47,6 +47,7 @@ Decisiones tomadas con valores por defecto razonables para no frenar. Cámbialas
 - **Chips de filtro con radio de 8 px**, no píldoras (antipatrón global "pill buttons").
 - **Hover sin animar `box-shadow` ni `background-color`:** el tinte y la sombra más profunda viven en un `::after` cuya opacidad se anima. Así solo se animan `transform`, `opacity` y `filter`.
 - **Fondos de producto:** `BG` en `catalog.ts` pasa de 10 pasteles a 10 neutros fríos casi idénticos; el sprite se recoloreó a grafito/aluminio con un detalle bermellón y trazo 2,6 (antes 3,5).
+- **Inter en pesos estáticos (400/500/600/700), no variable:** la página precarga solo el 700 del h1 (24 KB) en lugar del archivo variable (72 KB). Con el variable más la itálica precargada por error, el LCP simulado en 4G subía a 2,6 s.
 - Medido: Lighthouse móvil 100/100/100/100, LCP 1,1 s, CLS 0.
 
 ## Marcas inventadas

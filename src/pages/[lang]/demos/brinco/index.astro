@@ -51,7 +51,7 @@ const icon = {
 };
 ---
 
-<BaseLayout lang={lang} title={t('meta.title')} description={t('meta.description')} fonts={['--font-brinco', '--font-brinco-mono']} preload={['--font-brinco']} bodyClass="brinco" themeColor="#0B0C10">
+<BaseLayout lang={lang} title={t('meta.title')} description={t('meta.description')} fonts={['--font-brinco', '--font-brinco-mono']} preload={[{ cssVariable: '--font-brinco', weight: 700 }]} bodyClass="brinco" themeColor="#0B0C10">
   <DemoBar lang={lang} />
 
   <div class="b-ticker" role="region" aria-label={t('ticker.label')}>

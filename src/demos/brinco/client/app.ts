@@ -232,12 +232,21 @@ export function initBrinco(): (() => void) | void {
       raf(step);
     });
 
-  const reobserve = () => { io.unobserve(sentinel); io.observe(sentinel); };
+  /*
+   * Trigger = the FIRST ghost, not the sentinel. Ghosts reserve all auto batches up front, so the sentinel
+   * sits below ~120 empty cards and would only fire once the reader had scrolled through all of them.
+   * Watching the first ghost (1200px early) loads each batch while the reader is still on the previous one.
+   */
+  const reobserve = () => {
+    io.disconnect();
+    io.observe(grid.querySelector(':scope > [data-ghost]') ?? sentinel);
+  };
   const loadMore = async (auto: boolean) => {
     if (busy || rendered >= totalNow()) return;
     if (auto && autoCount >= 5) { updateMeta(); return; }
     const g = gen;
     busy = true;
+    let failed = false;
     updateMeta();
     try {
       let items: Product[];
@@ -250,14 +259,14 @@ export function initBrinco(): (() => void) | void {
       rendered += items.length;
       if (auto) autoCount++;
     } catch {
-      /* offline: keep what we have */
+      failed = true; /* offline: keep what we have, retry calmly instead of in a tight loop */
     } finally {
-      if (g === gen) { busy = false; updateMeta(); if (auto) reobserve(); }
+      if (g === gen) { busy = false; updateMeta(); if (auto) { if (failed) later(reobserve, 4000); else reobserve(); } }
     }
   };
   const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) loadMore(true); }, { rootMargin: '1200px 0px' });
-  io.observe(sentinel);
   syncGhosts();
+  reobserve();
   on(moreBtn, 'click', () => loadMore(false));
 
   const scrollToCatalog = () => {

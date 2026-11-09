@@ -62,7 +62,8 @@
 - **`popstate` y `ClientRouter`:** en `window` los listeners se ejecutan en orden de registro aunque sean de captura. Por eso la intercepción de "atrás" vive en un script inline en `<head>` **antes** de `<ClientRouter />`, que llama a `window.__uiPopHandler` (definido en `url-state.ts`). No lo muevas ni lo quites.
 - **Scripts de página:** siempre con `onPage()` (`src/scripts/lifecycle.ts`), que inicializa en `astro:page-load` y limpia en `astro:before-swap`. Nunca DOM a nivel de módulo.
 - **Disparadores de UI:** siempre `<button>`, nunca `<a href="?x">`, porque el router lo trata como navegación.
-- **Catálogo de Brinco:** el hueco de todos los lotes automáticos está reservado con tarjetas "fantasma" (`syncGhosts`). Sin eso, el CLS llegaba a 0,69.
+- **Catálogo de Brinco:** el hueco de todos los lotes automáticos está reservado con tarjetas "fantasma" (`syncGhosts`). Sin eso, el CLS llegaba a 0,69. El `IntersectionObserver` vigila la **primera tarjeta fantasma**, no el centinela del final: el centinela queda debajo de ~120 tarjetas vacías y solo disparaba cuando el usuario ya había bajado por todas ellas (arreglado 2026-11-08; test "loads ahead" en `tests/catalog.spec.ts`).
+- **Fuentes y estilos:** sin `styles: ['normal']` la Fonts API genera y precarga también la itálica. A Brinco eso le costaba 78 KB extra en la ruta crítica y un LCP de 2,6 s. Para precargar un solo peso, configura pesos estáticos y pasa `preload={[{ cssVariable, weight }]}` a `BaseLayout`.
 - **`astro dev` es de una sola instancia por proyecto.** Si un dev server ya corre, el panel no puede arrancar otro: usa `npx astro dev stop`. El agente no tiene permiso para matar procesos por puerto.
 - **Puertos:** dev y preview usan 4321; los tests y `npm run lighthouse` levantan su propio preview en **4330**.
 - **Navegador para tests:** Playwright usa el Chrome del sistema (`channel: 'chrome'`). No descargues navegadores.

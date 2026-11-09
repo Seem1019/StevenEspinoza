@@ -17,8 +17,11 @@ interface Props {
   description: string;
   /** Font cssVariables used by this page (configured in astro.config.mjs). */
   fonts?: string[];
-  /** Subset of `fonts` to preload (only the LCP text font). */
-  preload?: string[];
+  /**
+   * Subset of `fonts` to preload (only the LCP text font). Use `{ cssVariable, weight }` to preload a single
+   * weight of a family configured with static weights (e.g. only the h1 weight).
+   */
+  preload?: (string | { cssVariable: string; weight: number })[];
   bodyClass?: string;
   themeColor?: string;
   /** Render the global contact dialog (default true). */
@@ -41,6 +44,10 @@ const site = Astro.site ?? new URL('http://localhost');
 const canonical = new URL(Astro.url.pathname, site).href;
 const alternates = locales.map((l) => ({ l, href: new URL(switchLangPath(Astro.url.pathname, l), site).href }));
 type FontVar = Parameters<typeof Font>[0]['cssVariable'];
+const preloadFor = (v: string) => {
+  const hit = preload.find((p) => (typeof p === 'string' ? p : p.cssVariable) === v);
+  return hit === undefined ? false : typeof hit === 'string' ? true : [{ weight: hit.weight }];
+};
 ---
 
 <!doctype html>
@@ -61,7 +68,7 @@ type FontVar = Parameters<typeof Font>[0]['cssVariable'];
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href={baseUrl('favicon.svg')} type="image/svg+xml" />
-    {fonts.map((v) => <Font cssVariable={v as FontVar} preload={preload.includes(v)} />)}
+    {fonts.map((v) => <Font cssVariable={v as FontVar} preload={preloadFor(v)} />)}
     {/*
       Must run BEFORE ClientRouter registers its popstate listener: window listeners fire in
       registration order, so this classic inline script is what lets src/scripts/url-state.ts

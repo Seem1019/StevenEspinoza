@@ -25,6 +25,26 @@ async function measureCls(page: Page) {
   });
 }
 
+for (const vp of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) test(`next batch loads ahead of the reader at ${vp.width}px: no placeholder cards reach the viewport on a normal scroll`, async ({ page }) => {
+  await quiet(page);
+  await page.setViewportSize(vp);
+  await page.goto(PAGE);
+  await expect(page.locator('[data-grid] > li:not([data-ghost])')).toHaveCount(24);
+  // Read down the grid one screen at a time, pausing like a shopper would.
+  const top = await page.locator('[data-grid]').evaluate((g) => g.getBoundingClientRect().top + scrollY);
+  for (let y = top; y < top + 9000; y += 700) {
+    await page.evaluate((v) => scrollTo(0, v), y);
+    await page.waitForTimeout(600);
+    const ghostsInView = await page.evaluate(() =>
+      [...document.querySelectorAll('[data-grid] > [data-ghost]')].filter((g) => {
+        const r = g.getBoundingClientRect();
+        return r.bottom > 0 && r.top < innerHeight;
+      }).length,
+    );
+    expect(ghostsInView, `placeholder cards on screen at scrollY ${Math.round(y)}`).toBe(0);
+  }
+});
+
 test('infinite catalog loads batches without layout shift, footer stays reachable', async ({ page }) => {
   await quiet(page);
   await measureCls(page);
