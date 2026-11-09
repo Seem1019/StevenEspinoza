@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-09 · **Rama:** `claude/beautiful-pascal-o4wsu9` (commit local, sin push ni fusionar en `main`) · **Último trabajo:** quinta demo, **Tesela Studio** (estudio de producto con IA, servicios profesionales), ver `docs/decisions.md` → "Demo Tesela Studio" · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
+**Última actualización:** 2026-11-09 · **Rama:** `claude/beautiful-pascal-o4wsu9` (fusionado en `main`) · **Último trabajo:** quinta demo, **Tesela Studio** (estudio de producto con IA, servicios profesionales), ver `docs/decisions.md` → "Demo Tesela Studio"; arreglo del scroll-driven de Turnio, Isola y Lumbre, que no animaba en producción · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
 
 ---
 
@@ -36,7 +36,7 @@
 - `npm run build`: sin errores ni avisos.
 - Playwright: **41/41** pasan (4 nuevos en `tests/tesela.spec.ts`) (+6 de capturas cronometradas que solo corren con `npm run screenshots:agents`).
 - Lighthouse móvil (home es/en con la puerta de la intro, showcase y cada demo): **100/100/100/100**, LCP 0,9–1,4 s, CLS ≤ 0,012, TBT ≤ 10 ms.
-- 2026-11-09 (contenedor en la nube, CPU más lenta): Tesela **100/100/100/100**, LCP 1,1 s, CLS 0,003. El resto pasa (rendimiento 97–100); el TBT sube a 80–190 ms en showcase, Brinco y Lumbre en esta máquina, y no lo he comparado con `main` aquí.
+- 2026-11-09 (contenedor en la nube, CPU más lenta): todas las páginas **100/100/100/100** (Tesela LCP 1,1 s, CLS 0,002). Entre pasadas el rendimiento oscila 97–100. El TBT de 60–190 ms en showcase, Brinco y Lumbre es de esta máquina: `main` medido aquí da lo mismo (showcase 60–100, Brinco 20–90, Lumbre 140–180 ms).
 - Capturas de la intro y de Brinco/Lumbre en 390 y 1440 px, en 15 momentos: `test-results/agents/` (no versionado).
 - Tabla completa en `README.md` y `reports/lighthouse/summary.md`.
 
@@ -51,8 +51,7 @@
    - Isola: su `BuildPreview` mide unos 2.420 px de alto (el contrato pide unos 2.200).
    - Brinco: la ruleta que se abre sola no crea entrada de historial, así que "atrás" no la cierra (Esc y su botón sí). Se arregla con `openUi` en lugar de `showModal` directo en `src/demos/brinco/client/app.ts`.
 
-6. **Scroll-driven roto en Turnio e Isola:** el minificador mete `animation-timeline` en el shorthand `animation` y Chrome descarta la declaración, así que sus reveals no animan (el contenido se ve completo). Arreglo: pasar el timeline por `var()` como en Tesela y Lumbre (ver la skill `scroll-animation-patterns`, regla 3).
-7. **Detalles conocidos del motor de agentes:**
+6. **Detalles conocidos del motor de agentes:**
    - En móvil el menú del header está oculto, así que el fallo "enlace en inglés" de la home no se ve ni se marca (QA marca 4 de 5). Está previsto: el motor ignora objetivos no renderizados.
    - A 1440×900 el panel flotante tapa media tarjeta de Turnio durante la construcción; se aparta cuando el foco cae debajo, pero no antes.
    - El CLS de la home (0,007–0,012) viene de la puerta inicial; no afecta a la nota.
