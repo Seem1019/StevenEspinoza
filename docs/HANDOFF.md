@@ -2,7 +2,7 @@
 
 > Se carga automáticamente vía `@docs/HANDOFF.md` en `CLAUDE.md`. Las reglas estables están en `CLAUDE.md`; este archivo es el **estado vivo**: actualízalo al terminar cada sesión (qué cambió, qué queda, fecha).
 
-**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último trabajo:** motor de agentes (intro de la home + showcase), ver commit "Shared agents engine" · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
+**Última actualización:** 2026-11-08 · **Rama:** `main` · **Último trabajo:** rediseño visual de Brinco ("obsidiana y alabastro de precisión"), ver `docs/decisions.md` → "Rediseño de Brinco" · **Árbol de trabajo:** limpio · **Remoto:** `origin` = `Seem1019/StevenEspinoza` (público) · **Publicado:** https://seem1019.github.io/StevenEspinoza/
 
 ---
 
@@ -21,7 +21,7 @@
 | Home + galería (detalle en `<dialog>` con `?demo=`) | ✅ | `src/pages/[lang]/index.astro` |
 | Contacto: QR con la vCard completa + descarga `.vcf` | ✅ | `src/components/site/ContactDialog.astro`, `src/pages/steven-espinoza.vcf.ts` |
 | Navegación sin recarga + estado en URL + "atrás" cierra la UI | ✅ | `src/scripts/url-state.ts`, `src/layouts/BaseLayout.astro` |
-| **Brinco**: e-commerce de descuentos, 240 productos, ruleta, carrito, checkout simulado | ✅ | `src/demos/brinco/` |
+| **Brinco**: e-commerce de descuentos, 240 productos, ruleta (dial de precisión), carrito, checkout simulado. Rediseño 2026-11-08: obsidiana + alabastro, acento bermellón, Inter + JetBrains Mono | ✅ | `src/demos/brinco/` |
 | **Lumbre**: restaurante "scroll-world" (entrada → barra → cocina → mesa), menú, reserva | ✅ | `src/demos/lumbre/` |
 | **Isola**: auriculares premium, three.js procedural que gira y se despieza con el scroll | ✅ | `src/demos/isola/` |
 | **Turnio**: landing SaaS (precios mensual/anual, tour, FAQ, alta) | ✅ | `src/demos/turnio/` |
@@ -69,6 +69,8 @@
 - **Dependencias:** instala con `npm ci --ignore-scripts`; ninguna necesita scripts de instalación.
 - **Capturas en blanco:** las tarjetas de la galería usan `content-visibility: auto`. Una captura de un elemento fuera del viewport sale vacía; haz scroll antes de capturar.
 - **Textos (i18n):** si es y en no tienen las mismas claves, el build falla a propósito. Todo texto visible va en `src/i18n/<lang>/<ns>.json`.
+- **Brinco y su acento:** texto sobre `#FF3B1D` siempre en obsidiana (blanco no llega a 4,5:1); precios sobre blanco en `#D42A0E`. Los hovers animan la opacidad de un `::after`, nunca `box-shadow` ni `background-color`.
+- **Gradientes dentro de `<dialog>` cerrado:** Chrome no pinta un `url(#id)` cuyo `<defs>` está en un subárbol `display:none`. Por eso `Wheel.astro` genera ids únicos por instancia.
 - **Tamaño de three.js:** el chunk pesa unos 137 KB gz y por eso se subió `chunkSizeWarningLimit`. Nunca debe cargarse antes del primer scroll; Lighthouse no hace scroll.
 
 ## 5. Cómo verificar antes de dar algo por terminado

@@ -4,7 +4,7 @@
 Todas las ilustraciones (productos, escenas del restaurante, producto 3D, iconos) están dibujadas en el proyecto con SVG/CSS o generadas por código (three.js procedimental). No hay fotos de personas ni de marcas. Si se añade una imagen de terceros, regístrala aquí: archivo, autor, fuente, licencia.
 
 ## Fuentes (self-hosted vía Fontsource, SIL Open Font License 1.1)
-Bricolage Grotesque, Instrument Sans, Rubik, Fraunces, Work Sans, Manrope, Plus Jakarta Sans.
+Bricolage Grotesque, Instrument Sans, Inter, JetBrains Mono, Fraunces, Work Sans, Manrope, Plus Jakarta Sans.
 
 ## Código y skills de terceros
 - `landing-page-design` — elayadesign/ai-design-skills, MIT (`.claude/skills/landing-page-design/LICENSE`).

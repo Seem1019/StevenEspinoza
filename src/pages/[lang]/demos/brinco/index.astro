@@ -42,16 +42,16 @@ const payload = {
 };
 
 const icon = {
-  search: '<path d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5L21 21" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
-  cart: '<path d="M2 4h3l2.5 11h11L21 7H6.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><circle cx="9" cy="19.5" r="1.8" fill="currentColor"/><circle cx="17" cy="19.5" r="1.8" fill="currentColor"/>',
-  close: '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
-  bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor"/>',
-  filter: '<path d="M3 5h18M6 12h12M10 19h4" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
-  back: '<path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>',
+  search: '<path d="M10.5 4.5a6 6 0 1 1 0 12 6 6 0 0 1 0-12zM15 15l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  cart: '<path d="M3 4.5h2.2l2.3 10.5h10.6L20.5 7.5H6.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="19" r="1.4" fill="currentColor"/><circle cx="17" cy="19" r="1.4" fill="currentColor"/>',
+  close: '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  bolt: '<path d="M13 2.5L5 13.5h6.2l-1 8 8-11h-6.2z" fill="currentColor"/>',
+  filter: '<path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  back: '<path d="M14.5 5.5L8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
 };
 ---
 
-<BaseLayout lang={lang} title={t('meta.title')} description={t('meta.description')} fonts={['--font-brinco']} preload={['--font-brinco']} bodyClass="brinco" themeColor="#FF2E4D">
+<BaseLayout lang={lang} title={t('meta.title')} description={t('meta.description')} fonts={['--font-brinco', '--font-brinco-mono']} preload={['--font-brinco']} bodyClass="brinco" themeColor="#0B0C10">
   <DemoBar lang={lang} />
 
   <div class="b-ticker" role="region" aria-label={t('ticker.label')}>
@@ -88,8 +88,8 @@ const icon = {
           <h1 id="b-hero-title" class="b-hero__title">{t('hero.title')}</h1>
           <p class="b-hero__sub">{t('hero.sub', { free })}</p>
           <div class="b-hero__ctas">
-            <button type="button" class="b-btn b-btn--yellow b-btn--xl" data-scroll-catalog>{t('hero.ctaShop')}</button>
-            <button type="button" class="b-btn b-btn--red b-btn--xl" data-open-wheel>{t('hero.ctaSpin')}</button>
+            <button type="button" class="b-btn b-btn--light b-btn--xl" data-scroll-catalog>{t('hero.ctaShop')}</button>
+            <button type="button" class="b-btn b-btn--primary b-btn--xl" data-open-wheel>{t('hero.ctaSpin')}</button>
           </div>
         </div>
         <div class="b-hero__art" aria-hidden="true">
@@ -149,7 +149,7 @@ const icon = {
               <span class="sr-only">{t('catalog.sort')}</span>
               <select data-sort>{Object.entries(sorts).map(([k, v]) => <option value={k}>{v}</option>)}</select>
             </label>
-            <button type="button" class="b-btn b-btn--ink b-filterbtn" data-open-filters>
+            <button type="button" class="b-btn b-btn--dark b-filterbtn" data-open-filters>
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" set:html={icon.filter} />
               {t('catalog.filters')}<span class="b-filterbtn__n" data-filter-n hidden>0</span>
             </button>
@@ -161,12 +161,12 @@ const icon = {
         </ul>
         <div class="b-empty" data-empty hidden>
           <p>{t('catalog.empty')}</p>
-          <button type="button" class="b-btn b-btn--yellow" data-clear>{t('catalog.clear')}</button>
+          <button type="button" class="b-btn b-btn--light" data-clear>{t('catalog.clear')}</button>
         </div>
         <div class="b-sentinel" data-sentinel aria-hidden="true"></div>
         <div class="b-more">
           <p class="b-more__loading" data-loading hidden>{t('catalog.loading')}</p>
-          <button type="button" class="b-btn b-btn--ink b-btn--xl" data-more hidden>{t('catalog.more')}</button>
+          <button type="button" class="b-btn b-btn--dark b-btn--xl" data-more hidden>{t('catalog.more')}</button>
           <p class="b-more__end" data-end hidden>{t('catalog.end')}</p>
         </div>
       </div>
@@ -176,7 +176,7 @@ const icon = {
       <div class="b-wrap b-final__in">
         <h2 id="b-final-title">{t('final.title')}</h2>
         <p>{t('final.text')}</p>
-        <button type="button" class="b-btn b-btn--yellow b-btn--xl" data-open-contact>{t('final.cta')}</button>
+        <button type="button" class="b-btn b-btn--primary b-btn--xl" data-open-contact>{t('final.cta')}</button>
       </div>
     </section>
   </main>
@@ -226,11 +226,11 @@ const icon = {
             <output data-qv-qty aria-live="polite">1</output>
             <button type="button" data-qv-inc aria-label={t('quick.more')}>+</button>
           </div>
-          <button type="button" class="b-btn b-btn--red b-btn--xl b-qv__add" data-qv-add><span>{t('quick.add')}</span></button>
+          <button type="button" class="b-btn b-btn--primary b-btn--xl b-qv__add" data-qv-add><span>{t('quick.add')}</span></button>
         </div>
         <p class="b-qv__done" data-qv-done hidden>
           <span>{t('quick.added')}</span>
-          <button type="button" class="b-btn b-btn--ink" data-qv-gocart>{t('quick.goCart')}</button>
+          <button type="button" class="b-btn b-btn--dark" data-qv-gocart>{t('quick.goCart')}</button>
         </p>
         <p class="b-qv__desc">{t('quick.desc')}</p>
       </div>
@@ -255,7 +255,7 @@ const icon = {
         <ul class="b-lines" role="list" data-lines></ul>
         <div class="b-cart-empty" data-cart-empty hidden>
           <p>{t('cart.empty')}</p>
-          <button type="button" class="b-btn b-btn--yellow" data-cart-explore>{t('cart.emptyCta')}</button>
+          <button type="button" class="b-btn b-btn--light" data-cart-explore>{t('cart.emptyCta')}</button>
         </div>
       </div>
 
@@ -283,7 +283,7 @@ const icon = {
         <h3 class="b-done__h">{t('checkout.doneTitle')}</h3>
         <p class="b-done__id" data-order-id></p>
         <p>{t('checkout.doneText')}</p>
-        <button type="button" class="b-btn b-btn--yellow b-btn--xl" data-done-close>{t('checkout.doneCta')}</button>
+        <button type="button" class="b-btn b-btn--primary b-btn--xl" data-done-close>{t('checkout.doneCta')}</button>
       </div>
 
       <footer class="b-drawer__foot" data-totals>
@@ -295,7 +295,7 @@ const icon = {
           <div class="b-totals__total"><dt>{t('cart.total')}</dt><dd data-total></dd></div>
         </dl>
         <p class="b-totals__save" data-savings></p>
-        <button type="button" class="b-btn b-btn--red b-btn--xl b-btn--block" data-co-next>{t('cart.checkout')}</button>
+        <button type="button" class="b-btn b-btn--primary b-btn--xl b-btn--block" data-co-next>{t('cart.checkout')}</button>
       </footer>
     </div>
   </dialog>
@@ -338,7 +338,7 @@ const icon = {
       </div>
       <footer class="b-drawer__foot b-drawer__foot--row">
         <button type="button" class="b-btn b-btn--ghost" data-clear>{t('filters.clear')}</button>
-        <button type="button" class="b-btn b-btn--red b-btn--xl" data-f-apply>{t('filters.apply', { n: TOTAL })}</button>
+        <button type="button" class="b-btn b-btn--primary b-btn--xl" data-f-apply>{t('filters.apply', { n: TOTAL })}</button>
       </footer>
     </div>
   </dialog>
@@ -355,11 +355,11 @@ const icon = {
       </div>
       <div class="b-wheel__result" aria-live="polite" data-wheel-result></div>
       <div class="b-wheel__actions">
-        <button type="button" class="b-btn b-btn--red b-btn--xl b-btn--block" data-spin>{t('wheel.spin')}</button>
+        <button type="button" class="b-btn b-btn--primary b-btn--xl b-btn--block" data-spin>{t('wheel.spin')}</button>
         <div class="b-ticket" data-ticket hidden>
           <span class="b-ticket__code">{COUPON.code}</span><span class="b-ticket__pct">-{COUPON.pct}%</span>
         </div>
-        <button type="button" class="b-btn b-btn--yellow b-btn--xl b-btn--block" data-use-coupon hidden>{t('wheel.use')}</button>
+        <button type="button" class="b-btn b-btn--primary b-btn--xl b-btn--block" data-use-coupon hidden>{t('wheel.use')}</button>
       </div>
       <p class="b-wheel__terms">{t('wheel.terms')}</p>
     </div>
@@ -368,7 +368,7 @@ const icon = {
   <!-- Overlays (position: fixed, never push content) -->
   <div class="b-sticky" data-sticky aria-hidden="true">
     <div class="b-sticky__txt"><span data-sticky-text></span><span class="b-ship__bar" aria-hidden="true"><span data-sticky-bar></span></span></div>
-    <button type="button" class="b-btn b-btn--yellow" data-open-cart tabindex="-1">{t('sticky.open')}</button>
+    <button type="button" class="b-btn b-btn--primary" data-open-cart tabindex="-1">{t('sticky.open')}</button>
   </div>
   <div class="b-toasts" role="region" aria-label={t('social.region')}>
     <div aria-live="polite" data-toasts></div>

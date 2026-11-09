@@ -18,7 +18,7 @@ export const demos: DemoEntry[] = [
     slug: 'brinco',
     ns: 'brinco',
     sector: 'ecommerce',
-    card: { bg: '#FF2E4D', fg: '#FFFFFF', accent: '#FFE600' },
+    card: { bg: '#0B0C10', fg: '#FFFFFF', accent: '#FF3B1D' },
     techniques: ['infiniteCatalog', 'urlState', 'gamification', 'inp'],
   },
   {

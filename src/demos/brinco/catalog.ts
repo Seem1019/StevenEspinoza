@@ -14,7 +14,8 @@ export const SHIP_STD = 3.99;
 export const SHIP_EXPRESS = 6.99;
 
 /** Bright per-product backgrounds for the SVG art. */
-export const BG = ['#FFE600', '#FF8FA3', '#7CF0FF', '#B6FF5C', '#FFB020', '#C9A7FF', '#5CFFB0', '#FF9E6B', '#9EC9FF', '#FFF27A'];
+/** Studio backdrops: near-identical cool neutrals so every product reads as shot in the same studio. */
+export const BG = ['#F1F2F4', '#EEEFF2', '#F2F3F5', '#EDEEF1', '#F0F1F3', '#EFF0F3', '#F1F2F5', '#ECEDF0', '#F0F1F4', '#EEF0F2'];
 export const BADGES = ['', 'flash', 'hot', 'new', 'top'] as const;
 
 /** [id, name, cat, priceCents, origCents, rating x10, sold, stock, badge, bg, icon] */

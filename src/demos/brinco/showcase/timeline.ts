@@ -13,7 +13,7 @@ const scene: Scene = {
   prefix: 'showcase',
   duration: 37,
   errors: [
-    { id: 'cta-contrast', target: '[data-build=title] .bpb-btn--y', owner: 'design', flag: 'ctaContrast', paint: { color: '#fff7b8' } },
+    { id: 'cta-contrast', target: '[data-build=title] .bpb-btn--l', owner: 'design', flag: 'ctaContrast', paint: { color: '#e4e4e7' } },
     { id: 'price-off', target: '[data-build=card2] .bpb-card__price', owner: 'frontend', flag: 'priceOff', xf: { x: 26, y: -16 } },
     { id: 'add-lang', target: '[data-build=card4] .bpb-card__add', owner: 'copy', flag: 'addLang', swapKey: { ns: 'brinco', key: 'card.add' } },
   ],
@@ -130,7 +130,7 @@ const scene: Scene = {
     { at: 27.0, do: 'move', agent: 'design', target: '.bpb-logo b', anchor: 'center' },
     { at: 27.9, do: 'pick', agent: 'design', color: '#111111' },
     { at: 28.0, do: 'say', agent: 'design', say: 'dPick' },
-    { at: 28.7, do: 'move', agent: 'design', target: '[data-build=title] .bpb-btn--y', anchor: 'center' },
+    { at: 28.7, do: 'move', agent: 'design', target: '[data-build=title] .bpb-btn--l', anchor: 'center' },
     { at: 29.6, do: 'fix', agent: 'design', error: 'cta-contrast', dur: 0.6 },
     { at: 30.3, do: 'say', agent: 'design', say: 'dFixCta' },
 

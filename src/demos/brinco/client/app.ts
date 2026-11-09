@@ -6,7 +6,7 @@
 import { prefersReducedMotion, yieldToMain } from '../../../scripts/lifecycle';
 import { onUrlState, openUi, closeUi, setParams, adoptDeepLink } from '../../../scripts/url-state';
 import { decode, claimed, BADGES, type Tuple, type Product } from '../catalog';
-import { money, compact, dec1, fill, rot, CAT_SLUGS } from '../format';
+import { money, compact, dec1, fill, CAT_SLUGS } from '../format';
 
 type Dict = Record<string, any>;
 interface Data {
@@ -81,7 +81,6 @@ export function initBrinco(): (() => void) | void {
     const li = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
     li.dataset.id = String(p.id);
     li.style.setProperty('--bg', D.bg[p.bg]);
-    li.style.setProperty('--rot', `${rot(p.id)}deg`);
     if (anim && !reduced) li.classList.add('is-new');
     const art = q('.bc__art', li);
     art.dataset.quick = String(p.id);
@@ -386,7 +385,7 @@ export function initBrinco(): (() => void) | void {
 
   const burst = (el: HTMLElement) => {
     if (reduced) return;
-    const colors = ['#FF2E4D', '#FFE600', '#19E07A', '#111111', '#7CF0FF', '#FF8FA3'];
+    const colors = ['#FF3B1D', '#0B0C10', '#A1A1AA', '#FF3B1D', '#D4D4D8', '#52525B'];
     for (let i = 0; i < 8; i++) {
       const s = document.createElement('span');
       s.className = 'b-burst';
@@ -685,11 +684,11 @@ export function initBrinco(): (() => void) | void {
     const dy = to.top + to.height / 2 - (from.top + from.height / 2);
     const anim = fly.animate(
       [
-        { transform: 'translate(0,0) rotate(-3deg) scale(1)', opacity: 1 },
-        { transform: `translate(${dx * 0.45}px, ${dy * 0.45 - 90}px) rotate(-18deg) scale(0.8)`, opacity: 1, offset: 0.45 },
-        { transform: `translate(${dx}px, ${dy}px) rotate(12deg) scale(0.12)`, opacity: 0.3 },
+        { transform: 'translate(0,0) scale(1)', opacity: 1, filter: 'blur(0px)' },
+        { transform: `translate(${dx * 0.45}px, ${dy * 0.45 - 70}px) scale(0.78)`, opacity: 1, filter: 'blur(0px)', offset: 0.45 },
+        { transform: `translate(${dx}px, ${dy}px) scale(0.16)`, opacity: 0.2, filter: 'blur(2px)' },
       ],
-      { duration: 900, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' },
+      { duration: 820, easing: 'cubic-bezier(0.32, 0.72, 0, 1)' },
     );
     anim.onfinish = () => { fly.remove(); applyCoupon(); };
     signal.addEventListener('abort', () => fly.remove());
@@ -743,7 +742,7 @@ export function initBrinco(): (() => void) | void {
     const el = document.createElement('div');
     el.className = 'b-toast is-in';
     el.style.setProperty('--bg', D.bg[p.bg]);
-    el.innerHTML = `<span class="b-toast__art"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="${D.sprite}#i${p.icon}"/></svg></span><div><p></p><small></small></div><button type="button" class="b-x"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3"/></svg></button>`;
+    el.innerHTML = `<span class="b-toast__art"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="${D.sprite}#i${p.icon}"/></svg></span><div><p></p><small></small></div><button type="button" class="b-x"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 6v12M15 6v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>`;
     q('p', el).textContent = fill(S.social.bought, { city: cities[Math.floor(Math.random() * cities.length)], product: p.name });
     q('small', el).textContent = `${fill(S.social.ago, { n: 1 + Math.floor(Math.random() * 9) })} · ${S.social.sample}`;
     const pause = q('button', el);

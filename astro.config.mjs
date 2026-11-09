@@ -30,7 +30,8 @@ export default defineConfig({
     { provider: fontProviders.fontsource(), name: 'Bricolage Grotesque', cssVariable: '--font-brand-display', weights: ['500 800'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
     { provider: fontProviders.fontsource(), name: 'Instrument Sans', cssVariable: '--font-brand-body', weights: ['400 700'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
     // Demo: Brinco (e-commerce)
-    { provider: fontProviders.fontsource(), name: 'Rubik', cssVariable: '--font-brinco', weights: ['400 900'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
+    { provider: fontProviders.fontsource(), name: 'Inter', cssVariable: '--font-brinco', weights: ['400 700'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },
+    { provider: fontProviders.fontsource(), name: 'JetBrains Mono', cssVariable: '--font-brinco-mono', weights: ['400 700'], subsets: latin, display: 'swap', fallbacks: ['ui-monospace', 'monospace'] },
     // Demo: Lumbre (restaurant)
     { provider: fontProviders.fontsource(), name: 'Fraunces', cssVariable: '--font-lumbre-display', weights: ['400 700'], styles: ['normal'], subsets: latin, display: 'swap', fallbacks: ['Georgia', 'serif'] },
     { provider: fontProviders.fontsource(), name: 'Work Sans', cssVariable: '--font-lumbre-body', weights: ['400 600'], subsets: latin, display: 'swap', fallbacks: ['system-ui', 'sans-serif'] },

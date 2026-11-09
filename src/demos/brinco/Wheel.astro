@@ -1,28 +1,62 @@
 ---
-/** Prize wheel SVG (8 segments, clockwise from 12 o'clock). Used by the wheel dialog, the hero teaser and BuildPreview. */
+/**
+ * Prize wheel as a precision dial (8 segments, clockwise from 12 o'clock). Used by the wheel dialog,
+ * the hero teaser and BuildPreview. Gradient ids are unique per instance: a closed <dialog> is
+ * display:none, and Chrome won't paint a gradient defined inside a hidden subtree.
+ */
 interface Props { labels: string[]; class?: string; id?: string }
 const { labels, class: cls, id } = Astro.props;
-const C = 110, R = 102;
-const FILL = ['#FF2E4D', '#FFE600', '#19E07A', '#FFFFFF'];
-const INK = ['#111111', '#111111', '#111111', '#111111'];
+const uid = `bw${Math.random().toString(36).slice(2, 8)}`;
+const C = 110, R = 94;
+const FILL = ['#14151A', '#1C1D23'];
 const pt = (deg: number, r = R) => {
   const a = (deg * Math.PI) / 180;
   return `${(C + r * Math.sin(a)).toFixed(2)} ${(C - r * Math.cos(a)).toFixed(2)}`;
 };
 const segs = labels.map((label, i) => ({
   d: `M${C} ${C} L${pt(i * 45)} A${R} ${R} 0 0 1 ${pt((i + 1) * 45)} Z`,
-  fill: FILL[i % 4],
-  ink: INK[i % 4],
+  fill: FILL[i % 2],
   mid: i * 45 + 22.5,
   label,
 }));
+// 72 ticks on the bezel; every 9th (segment boundary) is long.
+const ticks = Array.from({ length: 72 }, (_, i) => {
+  const deg = i * 5;
+  const major = i % 9 === 0;
+  return { a: pt(deg, major ? 97 : 99), b: pt(deg, 104), major };
+});
+const mono = 'font-family: var(--font-brinco-mono), ui-monospace, SFMono-Regular, monospace; font-variant-numeric: tabular-nums;';
 ---
 <svg class={cls} id={id} viewBox="0 0 220 220" aria-hidden="true">
-  <circle cx={C} cy={C} r={R + 5} fill="#111" stroke="#FFE600" stroke-width="3" />
-  {segs.map((s) => <path d={s.d} fill={s.fill} stroke="#111" stroke-width="3" />)}
+  <defs>
+    <linearGradient id={`${uid}-bezel`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A3B42" />
+      <stop offset="0.5" stop-color="#1A1B20" />
+      <stop offset="1" stop-color="#2C2D33" />
+    </linearGradient>
+    <radialGradient id={`${uid}-spec`} cx="0.32" cy="0.22" r="0.85">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.09" />
+      <stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id={`${uid}-hub`} x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#F4F4F5" />
+      <stop offset="0.45" stop-color="#A1A1AA" />
+      <stop offset="1" stop-color="#52525B" />
+    </linearGradient>
+  </defs>
+  <circle cx={C} cy={C} r="108" fill={`url(#${uid}-bezel)`} />
+  <circle cx={C} cy={C} r="107.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1" />
+  {ticks.map((k) => <line x1={k.a.split(' ')[0]} y1={k.a.split(' ')[1]} x2={k.b.split(' ')[0]} y2={k.b.split(' ')[1]} stroke="#FFFFFF" stroke-opacity={k.major ? 0.55 : 0.22} stroke-width={k.major ? 1.1 : 0.7} />)}
+  {segs.map((s) => <path d={s.d} fill={s.fill} />)}
+  {segs.map((_, i) => <line x1={C} y1={C} x2={pt(i * 45).split(' ')[0]} y2={pt(i * 45).split(' ')[1]} stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="0.8" />)}
+  <circle cx={C} cy={C} r={R} fill={`url(#${uid}-spec)`} stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="0.8" />
   {segs.map((s) => (
-    <text x={C + 60} y={C} fill={s.ink} transform={`rotate(${s.mid - 90} ${C} ${C})`} text-anchor="middle" dominant-baseline="middle" font-size="19" font-weight="900" font-family="var(--font-brinco), system-ui, sans-serif">{s.label}</text>
+    // Radial labels; the left half is flipped 180° so no label reads upside down.
+    <text x={s.mid > 180 ? C - 58 : C + 58} y={C} fill="#E4E4E7" transform={`rotate(${s.mid > 180 ? s.mid + 90 : s.mid - 90} ${C} ${C})`} text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="600" letter-spacing="-0.2" style={mono}>{s.label}</text>
   ))}
-  <circle cx={C} cy={C} r="18" fill="#FFE600" stroke="#111" stroke-width="4" />
-  <circle cx={C} cy={C} r="6" fill="#111" />
+  <circle cx={C} cy={C} r="22" fill="#0B0C10" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="0.8" />
+  <circle cx={C} cy={C} r="17" fill={`url(#${uid}-hub)`} />
+  <circle cx={C} cy={C} r="17" fill="none" stroke="#000000" stroke-opacity="0.35" stroke-width="0.8" />
+  <circle cx={C} cy={C} r="6" fill="#FF3B1D" />
+  <circle cx={C - 1.6} cy={C - 1.8} r="1.6" fill="#FFFFFF" fill-opacity="0.55" />
 </svg>

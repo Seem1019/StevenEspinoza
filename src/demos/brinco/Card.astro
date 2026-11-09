@@ -2,14 +2,14 @@
 /** Product card. Same markup is cloned from <template> on the client (client/render.ts fills every field). */
 import { useT, type Lang } from '../../i18n';
 import { BG, BADGES, locale, type Product } from './catalog';
-import { money, compact, dec1, rot } from './format';
+import { money, compact, dec1 } from './format';
 interface Props { p: Product; lang: Lang; sprite: string }
 const { p, lang, sprite } = Astro.props;
 const t = useT(lang, 'brinco');
 const loc = locale(lang);
 const badge = BADGES[p.badge];
 ---
-<li class="bc" data-id={p.id} style={`--bg:${BG[p.bg]};--rot:${rot(p.id)}deg`}>
+<li class="bc" data-id={p.id} style={`--bg:${BG[p.bg]}`}>
   <button type="button" class="bc__art" data-quick={p.id} aria-label={t('card.view', { name: p.name })}>
     <svg class="bc__icon" viewBox="0 0 64 64" aria-hidden="true"><use href={`${sprite}#i${p.icon}`} /></svg>
     <span class="bc__off">-{p.off}%</span>
@@ -21,7 +21,7 @@ const badge = BADGES[p.badge];
     <p class="bc__meta"><span aria-hidden="true" class="bc__star">★</span> <span class="bc__rate">{dec1(p.rating, loc)}</span> <span class="bc__dot" aria-hidden="true">·</span> <span class="bc__sold">{t('card.sold', { n: compact(p.sold, loc) })}</span></p>
     <p class="bc__low" data-on={p.stock <= 11 ? '1' : '0'}>{t('card.low', { n: p.stock })}</p>
     <button type="button" class="bc__add" data-add={p.id} aria-label={t('card.addLabel', { name: p.name })}>
-      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="3" stroke-linecap="square" /></svg>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
       <span class="bc__add-t">{t('card.add')}</span>
     </button>
   </div>

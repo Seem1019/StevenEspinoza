@@ -21,5 +21,4 @@ export const moneyShort = (usd: number, loc: string) =>
 export const compact = (n: number, loc: string) => nf(loc, 'c').format(n);
 export const dec1 = (r10: number, loc: string) => nf(loc, 'd').format(r10 / 10);
 export const fill = (s: string, vars: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? `{${k}}`));
-export const rot = (id: number) => ((id * 7) % 5) * 4 - 8;
 export const CAT_SLUGS = ['tech', 'home', 'beauty', 'fashion', 'sports', 'toys', 'kitchen', 'pets'];

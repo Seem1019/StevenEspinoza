@@ -40,6 +40,15 @@ Decisiones tomadas con valores por defecto razonables para no frenar. Cámbialas
 - **Intro de la home:** el contenido real está en el HTML inicial. Un script inline en `<head>` decide antes del primer pintado si mostrar la puerta (`html[data-intro="gate"]`): no con `prefers-reduced-motion`, bots, enlaces profundos (`?demo=`, `#hash`) ni si ya se vio en la sesión (`sessionStorage`, con try/catch). Si el módulo no llega a ejecutarse, un temporizador de 4 s quita la puerta. El motor se carga con `import()` en reposo o al pulsar "Empezar". Se eligió `sessionStorage` (no `localStorage`) para que en cada reunión, en una pestaña nueva, la intro vuelva a salir; siempre queda el botón "Ver la intro otra vez".
 - Lighthouse mide la puerta tal cual la ve un visitante nuevo (no se excluye por user agent): home 100/100/100/100, LCP 1,1 s.
 
+## Rediseño de Brinco (2026-11-08)
+- De neo-brutalista (bordes negros gruesos, sombras duras, amarillo, pegatinas giradas) a **"obsidiana y alabastro de precisión"**: arriba obsidiana `#0B0C10`, catálogo zinc/alabastro con tarjetas blancas, un solo acento bermellón `#FF3B1D`. Se conservan todas las mecánicas (ticker, header con búsqueda y carrito, ruleta, flash con cuenta atrás y barras de stock, catálogo infinito con filtros, toasts con pausa). Sistema completo en `src/demos/brinco/DESIGN.md`.
+- **Texto sobre el bermellón en obsidiana, no en blanco:** blanco sobre `#FF3B1D` da 3,6:1 (no pasa AA en texto normal); obsidiana da 5,9:1. Los precios sobre blanco usan `#D42A0E` (5,1:1).
+- **Fuentes:** Inter (UI) + JetBrains Mono (precios, descuentos, cuenta atrás, contadores, cupón, etiquetas del dial) por la Fonts API con Fontsource, no por Google Fonts: autoalojadas, sin CSS externo que bloquee el render. Solo Inter se precarga (LCP = h1). Mono solo para datos, nunca para etiquetas (antipatrón global).
+- **Chips de filtro con radio de 8 px**, no píldoras (antipatrón global "pill buttons").
+- **Hover sin animar `box-shadow` ni `background-color`:** el tinte y la sombra más profunda viven en un `::after` cuya opacidad se anima. Así solo se animan `transform`, `opacity` y `filter`.
+- **Fondos de producto:** `BG` en `catalog.ts` pasa de 10 pasteles a 10 neutros fríos casi idénticos; el sprite se recoloreó a grafito/aluminio con un detalle bermellón y trazo 2,6 (antes 3,5).
+- Medido: Lighthouse móvil 100/100/100/100, LCP 1,1 s, CLS 0.
+
 ## Marcas inventadas
 - E-commerce **Brinco**, restaurante **Lumbre**, tienda premium (audio) **Isola**, SaaS de agendas **Turnio**. Nombres de ficción; si alguno coincide con una empresa real, cámbialo en `src/data/demos.ts` y en los JSON de i18n.
 
