@@ -4,12 +4,14 @@ import { useT, type Lang } from '../../i18n';
 import Landscape from './components/Landscape.astro';
 import IsoArt from './components/IsoArt.astro';
 import Logo from './components/Logo.astro';
+import { Image } from 'astro:assets';
+import fontainebleau from './assets/paintings/fontainebleau.jpg';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useT(lang, 'tesela');
 const services = t.raw<{ title: string; text: string }[]>('services.items');
 const cases = t.raw<{ id: string; name: string; sector: string; duration: string; text: string }[]>('work.items');
-const step = t.raw<{ badge: string; title: string; text: string; art: { title: string; rows: { l: string; v: number }[]; note: string } }[]>('process.steps')[2];
+const step = t.raw<{ badge: string; title: string; text: string; card: { title: string; rows: { l: string; run: string; done: string }[] } }[]>('process.steps')[2];
 const tiles = (n: string) => Array.from({ length: 8 }, (_, i) => n.toUpperCase()[i] ?? '');
 ---
 <div class="bp" data-lang={lang}>
@@ -60,11 +62,12 @@ const tiles = (n: string) => Array.from({ length: 8 }, (_, i) => n.toUpperCase()
   <section class="bp-sec bp-step" data-build="process">
     <div class="bp-step__text"><span class="bp-chip">{step.badge}</span><b class="bp-h4">{step.title}</b><p>{step.text}</p></div>
     <div class="bp-step__media">
-      <IsoArt name="evaluate" width={210} />
+      <Image src={fontainebleau} width={760} alt="" class="bp-paint" loading="lazy" decoding="async" />
       <div class="bp-inset" data-build="inset">
-        <p class="bp-inset__t">{step.art.title}<span class="bp-mono">{step.art.note}</span></p>
-        {step.art.rows.map((r) => <div class="bp-bar"><span>{r.l}</span><span class="bp-mono">{r.v}%</span><i style={`--v:${r.v / 100}`}></i></div>)}
+        <p class="bp-inset__t"><i></i>{step.card.title}</p>
+        {step.card.rows.map((r) => <div class="bp-row"><b></b><span>{r.l}</span><em>{r.done}</em></div>)}
       </div>
+      <span class="bp-cartela">{t('paintings.fontainebleau')}</span>
     </div>
   </section>
 
@@ -143,12 +146,15 @@ const tiles = (n: string) => Array.from({ length: 8 }, (_, i) => n.toUpperCase()
   .bp-step__text { display: grid; gap: 14px; justify-items: start; }
   .bp-h4 { font-family: var(--fd); font-weight: 350; font-size: 32px; line-height: 1.1; letter-spacing: -0.33px; }
   .bp-step__text p { color: var(--mu); }
-  .bp-step__media { display: flex; flex-direction: column; align-items: center; gap: 24px; height: 420px; padding: 36px; border-radius: 64px; background: var(--r); box-shadow: var(--sh); }
-  .bp-inset { width: 420px; display: grid; gap: 8px; padding: 18px; border-radius: 24px; background: #fff; box-shadow: var(--sh); }
-  .bp-inset__t { display: flex; justify-content: space-between; font-family: var(--fd); font-size: 19px; }
-  .bp-bar { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
-  .bp-bar i { grid-column: 1 / -1; height: 6px; border-radius: 9999px; background: var(--r); position: relative; overflow: hidden; }
-  .bp-bar i::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform-origin: 0 50%; transform: scaleX(var(--v)); }
+  .bp-step__media { position: relative; display: grid; place-items: center; height: 440px; border-radius: 64px; overflow: hidden; box-shadow: var(--sh); background: var(--r); }
+  .bp-paint { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .bp-inset { position: relative; width: 430px; display: grid; gap: 6px; padding: 10px; border-radius: 24px; background: #fff; box-shadow: 0 10px 40px rgb(10 10 12 / 0.18); }
+  .bp-inset__t { display: flex; align-items: center; gap: 10px; padding: 6px 10px 8px; font-size: 15px; }
+  .bp-inset__t i { width: 13px; height: 13px; background: radial-gradient(circle, var(--ink) 1.2px, transparent 1.5px) 0 0 / 4.33px 4.33px; }
+  .bp-row { display: grid; grid-template-columns: 18px 1fr auto; align-items: center; gap: 12px; min-height: 42px; padding: 8px 12px; border-radius: 14px; background: #eef5e7; font-size: 14px; }
+  .bp-row b { width: 18px; height: 18px; border-radius: 50%; background: #3f9b1d; }
+  .bp-row em { font-style: normal; color: var(--mu); font-size: 13px; }
+  .bp-cartela { position: absolute; left: 28px; bottom: 24px; padding: 5px 10px; border-radius: 12px; background: #fff; color: var(--mu); font-family: var(--fm); font-size: 11px; }
 
   .bp-footer { display: grid; grid-template-columns: 1fr auto; gap: 80px; padding: 72px 100px 64px; }
   .bp-statement { max-width: 420px; margin-bottom: 28px; font-family: var(--fd); font-weight: 350; font-size: 40px; line-height: 1.1; letter-spacing: -0.58px; }
@@ -158,10 +164,12 @@ const tiles = (n: string) => Array.from({ length: 8 }, (_, i) => n.toUpperCase()
 
   @media (prefers-reduced-motion: no-preference) {
     [data-build-state='motion'] :global(.ts-keystone) { animation: bp-key 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
-    [data-build-state='motion'] .bp-bar i::after { animation: bp-bar 1.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    [data-build-state='motion'] .bp-row b { animation: bp-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    [data-build-state='motion'] .bp-row:nth-child(3) b { animation-delay: 0.4s; }
+    [data-build-state='motion'] .bp-row:nth-child(4) b { animation-delay: 0.8s; }
     [data-build-state='motion'] .bp-tile { animation: bp-flip 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
   }
   @keyframes bp-key { from { transform: translateY(-26px); } }
-  @keyframes bp-bar { from { transform: scaleX(0); } }
+  @keyframes bp-pop { from { opacity: 0; transform: scale(0.3); } }
   @keyframes bp-flip { from { opacity: 0; transform: perspective(240px) rotateX(-80deg); } }
 </style>
